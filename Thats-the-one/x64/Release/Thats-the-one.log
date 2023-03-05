@@ -1,0 +1,37 @@
+﻿  Renderer.cpp
+  Shader.cpp
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(13,15): error C3646: 'ParseShader' : spécificateur de substitution inconnu
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(13,26): error C2059: erreur de syntaxe : '('
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(13,32): error C2039: 'string' n'est pas membre de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\predefined C++ types (compiler internal)(341): message : voir la déclaration de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(13,48): error C2238: jetons inattendus avant ';'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(14,59): error C2039: 'string' n'est pas membre de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\predefined C++ types (compiler internal)(341): message : voir la déclaration de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(14,65): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(14,65): error C2143: erreur de syntaxe : absence de ',' avant '&'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(15,39): error C2039: 'string' n'est pas membre de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\predefined C++ types (compiler internal)(341): message : voir la déclaration de 'std'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(15,45): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.h(15,45): error C2143: erreur de syntaxe : absence de ',' avant '&'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Rendering\Shader.cpp(2,10): fatal error C1083: Impossible d'ouvrir le fichier include : '' : No such file or directory
+  Application.cpp
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(52,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(53,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(54,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(57,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(58,5): error C2146: erreur de syntaxe : absence de ';' avant l'identificateur 'GLCall'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(58,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(59,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(60,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(63,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(64,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(65,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(67,5): error C2065: 'ShaderSource' : identificateur non déclaré
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(67,18): error C2146: erreur de syntaxe : absence de ';' avant l'identificateur 'source'
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(67,18): error C2065: 'source' : identificateur non déclaré
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(67,27): error C3861: 'ParseShader' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(68,32): error C2065: 'source' : identificateur non déclaré
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(68,53): error C2065: 'source' : identificateur non déclaré
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(68,19): error C3861: 'CreateShader' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(69,5): error C3861: 'GLCall' : identificateur introuvable
+C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(80,9): error C3861: 'GLCall' : identificateur introuvable
