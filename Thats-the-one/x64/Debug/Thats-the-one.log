@@ -1,3 +1,0 @@
-﻿  Application.cpp
-C:\Developpement\OpenGL\Thats-the-one\Thats-the-one\src\Application.cpp(111,35): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
-  Thats-the-one.vcxproj -> C:\Developpement\OpenGL\Thats-the-one\x64\Debug\Thats-the-one.exe

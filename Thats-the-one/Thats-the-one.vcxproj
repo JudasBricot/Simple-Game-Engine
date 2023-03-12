@@ -45,9 +45,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -55,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>res;src;src\vendor;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>res;src;src\vendor;src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -72,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>res;src;src\vendor;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>res;src;src\vendor;src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,20 +88,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Rendering\SpriteRenderer.cpp" />
     <ClCompile Include="src\Rendering\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />
-    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\test.cpp" />
     <ClCompile Include="src\Rendering\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="src\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
+    <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shader\Basic.shader" />
     <None Include="res\Shader\Texture.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\EventSystem\ApplicationEvent.h" />
+    <ClInclude Include="src\EventSystem\Event.h" />
     <ClInclude Include="src\Rendering\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Shader.h" />
@@ -106,6 +115,7 @@
     <ClInclude Include="src\Rendering\Buffers\VertexBufferLayout.h" />
     <ClInclude Include="src\Rendering\SpriteRenderer.h" />
     <ClInclude Include="src\Rendering\Texture.h" />
+    <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\grass.png" />
