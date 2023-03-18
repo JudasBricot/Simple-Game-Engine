@@ -57,9 +57,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC; JE_PLATFORM_WINDOWS; JE_BUILD_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>res;src;src\vendor;src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Thats-the-one\src\;$(SolutionDir)Thats-the-one\src\vendor;$(SolutionDir)Thats-the-one\src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,9 +74,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC; JE_PLATFORM_WINDOWS; JE_BUILD_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>res;src;src\vendor;src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Thats-the-one\src\;$(SolutionDir)Thats-the-one\src\vendor;$(SolutionDir)Thats-the-one\src\vendor\spdlog\include;$(SolutionDir)Dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,23 +88,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Logging\Log.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Rendering\SpriteRenderer.cpp" />
     <ClCompile Include="src\Rendering\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />
-    <ClCompile Include="src\test.cpp" />
     <ClCompile Include="src\Rendering\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="src\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shader\Basic.shader" />
     <None Include="res\Shader\Texture.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EntryPoint.h" />
+    <ClInclude Include="src\Logging\Log.h" />
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\EventSystem\ApplicationEvent.h" />
     <ClInclude Include="src\EventSystem\Event.h" />
     <ClInclude Include="src\Rendering\Buffers\IndexBuffer.h" />
@@ -116,6 +119,7 @@
     <ClInclude Include="src\Rendering\SpriteRenderer.h" />
     <ClInclude Include="src\Rendering\Texture.h" />
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\grass.png" />
