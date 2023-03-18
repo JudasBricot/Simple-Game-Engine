@@ -1,0 +1,3 @@
+[submodule "Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog"]
+	path = Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog
+	url = https://github.com/gabime/spdlog
