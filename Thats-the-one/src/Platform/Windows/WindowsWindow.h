@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Window.h"
+#include "WindowsWindow.h"
 
 namespace Judas_Engine
 {

@@ -16,7 +16,7 @@ namespace Judas_Engine
 		WindowClosedEvent() {}
 
 		EVENT_CLASS_TYPE(WindowsClosed)
-			EVENT_CLASS_CATEGORY(WindowsEventCategory)
+		EVENT_CLASS_CATEGORY(WindowsEventCategory)
 	};
 
 	class WindowResizedEvent : public Event
@@ -65,23 +65,25 @@ namespace Judas_Engine
 	class MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(const int offset)
-			: m_Offset(offset) { }
+		MouseScrolledEvent(const float xOffset, const float yOffset)
+			: m_XOffset(xOffset), m_YOffset(yOffset) { }
 
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseScrolled: " << m_Offset;
+			ss << "MouseScrolled: " << "(" << m_XOffset << "," << m_YOffset << ")";
 			return ss.str();
 		}
 
-		float GetOffset() const { return m_Offset; }
+		float GetXOffset() const { return m_XOffset; }
+		float GetYOffset() const { return m_YOffset; }
 
 		EVENT_CLASS_TYPE(MouseScrolled)
 		EVENT_CLASS_CATEGORY(InputEventCategory | MouseEventCategory)
 
 	private:
-		const float m_Offset;
+		const float m_XOffset;
+		const float m_YOffset;
 	};
 
 	class MouseDraggedEvent : public Event
@@ -101,7 +103,7 @@ namespace Judas_Engine
 		float GetYOffset() const { return m_YOffset; }
 
 		EVENT_CLASS_TYPE(MouseDragged)
-			EVENT_CLASS_CATEGORY(MouseEventCategory)
+		EVENT_CLASS_CATEGORY(MouseEventCategory)
 
 	private:
 		const float m_XOffset, m_YOffset;
