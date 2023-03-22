@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="EventSystem">
+      <UniqueIdentifier>{CCE875DF-389E-EED4-C192-E8AB2D47E5D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{157446C0-0116-7196-EAD0-84EAD611F8E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{AC6878E8-1848-F783-2160-825A8DBE5DE5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\EntryPoint.h" />
+    <ClInclude Include="src\EventSystem\ApplicationEvent.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventSystem\Event.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JudasEngine.h" />
+    <ClInclude Include="src\Layers\Layer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Layers\LayerStack.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Logging\Log.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Layers\Layer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Layers\LayerStack.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Logging\Log.cpp">
+      <Filter>Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

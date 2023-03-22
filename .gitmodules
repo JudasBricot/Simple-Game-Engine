@@ -1,3 +1,9 @@
 [submodule "Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog"]
 	path = Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Judas-Engine/vendor/GLFW"]
+	path = Judas-Engine/vendor/GLFW
+	url = https://github.com/TheCherno/GLFW
+[submodule "Judas-Engine/vendor/spdlog"]
+	path = Judas-Engine/vendor/spdlog
+	url = https://github.com/gabime/spdlog

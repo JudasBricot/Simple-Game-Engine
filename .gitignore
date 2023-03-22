@@ -3,7 +3,6 @@
 Dependencies/
 bin/
 bin-int/
-vendor/
 
 # Files
 *.user
