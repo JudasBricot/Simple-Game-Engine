@@ -13,8 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Judas-Engine/vendor/GLFW/include"
+IncludeDir["Glad"] = "Judas-Engine/vendor/Glad/include"
 
 include "Judas-Engine/vendor/GLFW"
+include "Judas-Engine/vendor/Glad"
 
 project "Judas-Engine"
     location "Judas-Engine"
@@ -34,12 +36,15 @@ project "Judas-Engine"
     {
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+
+        "%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links 
 	{ 
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -51,7 +56,9 @@ project "Judas-Engine"
         defines
         {
             "JE_PLATFORM_WINDOWS",
-            "JE_BUILD_DLL"
+            "JE_BUILD_DLL",
+            "GLFW_INCLUDE_NONE",
+            "JE_ENABLE_ASSERT"
         }
 
         postbuildcommands
@@ -60,17 +67,17 @@ project "Judas-Engine"
         }
     
     	filter "configurations:Debug"
-		defines "HZ_DEBUG"
+		defines "JE_DEBUG"
 		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "HZ_RELEASE"
+		defines "JE_RELEASE"
 		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
-		defines "HZ_DIST"
+		defines "JE_DIST"
 		buildoptions "/MD"
 		optimize "On"
 
@@ -90,8 +97,11 @@ project "Game"
 
     includedirs
     {
-	"Judas-Engine/vendor/spdlog/include",
-        "Judas-Engine/src"
+	    "Judas-Engine/vendor/spdlog/include",
+        "Judas-Engine/src",
+
+        "%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
     }
 
     links
