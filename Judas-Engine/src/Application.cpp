@@ -7,8 +7,13 @@ namespace Judas_Engine
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
+		JE_CORE_ASSERT(!s_Instance, "Another application has already be created !")
+		s_Instance = this;
+
 		Log::Init();
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
@@ -45,11 +50,13 @@ namespace Judas_Engine
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::Run()
@@ -58,8 +65,13 @@ namespace Judas_Engine
 		JE_CORE_INFO(buttonPressed.ToString().c_str());
 		while (m_Running)
 		{
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			for (Layer* layer : m_LayerStack)
+			{
 				layer->OnUpdate();
+			}
 
 			m_Window->OnUpdate();
 		}

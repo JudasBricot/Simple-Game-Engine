@@ -12,7 +12,7 @@ public:
 
 	void OnUpdate() override
 	{
-		JE_INFO("Updating layer");
+		JE_INFO("Updating Example layer");
 	}
 
 	void OnEvent(Judas_Engine::Event& e)
@@ -26,7 +26,8 @@ class GameApplication : public Judas_Engine::Application
 public:
 	GameApplication()
 	{
-
+		PushLayer(new ExampleLayer());
+		PushOverlay(new Judas_Engine::ImGuiLayer());
 	}
 	~GameApplication()
 	{

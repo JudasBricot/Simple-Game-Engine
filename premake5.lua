@@ -14,9 +14,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Judas-Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Judas-Engine/vendor/Glad/include"
+IncludeDir["ImGui"] = "Judas-Engine/vendor/imgui"
 
 include "Judas-Engine/vendor/GLFW"
 include "Judas-Engine/vendor/Glad"
+include "Judas-Engine/vendor/imgui"
+
 
 project "Judas-Engine"
     location "Judas-Engine"
@@ -38,13 +41,15 @@ project "Judas-Engine"
 		"%{prj.name}/vendor/spdlog/include",
 
         "%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+        "%{IncludeDir.ImGui}"
 	}
 
 	links 
 	{ 
 		"GLFW",
 		"Glad",
+        "ImGui",
 		"opengl32.lib"
 	}
 
@@ -101,7 +106,9 @@ project "Game"
         "Judas-Engine/src",
 
         "%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+        "%{IncludeDir.ImGui}"
+
     }
 
     links

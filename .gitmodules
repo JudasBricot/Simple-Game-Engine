@@ -7,3 +7,6 @@
 [submodule "Judas-Engine/vendor/spdlog"]
 	path = Judas-Engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Judas-Engine/vendor/imgui"]
+	path = Judas-Engine/vendor/imgui
+	url = https://github.com/thecherno/imgui
