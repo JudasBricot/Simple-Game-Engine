@@ -10,7 +10,7 @@ namespace Judas_Engine
 	enum class EventType {
 		None = 0,
 		WindowsClosed, WindowsResized,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseMoved, MouseScrolled, MouseDragged,
 		MouseButtonPressed, MouseButtonReleased,
 	};

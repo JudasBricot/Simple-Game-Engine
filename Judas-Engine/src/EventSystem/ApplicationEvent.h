@@ -228,4 +228,20 @@ namespace Judas_Engine
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+
+	class JE_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(const char keyCode)
+			: KeyEvent(keyCode) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << KeyEvent::ToString() << ", KeyTypedEvent";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	};
 }

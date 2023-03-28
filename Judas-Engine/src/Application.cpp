@@ -1,12 +1,12 @@
 #include "Application.h"
+
+#include "Core.h"
 #include "Logging/Log.h"
 
 #include <glad/glad.h>
 
 namespace Judas_Engine
 {
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -16,7 +16,7 @@ namespace Judas_Engine
 
 		Log::Init();
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
 		unsigned int id;
 		glCreateBuffers(1, &id);
@@ -29,7 +29,7 @@ namespace Judas_Engine
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 		JE_CORE_INFO("{0}", e.ToString());
 
 		for (auto it = m_LayerStack.begin(); it != m_LayerStack.end();)
