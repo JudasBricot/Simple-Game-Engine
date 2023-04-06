@@ -24,6 +24,7 @@ include "Judas-Engine/vendor/imgui"
 project "Judas-Engine"
     location "Judas-Engine"
     kind "SharedLib"
+    staticruntime "off"
     language "C++"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -37,25 +38,24 @@ project "Judas-Engine"
 
     includedirs
     {
-		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include",
+	"%{prj.name}/src",
+	"%{prj.name}/vendor/spdlog/include",
 
         "%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
+	"%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}"
-	}
+    }
 
-	links 
-	{ 
-		"GLFW",
-		"Glad",
+    links 
+    { 
+	"GLFW",
+	"Glad",
         "ImGui",
-		"opengl32.lib"
-	}
+	"opengl32.lib"
+    }
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime  "On"
         systemversion "latest"
 
         defines
@@ -73,22 +73,23 @@ project "Judas-Engine"
     
     	filter "configurations:Debug"
 		defines "JE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "JE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "JE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "Game"
     location "Game"
     kind "ConsoleApp"
+    staticruntime "off"
     language "C++"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -102,11 +103,11 @@ project "Game"
 
     includedirs
     {
-	    "Judas-Engine/vendor/spdlog/include",
+	"Judas-Engine/vendor/spdlog/include",
         "Judas-Engine/src",
 
         "%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
+	"%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}"
 
     }
@@ -118,7 +119,6 @@ project "Game"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime  "On"
         systemversion "latest"
 
         defines
@@ -128,15 +128,15 @@ project "Game"
     
     filter "configurations:Debug"
         defines "JE_DEBUG"
-	buildoptions "/MDd"
+	runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "JE_RELEASE"
-	buildoptions "/MD"
+	runtime "Release"
         optimize "On"
 
     filter "configurations:Dist"
         defines "JE_DIST"
-	buildoptions "/MD"
+	runtime "Release"
         optimize "On"

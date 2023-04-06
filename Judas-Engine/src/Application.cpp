@@ -5,6 +5,9 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
+
 namespace Judas_Engine
 {
 	Application* Application::s_Instance = nullptr;
@@ -72,6 +75,9 @@ namespace Judas_Engine
 			{
 				layer->OnUpdate();
 			}
+
+			auto[x, y] = Input::GetMousePosition();
+			JE_CORE_TRACE("{0}, {1}", x, y);
 
 			m_Window->OnUpdate();
 		}
