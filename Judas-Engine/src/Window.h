@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <functional>
-
 #include "EventSystem/Event.h"
 
 namespace Judas_Engine

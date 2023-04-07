@@ -1,9 +1,8 @@
 #pragma once
 
+#include "jepch.h"
 #include "Event.h"
 #include "Core.h"
-
-#include <sstream>
 
 namespace Judas_Engine
 {

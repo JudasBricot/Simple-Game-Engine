@@ -10,3 +10,6 @@
 [submodule "Judas-Engine/vendor/imgui"]
 	path = Judas-Engine/vendor/imgui
 	url = https://github.com/thecherno/imgui
+[submodule "Judas-Engine/vendor/glm"]
+	path = Judas-Engine/vendor/glm
+	url = https://github.com/g-truc/glm

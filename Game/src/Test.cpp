@@ -1,6 +1,5 @@
 #include <JudasEngine.h>
 
-
 class ExampleLayer : public Judas_Engine::Layer
 {
 public:

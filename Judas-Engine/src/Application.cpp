@@ -1,12 +1,14 @@
 #include "Application.h"
 
+#include "jepch.h"
+
 #include "Core.h"
 #include "Logging/Log.h"
 
 #include <glad/glad.h>
+#include "glm/glm.hpp"
 
 #include "Input.h"
-
 
 namespace Judas_Engine
 {

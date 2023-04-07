@@ -15,11 +15,11 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Judas-Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Judas-Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Judas-Engine/vendor/imgui"
+IncludeDir["glm"] = "Judas-Engine/vendor/glm"
 
 include "Judas-Engine/vendor/GLFW"
 include "Judas-Engine/vendor/Glad"
 include "Judas-Engine/vendor/imgui"
-
 
 project "Judas-Engine"
     location "Judas-Engine"
@@ -30,10 +30,15 @@ project "Judas-Engine"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "jepch.h"
+    pchsource "Judas-Engine/src/jepch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+	"%{prj.name}/vendor/glm/glm/**.hpp",
+	"%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
@@ -43,7 +48,8 @@ project "Judas-Engine"
 
         "%{IncludeDir.GLFW}",
 	"%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+	"%{IncludeDir.glm}"
     }
 
     links 
@@ -108,7 +114,8 @@ project "Game"
 
         "%{IncludeDir.GLFW}",
 	"%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+	"%{IncludeDir.glm}"
 
     }
 

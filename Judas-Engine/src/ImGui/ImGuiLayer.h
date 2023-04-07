@@ -7,8 +7,6 @@
 #include "EventSystem/Event.h"
 #include "EventSystem/ApplicationEvent.h"
 
-#include <unordered_map>
-
 namespace Judas_Engine
 {
 	class JE_API ImGuiLayer : public Layer
