@@ -1,5 +1,7 @@
 #include <JudasEngine.h>
 
+#include "ImGui/imgui.h"
+
 class ExampleLayer : public Judas_Engine::Layer
 {
 public:
@@ -7,6 +9,13 @@ public:
 		: Layer("MyLayer")
 	{
 
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello");
+		ImGui::End();
 	}
 
 	void OnUpdate() override
@@ -26,7 +35,6 @@ public:
 	GameApplication()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Judas_Engine::ImGuiLayer());
 	}
 	~GameApplication()
 	{

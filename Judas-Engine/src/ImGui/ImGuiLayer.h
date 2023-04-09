@@ -15,20 +15,12 @@ namespace Judas_Engine
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnUpdate() override;
-		void OnAttach() override;
-		void OnDetach() override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-		void OnEvent(Event& e) override;
-	private:
-		bool OnMouseMovedEvent(MouseMovedEvent e);
-		bool OnMouseScrolledEvent(MouseScrolledEvent e);
-		bool OnMouseButtonPressed(MouseButtonPressedEvent e);
-		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent e);
-		bool OnKeyPressedEvent(KeyPressedEvent e);
-		bool OnKeyReleasedEvent(KeyReleasedEvent e);
-		bool OnKeyTypedEvent(KeyTypedEvent e);
-		bool OnWindowResizedEvent(WindowResizedEvent e);
+		void Begin();
+		void End();
 	private:
 		float m_Time = 0.0f;
 	};

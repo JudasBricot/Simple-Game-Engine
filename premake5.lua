@@ -23,33 +23,34 @@ include "Judas-Engine/vendor/imgui"
 
 project "Judas-Engine"
     location "Judas-Engine"
-    kind "SharedLib"
-    staticruntime "off"
+    kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    pchheader "jepch.h"
-    pchsource "Judas-Engine/src/jepch.cpp"
+	pchheader "jepch.h"
+	pchsource "Judas-Engine/src/jepch.cpp"
 
     files
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-	"%{prj.name}/vendor/glm/glm/**.hpp",
-	"%{prj.name}/vendor/glm/glm/**.inl"
+	    "%{prj.name}/vendor/glm/glm/**.hpp",
+	    "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
     {
-	"%{prj.name}/src",
-	"%{prj.name}/vendor/spdlog/include",
+	    "%{prj.name}/src",
+	    "%{prj.name}/vendor/spdlog/include",
 
         "%{IncludeDir.GLFW}",
-	"%{IncludeDir.Glad}",
+	    "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-	"%{IncludeDir.glm}"
+	    "%{IncludeDir.glm}"
     }
 
     links 
@@ -61,7 +62,6 @@ project "Judas-Engine"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
 
         defines
@@ -69,34 +69,32 @@ project "Judas-Engine"
             "JE_PLATFORM_WINDOWS",
             "JE_BUILD_DLL",
             "GLFW_INCLUDE_NONE",
-            "JE_ENABLE_ASSERT"
-        }
-
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game")
+            "JE_ENABLE_ASSERT",
+            "_CRT_SECURE_NO_WARNINGS"
         }
     
-    	filter "configurations:Debug"
+    filter "configurations:Debug"
 		defines "JE_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "JE_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "JE_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Game"
     location "Game"
     kind "ConsoleApp"
-    staticruntime "off"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
+
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -109,13 +107,14 @@ project "Game"
 
     includedirs
     {
-	"Judas-Engine/vendor/spdlog/include",
+	    "Judas-Engine/vendor/spdlog/include",
         "Judas-Engine/src",
+	    "Judas-Engine/vendor",
 
         "%{IncludeDir.GLFW}",
-	"%{IncludeDir.Glad}",
+	    "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-	"%{IncludeDir.glm}"
+	    "%{IncludeDir.glm}"
 
     }
 
@@ -125,7 +124,6 @@ project "Game"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
 
         defines
@@ -135,15 +133,15 @@ project "Game"
     
     filter "configurations:Debug"
         defines "JE_DEBUG"
-	runtime "Debug"
-        symbols "On"
+	    runtime "Debug"
+        symbols "on"
 
     filter "configurations:Release"
         defines "JE_RELEASE"
-	runtime "Release"
-        optimize "On"
+	    runtime "Release"
+        optimize "on"
 
     filter "configurations:Dist"
         defines "JE_DIST"
-	runtime "Release"
-        optimize "On"
+	    runtime "Release"
+        optimize "on"

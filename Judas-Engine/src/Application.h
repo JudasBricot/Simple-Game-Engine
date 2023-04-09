@@ -5,6 +5,8 @@
 #include "Layers/LayerStack.h"
 #include "EventSystem/ApplicationEvent.h"
 
+#include "ImGui/ImGuiLayer.h"
+
 namespace Judas_Engine
 {
 	class JE_API Application
@@ -25,6 +27,7 @@ namespace Judas_Engine
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:
