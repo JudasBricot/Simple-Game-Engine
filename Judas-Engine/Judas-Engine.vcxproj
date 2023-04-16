@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>jepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;_CRT_SECURE_NO_WARNINGS;JE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;JE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -96,7 +96,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>jepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;_CRT_SECURE_NO_WARNINGS;JE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;JE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -120,7 +120,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>jepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;_CRT_SECURE_NO_WARNINGS;JE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;JE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -152,8 +152,10 @@
     <ClInclude Include="src\Layers\Layer.h" />
     <ClInclude Include="src\Layers\LayerStack.h" />
     <ClInclude Include="src\Logging\Log.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\jepch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -580,6 +582,7 @@
     <ClCompile Include="src\Layers\Layer.cpp" />
     <ClCompile Include="src\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Logging\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\jepch.cpp">

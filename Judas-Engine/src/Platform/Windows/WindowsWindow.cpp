@@ -2,10 +2,10 @@
 #include "WindowsWindow.h"
 
 #include "Core.h"
-#include "EventSystem/ApplicationEvent.h"
-#include "Logging/Log.h"
 
-#include <iostream>
+#include "EventSystem/ApplicationEvent.h"
+#include "../OpenGL/OpenGLContext.h"
+
 #include <glad/glad.h>
 
 namespace Judas_Engine
@@ -41,6 +41,7 @@ namespace Judas_Engine
 
         JE_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
+
         if (!s_GLFWInitialized)
         {
             int success = glfwInit();
@@ -50,9 +51,12 @@ namespace Judas_Engine
         }
 
         m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        JE_CORE_ASSERT(status, "Failed to initialize Glad!");
+        m_Context = new OpenGLContext(m_Window);
+
+        m_Context->Init();
+
+        
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -154,7 +158,7 @@ namespace Judas_Engine
 
     void WindowsWindow::OnUpdate()
     {
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
         glfwPollEvents();
     }
 

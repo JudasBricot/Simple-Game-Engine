@@ -20,12 +20,10 @@ public:
 
 	void OnUpdate() override
 	{
-		JE_INFO("Updating Example layer");
 	}
 
 	void OnEvent(Judas_Engine::Event& e)
 	{
-		JE_TRACE("{0}", e.ToString());
 	}
 };
 

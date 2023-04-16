@@ -15,3 +15,5 @@
 #ifdef JE_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
+
+#include "Logging/Log.h"

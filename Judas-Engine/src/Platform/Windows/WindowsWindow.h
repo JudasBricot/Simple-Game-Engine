@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "WindowsWindow.h"
+#include "Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -29,6 +29,7 @@ namespace Judas_Engine
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

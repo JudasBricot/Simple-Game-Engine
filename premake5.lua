@@ -42,11 +42,15 @@ project "Judas-Engine"
 	    "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
+    defines
+    {
+            "_CRT_SECURE_NO_WARNINGS"
+    }
+
     includedirs
     {
 	    "%{prj.name}/src",
 	    "%{prj.name}/vendor/spdlog/include",
-
         "%{IncludeDir.GLFW}",
 	    "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
@@ -55,10 +59,10 @@ project "Judas-Engine"
 
     links 
     { 
-	"GLFW",
-	"Glad",
+	    "GLFW",
+	    "Glad",
         "ImGui",
-	"opengl32.lib"
+	    "opengl32.lib"
     }
 
     filter "system:windows"
@@ -70,7 +74,6 @@ project "Judas-Engine"
             "JE_BUILD_DLL",
             "GLFW_INCLUDE_NONE",
             "JE_ENABLE_ASSERT",
-            "_CRT_SECURE_NO_WARNINGS"
         }
     
     filter "configurations:Debug"
@@ -110,10 +113,6 @@ project "Game"
 	    "Judas-Engine/vendor/spdlog/include",
         "Judas-Engine/src",
 	    "Judas-Engine/vendor",
-
-        "%{IncludeDir.GLFW}",
-	    "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}",
 	    "%{IncludeDir.glm}"
 
     }
