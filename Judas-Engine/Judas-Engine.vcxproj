@@ -156,6 +156,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\jepch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -588,6 +589,7 @@
     <ClCompile Include="src\jepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

@@ -7,6 +7,9 @@
 
 #include "ImGui/ImGuiLayer.h"
 
+//TEMP
+#include "Renderer/Shader.h"
+
 namespace Judas_Engine
 {
 	class JE_API Application
@@ -31,6 +34,8 @@ namespace Judas_Engine
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

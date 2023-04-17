@@ -48,6 +48,34 @@ namespace Judas_Engine
 		};
 
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		std::string vertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string fragmentSrc = R"(
+			#version 330 core
+			
+			in vec3 v_Position;			
+			layout(location = 0) out vec4 color;
+
+			void main()
+			{
+				color = vec4((v_Position + 1.5) / 2.0, 1.0);
+			}
+		)";
+
+		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
 	}
 
 	Application::~Application()
@@ -88,6 +116,8 @@ namespace Judas_Engine
 
 	void Application::Run()
 	{
+		m_Shader->Bind();
+
 		while (m_Running)
 		{
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
