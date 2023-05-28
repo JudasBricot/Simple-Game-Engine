@@ -4,11 +4,14 @@
 
 #include <glm/glm.hpp>
 
+typedef unsigned int GLenum;
+
 namespace Judas_Engine
 {
 	class OpenGLShader : public Shader
 	{
 	public:
+		OpenGLShader(const std::string& filepath);
 		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
@@ -25,6 +28,10 @@ namespace Judas_Engine
 
 		void UploadUniformMat3(const char* name, const glm::mat3 mat);
 		void UploadUniformMat4(const char* name, const glm::mat4 mat);
+	private:
+		std::string ReadFile(const std::string& filepath);
+		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+		void Compile(std::unordered_map<GLenum, std::string>& shaderSources);
 	private:
 		unsigned int m_RendererID;
 	};
