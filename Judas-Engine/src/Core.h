@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef JE_PLATFORM_WINDOWS
 #if JE_DYNAMIC_LINKING
 	#ifdef JE_BUILD_DLL
@@ -26,3 +28,12 @@
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 #define BIT(x) (1 << x);
+
+namespace Judas_Engine
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}

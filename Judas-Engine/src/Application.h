@@ -5,22 +5,19 @@
 #include "Layers/LayerStack.h"
 #include "EventSystem/ApplicationEvent.h"
 
-#include "ImGui/ImGuiLayer.h"
+#include "Core/Timestep.h"
 
-//TEMP
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Judas_Engine
 {
-	class JE_API Application
+	class Application
 	{
 	public:
 		Application();
 		~Application();
 
 		void OnEvent(Event& e);
-		bool OnWindowClose(WindowClosedEvent& e);
 
 		void PushOverlay(Layer* overlay);
 		void PushLayer(Layer* layer);
@@ -30,15 +27,13 @@ namespace Judas_Engine
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 	private:
-		unsigned int m_VertexArray;
+		bool OnWindowClose(WindowClosedEvent& e);
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		float m_LastTime = 0.0f;
 	private:
 		static Application* s_Instance;
 	};

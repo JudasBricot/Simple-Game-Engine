@@ -56,7 +56,7 @@ namespace Judas_Engine
 		double GetY() const { return m_Y; }
 
 		EVENT_CLASS_TYPE(MouseMoved)
-			EVENT_CLASS_CATEGORY(InputEventCategory | MouseEventCategory)
+		EVENT_CLASS_CATEGORY(InputEventCategory | MouseEventCategory)
 
 	private:
 		const double m_X, m_Y;
