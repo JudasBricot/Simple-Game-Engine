@@ -12,12 +12,13 @@ namespace Judas_Engine
 	{
 	public:
 		OpenGLShader(const std::string& filepath);
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
+
+		virtual const std::string GetName() { return m_Name; }
 
 		void Bind() const;
 		void Unbind() const;
-
 
 		void UploadUniformInt(const char* name, int value);
 
@@ -33,6 +34,7 @@ namespace Judas_Engine
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
 		void Compile(std::unordered_map<GLenum, std::string>& shaderSources);
 	private:
+		std::string m_Name;
 		unsigned int m_RendererID;
 	};
 }
