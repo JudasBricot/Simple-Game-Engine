@@ -9,11 +9,14 @@ namespace Judas_Engine
 	public:
 		OrthographicCamera(float left, float right, float top, float bottom);
 
+		void SetProjection(float left, float right, float top, float bottom);
+
 		const glm::vec3 GetPosition() const { return m_Position; }
 		const float GetRotation() const { return m_Rotation; }
 
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
 		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
+
 
 		void Translate(const glm::vec3& translation) { SetPosition(m_Position + translation); }
 		void Rotate(float rotation) { SetRotation(m_Rotation + rotation); }
