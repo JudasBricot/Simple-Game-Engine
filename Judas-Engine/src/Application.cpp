@@ -40,6 +40,7 @@ namespace Judas_Engine
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizedEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
 		for (auto it = m_LayerStack.begin(); it != m_LayerStack.end();)
 		{
@@ -56,6 +57,20 @@ namespace Judas_Engine
 		return true;
 	}
 
+	bool Application::OnWindowResize(WindowResizedEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
+	}
+
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
@@ -70,16 +85,18 @@ namespace Judas_Engine
 
 	void Application::Run()
 	{
-
 		while (m_Running)
 		{
 			float time = (float)glfwGetTime(); // Platform/Windows
 			Timestep timestep = time - m_LastTime;
 			m_LastTime = time;
 
-			for (Layer* layer : m_LayerStack)
+			if (!m_Minimized)
 			{
-				layer->OnUpdate(timestep);
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnUpdate(timestep);
+				}
 			}
 
 			m_ImGuiLayer->Begin();

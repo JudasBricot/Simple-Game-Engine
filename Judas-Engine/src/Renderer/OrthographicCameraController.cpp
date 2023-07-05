@@ -53,7 +53,7 @@ namespace Judas_Engine
 
     bool OrthographicCameraController::OnWindowResized(WindowResizedEvent& e)
     {
-        m_AspectRatio = e.GetWidth() / e.GetHeight();
+        m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
         return true;
