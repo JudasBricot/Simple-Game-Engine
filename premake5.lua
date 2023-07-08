@@ -16,6 +16,7 @@ IncludeDir["GLFW"] = "Judas-Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Judas-Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Judas-Engine/vendor/imgui"
 IncludeDir["glm"] = "Judas-Engine/vendor/glm"
+IncludeDir["stb_image"] = "Judas-Engine/vendor/stb_image"
 
 include "Judas-Engine/vendor/GLFW"
 include "Judas-Engine/vendor/Glad"
@@ -38,23 +39,26 @@ project "Judas-Engine"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-	    "%{prj.name}/vendor/glm/glm/**.hpp",
-	    "%{prj.name}/vendor/glm/glm/**.inl"
+	"%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
+	"%{prj.name}/vendor/glm/glm/**.hpp",
+	"%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     defines
     {
-            "_CRT_SECURE_NO_WARNINGS"
+        "_CRT_SECURE_NO_WARNINGS"
     }
 
     includedirs
     {
-	    "%{prj.name}/src",
-	    "%{prj.name}/vendor/spdlog/include",
+	"%{prj.name}/src",
+	"%{prj.name}/vendor/spdlog/include",
         "%{IncludeDir.GLFW}",
-	    "%{IncludeDir.Glad}",
+	"%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-	    "%{IncludeDir.glm}"
+	"%{IncludeDir.glm}",
+	"%{IncludeDir.stb_image}"
     }
 
     links 
