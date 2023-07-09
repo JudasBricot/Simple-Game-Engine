@@ -1,7 +1,7 @@
 #include "jepch.h"
 #include "WindowsWindow.h"
 
-#include "Core.h"
+#include "Core/Core.h"
 
 #include "EventSystem/ApplicationEvent.h"
 #include "../OpenGL/OpenGLContext.h"

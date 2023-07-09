@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 
 namespace Judas_Engine
 {

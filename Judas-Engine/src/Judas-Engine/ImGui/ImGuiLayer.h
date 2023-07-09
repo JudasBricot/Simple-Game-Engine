@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 
-#include "Layers/Layer.h"
+#include "Judas-Engine/Layers/Layer.h"
 
-#include "EventSystem/Event.h"
-#include "EventSystem/ApplicationEvent.h"
+#include "Judas-Engine/EventSystem/Event.h"
+#include "Judas-Engine/EventSystem/ApplicationEvent.h"
 
 namespace Judas_Engine
 {

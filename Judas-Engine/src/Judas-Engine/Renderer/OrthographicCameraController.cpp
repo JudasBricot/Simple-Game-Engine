@@ -1,10 +1,10 @@
 #include "jepch.h"
 #include "OrthographicCameraController.h"
 
-#include "Core.h"
+#include "Core/Core.h"
 
-#include "Input.h"
-#include "KeyCodes.h"
+#include "Core/Input.h"
+#include "Core/KeyCodes.h"
 
 namespace Judas_Engine
 {

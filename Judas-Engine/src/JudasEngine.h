@@ -1,34 +1,34 @@
 #pragma once
 
 //----- Macros ------
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 //-------------------
 
-#include "Application.h"
-#include "Layers/Layer.h"
-#include "Logging/Log.h"
+#include "Judas-Engine/Core/Application.h"
+#include "Judas-Engine/Layers/Layer.h"
+#include "Judas-Engine/Logging/Log.h"
 
-#include "Core/Timestep.h"
+#include "Judas-Engine/Core/Timestep.h"
 
-#include "Input.h"
-#include "KeyCodes.h"
-#include "MouseButtonCode.h"
+#include "Judas-Engine/Core/Input.h"
+#include "Judas-Engine/Core/KeyCodes.h"
+#include "Judas-Engine/Core/MouseButtonCode.h"
 
-#include "ImGui/ImGuiLayer.h"
+#include "Judas-Engine/ImGui/ImGuiLayer.h"
 
 //---- Renderer ----
-#include "Renderer/Renderer.h"
-#include "Renderer/RenderCommand.h"
+#include "Judas-Engine/Renderer/Renderer.h"
+#include "Judas-Engine/Renderer/RenderCommand.h"
 
-#include "Renderer/Buffer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Texture.h"
-#include "Renderer/VertexArray.h"
+#include "Judas-Engine/Renderer/Buffer.h"
+#include "Judas-Engine/Renderer/Shader.h"
+#include "Judas-Engine/Renderer/Texture.h"
+#include "Judas-Engine/Renderer/VertexArray.h"
 
-#include "Renderer/OrthographicCamera.h"
-#include "Renderer/OrthographicCameraController.h"
+#include "Judas-Engine/Renderer/OrthographicCamera.h"
+#include "Judas-Engine/Renderer/OrthographicCameraController.h"
 //--------------------
 
 //---- EntryPoint ----
-#include "EntryPoint.h"
+#include "Judas-Engine/Core/EntryPoint.h"
 //--------------------

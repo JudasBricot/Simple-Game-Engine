@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 
 
 namespace Judas_Engine

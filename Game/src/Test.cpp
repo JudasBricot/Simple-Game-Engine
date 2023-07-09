@@ -1,7 +1,7 @@
 #include <JudasEngine.h>
 
-#include "Platform/OpenGL/OpenGLShader.h"
-#include "Renderer/Shader.h"
+#include "Judas-Engine/Platform/OpenGL/OpenGLShader.h"
+#include "Judas-Engine/Renderer/Shader.h"
 
 #include "ImGui/imgui.h"
 

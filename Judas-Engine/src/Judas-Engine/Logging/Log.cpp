@@ -1,5 +1,5 @@
 #include "jepch.h"
-#include "Log.h"
+#include "Logging/Log.h"
 
 namespace Judas_Engine
 {

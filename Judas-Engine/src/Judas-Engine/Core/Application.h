@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Window.h"
-#include "Layers/Layer.h"
-#include "Layers/LayerStack.h"
-#include "EventSystem/ApplicationEvent.h"
+#include "Judas-Engine/Layers/Layer.h"
+#include "Judas-Engine/Layers/LayerStack.h"
+#include "Judas-Engine/EventSystem/ApplicationEvent.h"
 
-#include "Core/Timestep.h"
+#include "Judas-Engine/Core/Timestep.h"
 
-#include "ImGui/ImGuiLayer.h"
+#include "Judas-Engine/ImGui/ImGuiLayer.h"
 
 namespace Judas_Engine
 {

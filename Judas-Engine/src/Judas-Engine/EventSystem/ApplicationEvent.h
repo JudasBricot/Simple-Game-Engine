@@ -2,7 +2,7 @@
 
 #include "jepch.h"
 #include "Event.h"
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 
 namespace Judas_Engine
 {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Layer.h"
+#include "Judas-Engine/Layers/Layer.h"
 
-#include "Core.h"
+#include "Judas-Engine/Core/Core.h"
 
 namespace Judas_Engine
 {

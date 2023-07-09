@@ -1,9 +1,9 @@
 #pragma once
 
-#include "EventSystem/Event.h"
+#include "Judas-Engine/EventSystem/Event.h"
 
-#include "Core.h"
-#include "Core/Timestep.h"
+#include "Judas-Engine/Core/Core.h"
+#include "Judas-Engine/Core/Timestep.h"
 
 namespace Judas_Engine
 {

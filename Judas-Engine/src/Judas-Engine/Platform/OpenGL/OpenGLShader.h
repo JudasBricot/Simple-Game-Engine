@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Shader.h"
+#include "Judas-Engine/Renderer/Shader.h"
 
 #include <glm/glm.hpp>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EventSystem/Event.h"
+#include "Judas-Engine/EventSystem/Event.h"
 
 namespace Judas_Engine
 {

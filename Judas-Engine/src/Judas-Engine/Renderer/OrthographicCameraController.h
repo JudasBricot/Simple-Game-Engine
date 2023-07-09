@@ -1,9 +1,9 @@
 #pragma once
 
-#include "OrthographicCamera.h"
-#include "Core/Timestep.h"
+#include "Judas-Engine/Renderer/OrthographicCamera.h"
+#include "Judas-Engine/Core/Timestep.h"
 
-#include "EventSystem/ApplicationEvent.h"
+#include "Judas-Engine/EventSystem/ApplicationEvent.h"
 
 namespace Judas_Engine
 {
