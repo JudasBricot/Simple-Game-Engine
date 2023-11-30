@@ -270,12 +270,163 @@ private:
 	glm::vec3 m_SquareColor = { 0.2f, 0.1f, 0.8f };
 };
 
+class CubeLayer : public Judas_Engine::Layer
+{
+public:
+	CubeLayer()
+		: Layer("MyLayer"), m_CameraController(1.0f, 1280.0f / 720.0f, 0.1f, 100.0f, true)
+	{
+		m_VertexArray = Judas_Engine::VertexArray::Create();
+
+		float g_vertexPositions[144] = {
+			-0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+
+			-0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+
+			-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+
+			 0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+
+			-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+
+			-0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f
+		};
+
+		unsigned int g_triangleIndices[36] = {
+			0, 1, 2,
+			1, 3, 2,
+
+			4, 5, 6,
+			5, 7, 6,
+
+			8, 10, 9,
+			9, 10, 11,
+
+			12, 14, 13,
+			13, 14, 15,
+
+			16, 18, 17,
+			17, 18, 19,
+
+			20, 21, 22,
+			21, 23, 22
+		};
+
+		Judas_Engine::Ref<Judas_Engine::VertexBuffer> vb;
+		vb.reset(Judas_Engine::VertexBuffer::Create(g_vertexPositions, sizeof(g_vertexPositions)));
+
+		Judas_Engine::BufferLayout layout2 = {
+			{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
+			{ Judas_Engine::ShaderDataType::Float3, "a_Color"}
+		};
+		vb->SetLayout(layout2);
+		m_VertexArray->AddVertexBuffer(vb);
+
+
+		Judas_Engine::Ref<Judas_Engine::IndexBuffer> ib;
+		ib.reset(Judas_Engine::IndexBuffer::Create(g_triangleIndices, sizeof(g_triangleIndices) / sizeof(uint32_t)));
+
+		m_VertexArray->SetIndexBuffer(ib);
+		//bluePosition = glm::translate(position, glm::vec3(0.0f, 0.0f, 0.0f));
+
+		std::string vertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec3 a_Color;
+
+			uniform mat4 u_ViewProjection;
+
+			out vec3 v_Color;
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Color = a_Color;
+				v_Position = a_Position;
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string fragmentSrc = R"(
+			#version 330 core
+			
+			in vec3 v_Position;	
+			in vec3 v_Color;		
+			layout(location = 0) out vec4 color;
+
+			void main()
+			{
+				color = vec4(v_Color, 1.0);
+			}
+		)";
+
+		m_Shader = Judas_Engine::Shader::Create("Shader", vertexSrc, fragmentSrc);
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("SquareColor", glm::value_ptr(m_SquareColor));
+		ImGui::End();
+	}
+
+	void OnUpdate(Judas_Engine::Timestep ts) override
+	{
+		m_CameraController.OnUpdate(ts);
+
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		Judas_Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		Judas_Engine::RenderCommand::Clear();
+
+		Judas_Engine::Renderer::BeginScene(m_CameraController.GetCamera());
+
+		Judas_Engine::Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		Judas_Engine::Renderer::EndScene();
+	}
+
+	void OnEvent(Judas_Engine::Event& e)
+	{
+		m_CameraController.OnEvent(e);
+	}
+private:
+	Judas_Engine::ShaderLibrary m_ShaderLibrary;
+
+	Judas_Engine::Ref<Judas_Engine::Shader> m_Shader;
+	Judas_Engine::Ref<Judas_Engine::VertexArray> m_VertexArray;
+	glm::mat4x4 position;
+
+	Judas_Engine::PerspectiveCameraController m_CameraController;
+
+	glm::vec3 m_SquareColor = { 0.2f, 0.1f, 0.8f };
+};
+
 class GameApplication : public Judas_Engine::Application
 {
 public:
 	GameApplication()
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new CubeLayer());
 
 		/*m_CameraLayer = new CameraLayer(&m_Camera);
 		PushLayer(m_CameraLayer);*/

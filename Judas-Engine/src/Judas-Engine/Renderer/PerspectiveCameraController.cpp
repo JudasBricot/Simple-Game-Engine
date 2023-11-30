@@ -50,7 +50,7 @@ namespace Judas_Engine
 
     bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
     {
-        m_Camera.Translate({0.0f, 0.0f, e.GetYOffset()});
+        m_Camera.TranslateLocal({0.0f, 0.0f, e.GetYOffset()});
 
         return true;
     }

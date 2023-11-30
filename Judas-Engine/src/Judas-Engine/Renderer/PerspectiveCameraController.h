@@ -31,7 +31,7 @@ namespace Judas_Engine
 
 		bool m_Rotation;
 		float m_CameraRotation = 0.0f;
-		float m_CameraTranslationSpeed = 1.0f, m_CameraRotationSpeed = 1.0f;
+		float m_CameraTranslationSpeed = 3.0f, m_CameraRotationSpeed = 1.0f;
 	};
 }
 
