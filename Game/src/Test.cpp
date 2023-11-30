@@ -23,7 +23,7 @@ class ExampleLayer : public Judas_Engine::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("MyLayer"), m_CameraController(1280.0f / 720.0f, true)
+		: Layer("MyLayer"), m_CameraController(1.0f, 1280.0f / 720.0f, 0.1f, 100.0f, true)
 	{
 		/*m_VertexArray.reset(Judas_Engine::VertexArray::Create());
 
@@ -55,30 +55,75 @@ public:
 
 		m_BlueShaderVertexArray = Judas_Engine::VertexArray::Create();
 
-		float vertices2[5 * 4] = {
-			-0.75f, -0.75f, 0.0f, 0.0f, 0.0f,
-			 0.75f, -0.75f, 0.0f, 1.0f, 0.0f,
-			 0.75f,  0.75f, 0.0f, 1.0f, 1.0f,
-			-0.75f,  0.75f, 0.0f, 0.0f, 1.0f
+		float g_vertexPositions[144] = {
+			-0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+
+			-0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+
+			-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+
+			 0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+
+			-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+
+			-0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f
+		};
+
+		unsigned int g_triangleIndices[36] = {
+			0, 1, 2,
+			1, 3, 2,
+
+			4, 5, 6,
+			5, 7, 6,
+
+			8, 10, 9,
+			9, 10, 11,
+
+			12, 14, 13,
+			13, 14, 15,
+
+			16, 18, 17,
+			17, 18, 19,
+
+			20, 21, 22,
+			21, 23, 22
 		};
 
 		Judas_Engine::Ref<Judas_Engine::VertexBuffer> vb;
-		vb.reset(Judas_Engine::VertexBuffer::Create(vertices2, sizeof(vertices2)));
+		vb.reset(Judas_Engine::VertexBuffer::Create(g_vertexPositions, sizeof(g_vertexPositions)));
 
 		Judas_Engine::BufferLayout layout2 = {
 			{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
-			{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
+			{ Judas_Engine::ShaderDataType::Float3, "a_Color"}
 		};
 		vb->SetLayout(layout2);
 		m_BlueShaderVertexArray->AddVertexBuffer(vb);
 
-		unsigned int indices2[6] = {
+		/*unsigned int indices2[6] = {
 			0, 1, 2,
 			0, 2, 3
-		};
+		};*/
 
 		Judas_Engine::Ref<Judas_Engine::IndexBuffer> ib;
-		ib.reset(Judas_Engine::IndexBuffer::Create(indices2, sizeof(indices2) / sizeof(uint32_t)));
+		ib.reset(Judas_Engine::IndexBuffer::Create(g_triangleIndices, sizeof(g_triangleIndices) / sizeof(uint32_t)));
 
 		m_BlueShaderVertexArray->SetIndexBuffer(ib);
 		bluePosition = glm::mat4x4(1.0f); // Set identity
@@ -88,30 +133,30 @@ public:
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoords;
+			layout(location = 1) in vec3 a_Color;
 			
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transform;
 			uniform vec3 u_Color;
 
-			out vec2 v_TexCoords;
+			out vec3 v_Color;
 
 			void main()
 			{
 				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-				v_TexCoords = a_TexCoords;
+				v_Color = a_Color;
 			}
 		)";
 
 		std::string fragmentSrc = R"(
 			#version 330 core
 			
-			in vec2 v_TexCoords;		
+			in vec3 v_Color;		
 			layout(location = 0) out vec4 color;
 
 			void main()
 			{
-				color = vec4(v_TexCoords, 0.0, 1.0);
+				color = vec4(v_Color, 1.0);
 			}
 		)";
 
@@ -121,6 +166,7 @@ public:
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec3 a_Color;
 
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transform;
@@ -132,7 +178,7 @@ public:
 
 			void main()
 			{
-				v_Color = u_Color;
+				v_Color = a_Color;
 				v_Position = a_Position;
 				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
@@ -219,7 +265,7 @@ private:
 	Judas_Engine::Ref<Judas_Engine::VertexArray> m_BlueShaderVertexArray;
 	glm::mat4x4 bluePosition;
 
-	Judas_Engine::OrthographicCameraController m_CameraController;
+	Judas_Engine::PerspectiveCameraController m_CameraController;
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.1f, 0.8f };
 };

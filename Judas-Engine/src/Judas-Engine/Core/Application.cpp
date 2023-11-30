@@ -27,6 +27,8 @@ namespace Judas_Engine
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		Renderer::EnableBackFaceCulling();
+		Renderer::EnableDepthTest();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);

@@ -11,6 +11,14 @@ namespace Judas_Engine
 		{
 			s_RendererAPI->Init();
 		}
+		inline static void EnableBackFaceCulling()
+		{
+			s_RendererAPI->EnableBackFaceCulling();
+		}
+		inline static void EnableDepthTest()
+		{
+			s_RendererAPI->EnableDepthTest();
+		}
 		inline static void SetViewPort(int x, int y, uint32_t width, uint32_t height)
 		{
 			s_RendererAPI->SetViewPort(x, y, width, height);

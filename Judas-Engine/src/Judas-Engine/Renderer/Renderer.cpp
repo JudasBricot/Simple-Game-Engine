@@ -17,7 +17,17 @@ namespace Judas_Engine
 		RenderCommand::SetViewPort(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrthographicCamera& camera)
+	void Renderer::EnableBackFaceCulling()
+	{
+		RenderCommand::EnableBackFaceCulling();
+	}
+
+	void Renderer::EnableDepthTest()
+	{
+		RenderCommand::EnableDepthTest();
+	}
+
+	void Renderer::BeginScene(PerspectiveCamera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}
