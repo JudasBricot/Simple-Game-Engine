@@ -53,7 +53,7 @@ public:
 		m_IndexBuffer.reset(Judas_Engine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);*/
 
-		m_BlueShaderVertexArray.reset(Judas_Engine::VertexArray::Create());
+		m_BlueShaderVertexArray = Judas_Engine::VertexArray::Create();
 
 		float vertices2[5 * 4] = {
 			-0.75f, -0.75f, 0.0f, 0.0f, 0.0f,

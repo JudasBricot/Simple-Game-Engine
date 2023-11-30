@@ -9,9 +9,4 @@ namespace Judas_Engine
 	{
 
 	}
-
-	Layer::~Layer()
-	{
-
-	}
 }

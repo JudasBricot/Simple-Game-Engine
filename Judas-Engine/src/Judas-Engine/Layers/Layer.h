@@ -11,7 +11,7 @@ namespace Judas_Engine
 	{
 	public:
 		Layer(const std::string& name = "Layer");
-		~Layer();
+		~Layer() = default;
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}

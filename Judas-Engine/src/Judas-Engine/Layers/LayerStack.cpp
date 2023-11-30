@@ -17,12 +17,14 @@ namespace Judas_Engine
 	void LayerStack::PushLayer(Layer* layer)
 	{
 		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+		layer->OnAttach();
 		m_LayerInsertIndex++;
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
 	{
 		m_Layers.emplace_back(overlay);
+		overlay->OnAttach();
 	}
 
 	void LayerStack::PopLayer(Layer* layer)
@@ -32,13 +34,17 @@ namespace Judas_Engine
 		{
 			m_Layers.erase(it);
 			m_LayerInsertIndex--;
+			layer->OnDetach();
 		}
 	}
-	void LayerStack::PopOverlay(Layer* layer)
+	void LayerStack::PopOverlay(Layer* overlay)
 	{
-		auto it = std::find(begin(), end(), layer);
+		auto it = std::find(begin(), end(), overlay);
 		if (it != end())
+		{
 			m_Layers.erase(it);
+			overlay->OnDetach();
+		}
 	}
 }
 

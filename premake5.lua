@@ -18,9 +18,12 @@ IncludeDir["ImGui"] = "Judas-Engine/vendor/imgui"
 IncludeDir["glm"] = "Judas-Engine/vendor/glm"
 IncludeDir["stb_image"] = "Judas-Engine/vendor/stb_image"
 
-include "Judas-Engine/vendor/GLFW"
-include "Judas-Engine/vendor/Glad"
-include "Judas-Engine/vendor/imgui"
+group "Dependencies"
+	include "Judas-Engine/vendor/GLFW"
+	include "Judas-Engine/vendor/Glad"
+	include "Judas-Engine/vendor/imgui"
+
+group ""
 
 project "Judas-Engine"
     location "Judas-Engine"

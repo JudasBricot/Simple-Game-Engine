@@ -15,7 +15,7 @@ namespace Judas_Engine
 	{
 	public:
 		Application();
-		~Application();
+		~Application() = default;
 
 		void OnEvent(Event& e);
 

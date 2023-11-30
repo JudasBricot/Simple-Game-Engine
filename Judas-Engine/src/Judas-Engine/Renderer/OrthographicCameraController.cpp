@@ -28,9 +28,11 @@ namespace Judas_Engine
         if (m_Rotation)
         {
             if (Input::IsKeyPressed(JE_KEY_Q))
-                m_Rotation -= m_CameraRotationSpeed * ts;
+                m_CameraRotation -= m_CameraRotationSpeed * ts;
             else if (Input::IsKeyPressed(JE_KEY_E))
-                m_Rotation += m_CameraRotationSpeed * ts;
+                m_CameraRotation += m_CameraRotationSpeed * ts;
+
+            m_Camera.SetRotation(m_CameraRotation);
         }
 
         m_Camera.SetPosition(m_CameraPosition);
