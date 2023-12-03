@@ -8,8 +8,8 @@
 
 namespace Judas_Engine
 {
-    PerspectiveCameraController::PerspectiveCameraController(float fov, float aspectRatio, float camNear, float camFar, bool rotation = false)
-        : m_Fov(fov), m_AspectRatio(aspectRatio), m_Near(camNear), m_Far(camFar), m_Camera(fov, aspectRatio, camNear, camFar), m_Rotation(rotation)
+    PerspectiveCameraController::PerspectiveCameraController(float fov, float aspectRatio, float camNear, float camFar)
+        : m_Fov(fov), m_AspectRatio(aspectRatio), m_Near(camNear), m_Far(camFar), m_Camera(fov, aspectRatio, camNear, camFar)
     {
 
     }
@@ -27,16 +27,6 @@ namespace Judas_Engine
         else if (Input::IsKeyPressed(JE_KEY_D))
             translation.x -= m_CameraTranslationSpeed * ts;
 
-        if (m_Rotation)
-        {
-            if (Input::IsKeyPressed(JE_KEY_Q))
-                m_CameraRotation -= m_CameraRotationSpeed * ts;
-            else if (Input::IsKeyPressed(JE_KEY_E))
-                m_CameraRotation += m_CameraRotationSpeed * ts;
-
-            m_Camera.SetRotation(m_CameraRotation);
-        }
-
         if(translation.length() > 0.0f)
             m_Camera.TranslateLocal(translation);
     }
@@ -45,6 +35,7 @@ namespace Judas_Engine
     {
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(PerspectiveCameraController::OnMouseScrolled));
+        dispatcher.Dispatch<MouseDraggedEvent>(BIND_EVENT_FN(PerspectiveCameraController::OnMouseDragged));
         dispatcher.Dispatch<WindowResizedEvent>(BIND_EVENT_FN(PerspectiveCameraController::OnWindowResized));
     }
 
@@ -52,6 +43,13 @@ namespace Judas_Engine
     {
         m_Camera.TranslateLocal({0.0f, 0.0f, e.GetYOffset()});
 
+        return true;
+    }
+
+    bool PerspectiveCameraController::OnMouseDragged(MouseDraggedEvent& e)
+    {
+        JE_INFO("Called");
+        m_Camera.TranslateLocal({ e.GetXOffset(), 0.0f, e.GetYOffset() });
         return true;
     }
 

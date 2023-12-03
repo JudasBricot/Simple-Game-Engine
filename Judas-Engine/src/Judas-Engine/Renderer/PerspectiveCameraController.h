@@ -10,7 +10,7 @@ namespace Judas_Engine
 	class PerspectiveCameraController
 	{
 	public:
-		PerspectiveCameraController(float fov, float aspectRatio, float camNear, float camFar, bool rotation);
+		PerspectiveCameraController(float fov, float aspectRatio, float camNear, float camFar);
 
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
@@ -20,6 +20,7 @@ namespace Judas_Engine
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
+		bool OnMouseDragged(MouseDraggedEvent& e);
 		bool OnWindowResized(WindowResizedEvent& e);
 	private:
 		float m_Fov;
@@ -29,8 +30,6 @@ namespace Judas_Engine
 
 		PerspectiveCamera m_Camera;
 
-		bool m_Rotation;
-		float m_CameraRotation = 0.0f;
 		float m_CameraTranslationSpeed = 3.0f, m_CameraRotationSpeed = 1.0f;
 	};
 }

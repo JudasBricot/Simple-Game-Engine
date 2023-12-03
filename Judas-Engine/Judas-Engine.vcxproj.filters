@@ -1415,6 +1415,7 @@
     </ClInclude>
     <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCameraController.h" />
+    <ClInclude Include="src\Judas-Engine\SceneObjects\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp">
@@ -1494,5 +1495,6 @@
     </ClCompile>
     <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCameraController.cpp" />
+    <ClCompile Include="src\Judas-Engine\SceneObjects\Mesh.cpp" />
   </ItemGroup>
 </Project>
