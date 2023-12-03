@@ -11,9 +11,12 @@
 
 namespace Judas_Engine
 {
+	enum PrimitiveType { Cube, Plane };
+
 	class Mesh
 	{
 	public:
+		static const Ref<Mesh> CreatePrimitive(PrimitiveType type, unsigned int resolution = 1);
 		Mesh() {}
 		Mesh(const Ref<Shader> shader, const Ref<VertexArray> vertexArray, glm::vec3 scale) : m_Shader(shader), m_VertexArray(vertexArray), m_Scale(scale) {}
 		~Mesh() {}
