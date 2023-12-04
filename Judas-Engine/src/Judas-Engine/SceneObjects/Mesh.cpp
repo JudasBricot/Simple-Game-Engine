@@ -65,16 +65,16 @@ namespace Judas_Engine
 
 					20, 21, 22,
 					21, 23, 22
-				};
+				};  
 				break;
 			}
 			case Judas_Engine::Plane:
 			{
 				vertices = {
-					-0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f,
-					-0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f
+					-0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+					 0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+					-0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+					 0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f
 				};
 
 				indices = {
@@ -89,7 +89,8 @@ namespace Judas_Engine
 
 		layout = {
 			{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
-			{ Judas_Engine::ShaderDataType::Float3, "a_Color"}
+			{ Judas_Engine::ShaderDataType::Float3, "a_Color"},
+			{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
 		};
 
 		std::string vertexSrc = R"(
@@ -97,6 +98,7 @@ namespace Judas_Engine
 			
 				layout(location = 0) in vec3 a_Position;
 				layout(location = 1) in vec3 a_Color;
+				layout(location = 1) in vec2 a_TexCoords;
 
 				uniform mat4 u_ViewProjection;
 
