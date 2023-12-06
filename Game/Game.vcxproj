@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Assets\Ocean.cpp" />
     <ClCompile Include="src\Assets\Spectrum.cpp" />
     <ClCompile Include="src\Sandbox2D.cpp" />
     <ClCompile Include="src\Test.cpp" />
@@ -141,8 +142,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Assets\Ocean.h" />
     <ClInclude Include="src\Assets\Spectrum.h" />
     <ClInclude Include="src\Sandbox2D.h" />
+    <ClInclude Include="src\vendor\simple_fft\check_fft.hpp" />
+    <ClInclude Include="src\vendor\simple_fft\copy_array.hpp" />
+    <ClInclude Include="src\vendor\simple_fft\error_handling.hpp" />
+    <ClInclude Include="src\vendor\simple_fft\fft.h" />
+    <ClInclude Include="src\vendor\simple_fft\fft.hpp" />
+    <ClInclude Include="src\vendor\simple_fft\fft_impl.hpp" />
+    <ClInclude Include="src\vendor\simple_fft\fft_settings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Assets\shaders\colors.glsl" />

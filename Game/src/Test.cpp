@@ -20,6 +20,7 @@
 #include "glm/ext.hpp"
 
 #include "Assets/Spectrum.h"
+#include "Assets/Ocean.h"
 
 #include <iostream>
 
@@ -32,15 +33,19 @@ public:
 		m_Shader = Judas_Engine::Shader::Create("src/Assets/shaders/texture.glsl");
 
 		uint32_t size = 256;
-		SpectrumInfos infos = {1.0f, glm::vec2(31.0f, 15.0f), 9.8f, 1.0f};
+		SpectrumInfos infos = {1.0f, glm::vec2(31.0f, 0.0f), 9.8f, 1.0f};
 		Spectrum ps(infos, size, size);
-		ps.Generate();
-		std::vector<float> spectrum = ps.GetSpectrum();
+		ps.GenerateFourierAmplitude();
+		std::vector<std::complex<float>> spectrum = ps.GetSpectrum();
+		//Ocean ocean(infos, size, size);
+		//ocean.Generate();
+		//std::vector<float> heightField = ocean.GetRealHeightField();
+
 		std::vector<unsigned char> spectrum_ui(size * size * 3);
 
 		for (size_t i = 0; i < size * size; i++)
 		{
-			float clamped_value = spectrum[i] > 1.0 ? 1.0f : spectrum[i];
+			float clamped_value = spectrum[i].real() > 1.0 ? 1.0f : spectrum[i].real();
 			spectrum_ui[3 * i] = char(255 * clamped_value);
 			spectrum_ui[3 * i + 1] = char(255 * clamped_value);
 			spectrum_ui[3 * i + 2] = char(255 * clamped_value);

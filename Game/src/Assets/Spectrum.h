@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 #include <random>
+#include <complex>
 #include <glm/glm.hpp>
 
 #include <iostream>
@@ -20,16 +20,21 @@ struct SpectrumInfos
 class Spectrum
 {
 public:
-    Spectrum(const SpectrumInfos& spectrumInfos, int width, int height) : m_SpectrumInfos(spectrumInfos), m_Height(height), m_Width(width) {}
-
-    void SetSpectrumInfos(const SpectrumInfos& spectrumInfos) { m_SpectrumInfos = spectrumInfos; }
-    void Generate();
-    const std::vector<float>& GetSpectrum() const { return m_Spectrum; }
+    Spectrum(const SpectrumInfos& spectrumInfos, int width, int height);
+    void GeneratePhillips();
+    void GenerateFourier();
+    void GenerateFourierAmplitude();
+    const std::vector<std::complex<float>>& GetSpectrum() const { return m_Spectrum; }
+private:
+    float PhillipsSpectrum(const glm::vec2& k);
 protected:
-    SpectrumInfos m_SpectrumInfos;
     uint32_t m_Width, m_Height;
 
-    std::vector<float> m_Spectrum;
+    std::vector<std::complex<float>> m_Spectrum;
+
+    float m_Amplitude, m_Gravity, m_MinimumWaveHeightSqrd, m_L;
+    glm::vec2 m_Wind, m_NormalizedWind;
+    float m_LSqrd, m_WindSqrd;
 };
 
 /*class PhillipsSpectrum : public Spectrum
