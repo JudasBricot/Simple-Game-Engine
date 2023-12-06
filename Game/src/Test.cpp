@@ -19,6 +19,9 @@
 // temp
 #include "glm/ext.hpp"
 
+#include "Assets/Spectrum.h"
+
+#include <iostream>
 
 class ExampleLayer : public Judas_Engine::Layer
 {
@@ -27,7 +30,24 @@ public:
 		: Layer("MyLayer"), m_CameraController(1.0f, 1280.0f / 720.0f, 0.1f, 100.0f)
 	{
 		m_Shader = Judas_Engine::Shader::Create("src/Assets/shaders/texture.glsl");
-		m_Texture = Judas_Engine::Texture2D::Create("src/Assets/textures/texture.png");
+
+		uint32_t size = 256;
+		SpectrumInfos infos = {1.0f, glm::vec2(31.0f, 15.0f), 9.8f, 1.0f};
+		Spectrum ps(infos, size, size);
+		ps.Generate();
+		std::vector<float> spectrum = ps.GetSpectrum();
+		std::vector<unsigned char> spectrum_ui(size * size * 3);
+
+		for (size_t i = 0; i < size * size; i++)
+		{
+			float clamped_value = spectrum[i] > 1.0 ? 1.0f : spectrum[i];
+			spectrum_ui[3 * i] = char(255 * clamped_value);
+			spectrum_ui[3 * i + 1] = char(255 * clamped_value);
+			spectrum_ui[3 * i + 2] = char(255 * clamped_value);
+		}
+
+		//m_Texture = Judas_Engine::Texture2D::Create("src/Assets/textures/texture.png");
+		m_Texture = Judas_Engine::Texture2D::Create(spectrum_ui.data(), size, size, 3);
 
 		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->Bind();
 		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->UploadUniformInt("u_Texture", 0);
