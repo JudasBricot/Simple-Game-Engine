@@ -17,4 +17,16 @@ namespace Judas_Engine
 		JE_CORE_ASSERT(false, "Unknown Render API");
 		return nullptr;
 	}
+
+	Ref<Texture2D> Texture2D::Create(const unsigned char* data, int width, int height, int channels)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:	JE_CORE_ASSERT(false, "RendererAPI::None is not currently supported");  return nullptr;
+		case RendererAPI::API::OpenGL:	return std::make_shared<OpenGLTexture2D>(data, width, height, channels);
+		}
+
+		JE_CORE_ASSERT(false, "Unknown Render API");
+		return nullptr;
+	}
 }

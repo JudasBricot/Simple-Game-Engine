@@ -22,5 +22,6 @@ namespace Judas_Engine
 	{
 	public:
 		static Ref<Texture2D> Create(const std::string& path);
+		static Ref<Texture2D> Create(const unsigned char* data, int width, int height, int channels);
 	};
 }

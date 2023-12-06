@@ -8,7 +8,27 @@
 namespace Judas_Engine
 {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-		: m_Path(path)
+		: m_Path(path), m_Width(0), m_Height(0), m_Channels(0), m_RendererID(0)
+	{
+		SetTexture(path);
+	}
+
+	OpenGLTexture2D::OpenGLTexture2D(const unsigned char* data, int width, int height, int channels)
+	{
+		SetTexture(data, width, height, channels);
+	}
+
+	OpenGLTexture2D::~OpenGLTexture2D()
+	{
+		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLTexture2D::Bind(uint32_t slot) const
+	{
+		glBindTextureUnit(slot, m_RendererID);
+	}
+
+	void OpenGLTexture2D::SetTexture(const std::string& path)
 	{
 		int width, height, channels;
 
@@ -16,8 +36,33 @@ namespace Judas_Engine
 
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		JE_CORE_ASSERT(data, "Failed to load image");
+
 		m_Width = width;
 		m_Height = height;
+		m_Channels = channels;
+
+		m_RendererID = LoadTexture(data, width, height, channels);
+		stbi_image_free(data);
+	}
+
+	void OpenGLTexture2D::SetTexture(const unsigned char* data, int width, int height, int channels)
+	{
+		// TO DO REMEMBER TEXTURE DATA ?
+		JE_CORE_ASSERT(data, "The texture data pointer is NULL");
+		JE_CORE_ASSERT(width, "The texture width cannot be 0");
+		JE_CORE_ASSERT(height, "The texture height cannot be 0");
+		JE_CORE_ASSERT(channels, "The texture channels cannot be 0");
+
+		m_Width = width;
+		m_Height = height;
+		m_Channels = channels;
+
+		m_RendererID = LoadTexture(data, width, height, channels);
+	}
+
+	unsigned int OpenGLTexture2D::LoadTexture(const unsigned char* data, int width, int height, int channels)
+	{
+		unsigned int rendererId;
 
 		GLenum internalFormat = 0, dataFormat = 0;
 		if (channels == 4)
@@ -33,24 +78,14 @@ namespace Judas_Engine
 
 		JE_CORE_ASSERT(internalFormat & dataFormat, "Data format not supported, must be 3 or 4 channels")
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+		glCreateTextures(GL_TEXTURE_2D, 1, &rendererId);
+		glTextureStorage2D(rendererId, 1, internalFormat, width, height);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(rendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(rendererId, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
 
-		stbi_image_free(data);
-	}
-
-	OpenGLTexture2D::~OpenGLTexture2D()
-	{
-		glDeleteTextures(1, &m_RendererID);
-	}
-
-	void OpenGLTexture2D::Bind(uint32_t slot) const
-	{
-		glBindTextureUnit(slot, m_RendererID);
+		return rendererId;
 	}
 }
