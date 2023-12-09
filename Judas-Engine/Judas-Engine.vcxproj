@@ -174,7 +174,7 @@
     <ClInclude Include="src\Judas-Engine\Renderer\Shader.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\Texture.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Judas-Engine\SceneObjects\Mesh.h" />
+    <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h" />
     <ClInclude Include="src\JudasEngine.h" />
     <ClInclude Include="src\jepch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -624,7 +624,7 @@
     <ClCompile Include="src\jepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Judas-Engine\SceneObjects\Mesh.cpp" />
+    <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

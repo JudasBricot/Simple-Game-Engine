@@ -66,6 +66,11 @@ namespace Judas_Engine
 					20, 21, 22,
 					21, 23, 22
 				};  
+
+				layout = {
+					{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
+					{ Judas_Engine::ShaderDataType::Float3, "a_Color"}
+				};
 				break;
 			}
 			case Judas_Engine::Plane:
@@ -81,24 +86,24 @@ namespace Judas_Engine
 					0, 2, 1,
 					1, 2, 3,
 				};
+
+				layout = {
+					{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
+					{ Judas_Engine::ShaderDataType::Float3, "a_Color"},
+					{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
+				};
 				break;
 			}
 			default:
 				break;
 		}
 
-		layout = {
-			{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
-			{ Judas_Engine::ShaderDataType::Float3, "a_Color"},
-			{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
-		};
-
 		std::string vertexSrc = R"(
 				#version 330 core
 			
 				layout(location = 0) in vec3 a_Position;
 				layout(location = 1) in vec3 a_Color;
-				layout(location = 1) in vec2 a_TexCoords;
+				layout(location = 2) in vec2 a_TexCoords;
 
 				uniform mat4 u_ViewProjection;
 

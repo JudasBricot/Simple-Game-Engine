@@ -29,6 +29,8 @@
 #include "Judas-Engine/Renderer/OrthographicCameraController.h"
 #include "Judas-Engine/Renderer/PerspectiveCamera.h"
 #include "Judas-Engine/Renderer/PerspectiveCameraController.h"
+
+#include "Judas-Engine/Renderer/Mesh.h"
 //--------------------
 
 //---- EntryPoint ----
