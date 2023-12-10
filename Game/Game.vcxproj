@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Assets\ComputeShaders\compute.glsl" />
+    <None Include="src\Assets\ComputeShaders\phillipsSpectrum.glsl" />
     <None Include="src\Assets\Shaders\colors.glsl" />
     <None Include="src\Assets\Shaders\texture.glsl" />
   </ItemGroup>

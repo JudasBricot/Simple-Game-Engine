@@ -191,7 +191,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniform1i(location, value);
 	}
@@ -200,7 +203,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniform1f(location, value);
 	}
@@ -209,7 +215,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniform2f(location, values.x, values.y);
 	}
@@ -218,7 +227,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniform3f(location, values.x, values.y, values.z);
 	}
@@ -227,7 +239,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniform4f(location, values.x, values.y, values.z, values.w);
 	}
@@ -236,7 +251,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniformMatrix3fv(location, 1, false, glm::value_ptr(mat));
 	}
@@ -245,7 +263,10 @@ namespace Judas_Engine
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
+		{
+			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
+		}
 
 		glUniformMatrix4fv(location, 1, false, glm::value_ptr(mat));
 	}

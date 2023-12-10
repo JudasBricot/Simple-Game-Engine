@@ -13,9 +13,15 @@ namespace Judas_Engine
 		~Texture() = default;
 
 		virtual uint32_t GetWidth() const = 0;
-		virtual uint32_t Getheight() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 
 		virtual void Bind(uint32_t slot) const = 0;
+	};
+
+	class RenderTexture2D : public Texture
+	{
+	public:
+		static Ref<RenderTexture2D> Create(unsigned int width, unsigned int height);
 	};
 
 	class Texture2D : public Texture

@@ -3,45 +3,61 @@
 
 #include <glad/glad.h>
 
+#include <fstream>
+
+#include <glm/ext.hpp>
+
 namespace Judas_Engine
 {
-	OpenGLComputeShader::OpenGLComputeShader(const std::string& filepath)
+	OpenGLComputeShader::OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture) : m_RenderTexture(renderTexture)
 	{
+		JE_CORE_ASSERT(m_RenderTexture, "Render texture is null");
+
+		std::string source = ReadFile(filepath);
+		Compile(source);
+
+		// Find Name
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind(".");
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filepath.substr(lastSlash, count);
 	}
 
-	OpenGLComputeShader::OpenGLComputeShader(const std::string& name, const std::string& src) : m_Name(name)
+	OpenGLComputeShader::OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture) : m_Name(name), m_RenderTexture(renderTexture)
 	{
+		JE_CORE_ASSERT(m_RenderTexture, "Render texture is null");
 		Compile(src);
-	}
-
-	void OpenGLComputeShader::InitTexture()
-	{
-		glGenTextures(1, &m_Texture);
-		glBindTexture(GL_TEXTURE_2D, m_Texture);
-		glActiveTexture(GL_TEXTURE0);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA,
-			GL_FLOAT, NULL);
-
-		glBindImageTexture(0, m_Texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
-	}
-
-	void OpenGLComputeShader::BindTexture()
-	{
-		glBindTexture(GL_TEXTURE_2D, m_Texture);
 	}
 
 	void OpenGLComputeShader::Dispatch() const
 	{
 		glUseProgram(m_RendererID);
-		glBindImageTexture(0, m_Texture, 0, GL_FALSE,0, GL_WRITE_ONLY, GL_RGBA32F);
-		glDispatchCompute((unsigned int)TEXTURE_WIDTH, (unsigned int)TEXTURE_HEIGHT, 1);
+		m_RenderTexture->Bind(0);
 
-		//glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+		glDispatchCompute(m_RenderTexture->GetWidth(), m_RenderTexture->GetHeight(), 1);
+		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+	}
+
+	std::string OpenGLComputeShader::ReadFile(const std::string& filepath)
+	{
+		std::string result;
+		std::ifstream in(filepath, std::ios::in | std::ios::binary);
+
+		if (in)
+		{
+			in.seekg(0, std::ios::end);
+			result.resize(in.tellg());
+			in.seekg(0, std::ios::beg);
+			in.read(&result[0], result.size());
+			in.close();
+		}
+		else
+		{
+			JE_CORE_ERROR("Could not open file '{0}'", filepath);
+		}
+
+		return result;
 	}
 
 	void OpenGLComputeShader::Compile(const std::string& src)

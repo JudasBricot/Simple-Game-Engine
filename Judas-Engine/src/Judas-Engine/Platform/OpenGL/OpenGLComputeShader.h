@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Judas-Engine/Compute/ComputeShader.h"
+#include "Judas-Engine/Platform/OpenGL/OpenGLRenderTexture.h"
+
+#include <glm/glm.hpp>
 
 typedef unsigned int GLenum;
 
@@ -9,25 +12,21 @@ namespace Judas_Engine
 	class OpenGLComputeShader : public ComputeShader
 	{
 	public:
-		OpenGLComputeShader(const std::string& filepath);
-		OpenGLComputeShader(const std::string& name, const std::string& src);
+		OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture);
+		OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture);
 
 		virtual const std::string GetName() override { return m_Name; }
-
-		void InitTexture();
-		void BindTexture();
 
 		virtual void Dispatch() const override;
 
 	private:
+		std::string ReadFile(const std::string& filepath);
 		void Compile(const std::string& src);
 
 	private:
 		std::string m_Name;
-		unsigned int m_RendererID;
-		unsigned int m_Texture;
-		unsigned int m_Fbo;
+		unsigned int m_RendererID;	
 
-		const unsigned int TEXTURE_WIDTH = 512, TEXTURE_HEIGHT = 512;	
+		Ref<RenderTexture2D> m_RenderTexture;
 	};
 }

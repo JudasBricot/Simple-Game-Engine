@@ -159,6 +159,7 @@
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLVertexArray.h" />
@@ -609,6 +610,7 @@
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLVertexArray.cpp" />
