@@ -1416,6 +1416,8 @@
     <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCameraController.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h" />
+    <ClInclude Include="src\Judas-Engine\Compute\ComputeShader.h" />
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp">
@@ -1496,5 +1498,7 @@
     <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp" />
+    <ClCompile Include="src\Judas-Engine\Compute\ComputeShader.cpp" />
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
   </ItemGroup>
 </Project>

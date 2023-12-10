@@ -8,14 +8,18 @@ void TestManagerLayer::OnImGuiRender()
 {
 	ImGui::Begin("Test Manager");
 
-	for (auto test : m_TestMap)
+	for (auto const& [key, val] : m_TestMap)
 	{
-		ImGui::Text(test.first.c_str());
-		if (ImGui::Button("Select", ImVec2(100.0f, 20.0f)))
+		ImGui::Text(key.c_str());
+		std::string s = "Select " + key;
+		bool pressed = ImGui::Button(s.c_str());
+
+		if (pressed)
 		{
+			JE_INFO("{0} Pressed : {1}", key.c_str(), pressed);
 			if (m_SelectedTest != nullptr)
 				m_SelectedTest->OnDetach();
-			m_SelectedTest = test.second;
+			m_SelectedTest = val;
 			m_SelectedTest->OnAttach();
 
 			break;
@@ -30,6 +34,8 @@ void TestManagerLayer::OnImGuiRender()
 
 void TestManagerLayer::OnEvent(Judas_Engine::Event& e)
 {
+	m_CameraController.OnEvent(e);
+
 	if (m_SelectedTest != nullptr)
 		m_SelectedTest->OnEvent(e);
 }

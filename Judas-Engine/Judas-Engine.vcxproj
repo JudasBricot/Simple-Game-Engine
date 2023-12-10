@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Judas-Engine\Compute\ComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Core\Application.h" />
     <ClInclude Include="src\Judas-Engine\Core\Core.h" />
     <ClInclude Include="src\Judas-Engine\Core\EntryPoint.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="src\Judas-Engine\Layers\LayerStack.h" />
     <ClInclude Include="src\Judas-Engine\Logging\Log.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.h" />
@@ -596,6 +598,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Judas-Engine\Compute\ComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp" />
     <ClCompile Include="src\Judas-Engine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Judas-Engine\ImGui\ImGuiLayer.cpp" />
@@ -603,6 +606,7 @@
     <ClCompile Include="src\Judas-Engine\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Judas-Engine\Logging\Log.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.cpp" />

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Renderer/Texture.h"
-
-#include <glad/glad.h>
+#include "Judas-Engine/Renderer/Texture.h"
 
 namespace Judas_Engine
 {

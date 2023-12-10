@@ -140,16 +140,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Assets\shaders\colors.glsl" />
-    <None Include="src\Assets\shaders\texture.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="src\Assets\textures\ChernoLogo.png" />
-    <Image Include="src\Assets\textures\texture.png" />
+    <None Include="src\Assets\ComputeShaders\compute.glsl" />
+    <None Include="src\Assets\Shaders\colors.glsl" />
+    <None Include="src\Assets\Shaders\texture.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Assets\Scripts\TestManager.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\ComputeShaderTest.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\PhillipsTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\PrimitiveTest.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\Tessendorf\Header.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\TextureTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Assets\textures\texture.jpeg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
