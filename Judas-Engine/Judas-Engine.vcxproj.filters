@@ -1419,6 +1419,7 @@
     <ClInclude Include="src\Judas-Engine\Compute\ComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.h" />
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLSsbo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp">
@@ -1502,5 +1503,6 @@
     <ClCompile Include="src\Judas-Engine\Compute\ComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.cpp" />
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLSsbo.cpp" />
   </ItemGroup>
 </Project>
