@@ -143,11 +143,11 @@ namespace Judas_Engine
 	void Mesh::SetMeshData(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const BufferLayout& layout)
 	{
 		m_Vertices = vertices;
-		m_VertexBuffer.reset(Judas_Engine::VertexBuffer::Create(m_Vertices.data(), sizeof(float) * m_Vertices.size()));
+		m_VertexBuffer.reset(Judas_Engine::VertexBuffer::Create(m_Vertices.data(), sizeof(float) * (uint32_t)m_Vertices.size()));
 		m_VertexBuffer->SetLayout(layout);
 
 		m_Indices = indices;
-		m_IndexBuffer.reset(Judas_Engine::IndexBuffer::Create(m_Indices.data(), m_Indices.size()));
+		m_IndexBuffer.reset(Judas_Engine::IndexBuffer::Create(m_Indices.data(), (uint32_t)m_Indices.size()));
 
 		m_VertexArray = VertexArray::Create();
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);

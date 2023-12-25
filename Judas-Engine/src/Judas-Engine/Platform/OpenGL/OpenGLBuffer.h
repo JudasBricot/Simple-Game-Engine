@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Renderer/Buffer.h"
+#include "Judas-Engine/Renderer/Buffer.h"
+
+#include "glm/glm.hpp"
 
 namespace Judas_Engine
 {
@@ -34,4 +36,21 @@ namespace Judas_Engine
 		uint32_t m_RendererID;
 		uint32_t m_Count;
 	};
+
+	class OpenGLDataBufferObject
+	{
+	public:
+		OpenGLDataBufferObject(const Ref<void>& data, size_t size);
+		~OpenGLDataBufferObject() {}
+
+		void Bind(unsigned int index = 0) const;
+		void UnBind() const;
+
+		void UpdateData(const Ref<void>& data) const;
+
+	private:
+		unsigned int m_RendererID; 
+		unsigned int m_Size;
+	};
+
 }

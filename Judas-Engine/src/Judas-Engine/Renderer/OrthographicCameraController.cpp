@@ -47,7 +47,7 @@ namespace Judas_Engine
 
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
     {
-        m_ZoomLevel -= e.GetYOffset();
+        m_ZoomLevel -= (float)e.GetYOffset();
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
         return true;

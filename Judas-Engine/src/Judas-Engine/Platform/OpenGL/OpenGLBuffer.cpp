@@ -53,4 +53,30 @@ namespace Judas_Engine
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
+
+	// SSBO Class
+
+	OpenGLDataBufferObject::OpenGLDataBufferObject(const Ref<void>& data, size_t size) : m_Size(size)
+	{
+		glGenBuffers(1, &m_RendererID);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RendererID);
+		UpdateData(data);
+		UnBind();
+	}
+
+	void OpenGLDataBufferObject::Bind(unsigned int index) const
+	{
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_RendererID);
+	}
+
+	void OpenGLDataBufferObject::UnBind() const
+	{
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+	}
+
+	void OpenGLDataBufferObject::UpdateData(const Ref<void>& data) const
+	{
+		glBufferData(GL_SHADER_STORAGE_BUFFER, m_Size, data.get(), GL_DYNAMIC_READ);
+		UnBind();
+	}
 }
