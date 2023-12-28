@@ -5,7 +5,7 @@
 
 namespace Judas_Engine
 {
-	OpenGLRenderTexture2D::OpenGLRenderTexture2D(unsigned int width, unsigned int height) : m_Width(width), m_Height(height)
+	OpenGLRenderTexture2D::OpenGLRenderTexture2D(uint32_t width, uint32_t height) : m_Width(width), m_Height(height), m_Slot(0)
 	{
 		glGenTextures(1, &m_RenderID);
 		glBindTexture(GL_TEXTURE_2D, m_RenderID);
@@ -16,8 +16,7 @@ namespace Judas_Engine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, m_Width, m_Height, 0, GL_RGBA, GL_FLOAT, NULL);
-
-		glBindImageTexture(0, m_RenderID, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	OpenGLRenderTexture2D::~OpenGLRenderTexture2D()
@@ -25,8 +24,16 @@ namespace Judas_Engine
 		glDeleteTextures(1, &m_RenderID);
 	}
 
-	void OpenGLRenderTexture2D::Bind(uint32_t slot) const
+	void OpenGLRenderTexture2D::Bind(uint32_t slot)
 	{
-		glBindImageTexture(slot, m_RenderID, 0, GL_FALSE,0, GL_WRITE_ONLY, GL_RGBA32F);
+		m_Slot = slot;
+		glBindTexture(GL_TEXTURE_2D, m_RenderID);
+		glBindImageTexture(slot, m_RenderID, 0, GL_FALSE,0, GL_READ_WRITE, GL_RGBA32F);
+	}
+
+	void OpenGLRenderTexture2D::Unbind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindImageTexture(m_Slot, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 	}
 }

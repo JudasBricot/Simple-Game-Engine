@@ -23,9 +23,16 @@ namespace Judas_Engine
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void OpenGLTexture2D::Bind(uint32_t slot) const
+	void OpenGLTexture2D::Bind(uint32_t slot)
 	{
+		m_Slot = slot;
 		glBindTextureUnit(slot, m_RendererID);
+	}
+
+	// A reflechir : ajouter une securite ? unbind => on reset m_Slot et on ajoute un assert pour unbind pour eviter d'unbind plusieurs fois ?
+	void OpenGLTexture2D::Unbind() const
+	{
+		glBindTextureUnit(m_Slot, 0);
 	}
 
 	void OpenGLTexture2D::SetTexture(const std::string& path)

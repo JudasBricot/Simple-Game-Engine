@@ -9,7 +9,7 @@
 
 namespace Judas_Engine
 {
-	OpenGLComputeShader::OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture) : m_RenderTexture(renderTexture)
+	OpenGLComputeShader::OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot) : m_RenderTexture(renderTexture), m_TextureSlot(textureSlot)
 	{
 		JE_CORE_ASSERT(m_RenderTexture, "Render texture is null");
 
@@ -24,7 +24,7 @@ namespace Judas_Engine
 		m_Name = filepath.substr(lastSlash, count);
 	}
 
-	OpenGLComputeShader::OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture) : m_Name(name), m_RenderTexture(renderTexture)
+	OpenGLComputeShader::OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot) : m_Name(name), m_RenderTexture(renderTexture), m_TextureSlot(textureSlot)
 	{
 		JE_CORE_ASSERT(m_RenderTexture, "Render texture is null");
 		Compile(src);
@@ -33,7 +33,7 @@ namespace Judas_Engine
 	void OpenGLComputeShader::Dispatch() const
 	{
 		glUseProgram(m_RendererID);
-		m_RenderTexture->Bind(0);
+		//m_RenderTexture->Bind(m_TextureSlot);
 
 		glDispatchCompute(m_RenderTexture->GetWidth(), m_RenderTexture->GetHeight(), 1);
 		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);

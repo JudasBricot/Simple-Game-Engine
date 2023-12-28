@@ -12,8 +12,8 @@ namespace Judas_Engine
 	class OpenGLComputeShader : public ComputeShader
 	{
 	public:
-		OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture);
-		OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture);
+		OpenGLComputeShader(const std::string& filepath, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot);
+		OpenGLComputeShader(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot);
 
 		virtual const std::string GetName() override { return m_Name; }
 
@@ -28,5 +28,6 @@ namespace Judas_Engine
 		unsigned int m_RendererID;	
 
 		Ref<RenderTexture2D> m_RenderTexture;
+		uint32_t m_TextureSlot;
 	};
 }

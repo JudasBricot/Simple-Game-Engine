@@ -61,7 +61,7 @@ namespace Judas_Engine
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RendererID);
 		UpdateData(data);
-		UnBind();
+		Unbind();
 	}
 
 	void OpenGLDataBufferObject::Bind(unsigned int index) const
@@ -69,7 +69,7 @@ namespace Judas_Engine
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_RendererID);
 	}
 
-	void OpenGLDataBufferObject::UnBind() const
+	void OpenGLDataBufferObject::Unbind() const
 	{
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 	}
@@ -77,6 +77,5 @@ namespace Judas_Engine
 	void OpenGLDataBufferObject::UpdateData(const Ref<void>& data) const
 	{
 		glBufferData(GL_SHADER_STORAGE_BUFFER, m_Size, data.get(), GL_DYNAMIC_READ);
-		UnBind();
 	}
 }

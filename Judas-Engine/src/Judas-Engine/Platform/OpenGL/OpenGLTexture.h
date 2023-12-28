@@ -14,7 +14,8 @@ namespace Judas_Engine
 		virtual uint32_t GetWidth() const override { return m_Width; }
 		virtual uint32_t GetHeight() const override { return m_Height; }
 
-		virtual void Bind(uint32_t slot) const override;
+		virtual void Bind(uint32_t slot) override;
+		virtual void Unbind() const override;
 		// TEMP
 		void SetTexture(const std::string& path);
 		void SetTexture(const unsigned char* data, int width, int height, int channels);
@@ -27,5 +28,6 @@ namespace Judas_Engine
 		// CHANGE DATA TYPE !!!
 		uint32_t m_Channels;
 		uint32_t m_RendererID;
+		uint32_t m_Slot;
 	};
 }

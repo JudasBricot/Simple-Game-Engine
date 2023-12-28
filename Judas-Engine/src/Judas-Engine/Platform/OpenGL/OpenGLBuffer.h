@@ -44,7 +44,7 @@ namespace Judas_Engine
 		~OpenGLDataBufferObject() {}
 
 		void Bind(unsigned int index = 0) const;
-		void UnBind() const;
+		void Unbind() const;
 
 		void UpdateData(const Ref<void>& data) const;
 
@@ -52,5 +52,4 @@ namespace Judas_Engine
 		unsigned int m_RendererID; 
 		unsigned int m_Size;
 	};
-
 }
