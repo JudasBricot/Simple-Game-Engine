@@ -192,7 +192,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -204,7 +203,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -216,7 +214,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -228,7 +225,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -240,7 +236,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -252,7 +247,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 
@@ -264,7 +258,6 @@ namespace Judas_Engine
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
 		{
-			JE_CORE_WARN("Couldn't find uniform {0} in shader {1}", name, m_Name);
 			return;
 		}
 

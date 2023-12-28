@@ -3,52 +3,104 @@
 layout (local_size_x = 1, local_size_y = 1) in;
 layout(rgba32f, binding = 0) uniform image2D spectrumBuffer;
 
-const float amplitude = 0.1;
+layout(std430, binding = 1) buffer ssbo {
+	vec2 step;
+	vec2 wind_direction;
+    float amplitude;
+	float wind_amplitude;
+
+	float gravity;
+
+	float max_wave_height_sqrd;
+	float min_wave_height_sqrd;
+
+	float time;
+};
+
+/*const float amplitude = 1.0;
 const vec2 wind_direction = vec2(1.0, 0.0);
 float wind_amplitude = 31.0;
 
 float gravity = 9.8;
 
 float max_wave_height_sqrd = 31.0 * 31.0 * 31.0 * 31.0 / (gravity * gravity);
-float min_wave_height_sqrd = 1.0;
+float min_wave_height_sqrd = 0.1;
 
 const vec2 step = vec2(2.0f);
 
-uniform float time;
+uniform float time;*/
 
 const float PI = 3.141592;
 
-float random (vec2 uv) {
-    return fract(sin(dot(uv.xy,
-        vec2(12.9898,78.233))) * 43758.5453123);
+float hash(float x)
+{
+    // based on: pcg by Mark Jarzynski: http://www.jcgt.org/published/0009/03/02/
+    uint state = uint(x * 8192.0) * 747796405u + 2891336453u;
+    uint word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;
+    return float((word >> 22u) ^ word) * (1.0 / float(0xffffffffu));;
 }
 
-float gaussian (float x) {
-    return exp(-x*x / 2) / sqrt(2.0 * PI);
+vec2 UniformToGaussian(float u1, float u2) {
+    float R = sqrt(-2.0f * log(u1));
+    float theta = 2.0f * PI * u2;
+
+    return vec2(R * cos(theta), R * sin(theta));
 }
 
-
-void main() {
-	ivec2 pixelPos = ivec2(gl_GlobalInvocationID.xy);
-	ivec2 screenSize = imageSize(spectrumBuffer);
-
-	// Phillips Spectrum generation
-	ivec2 centeredPos = ivec2(pixelPos.x - screenSize.x / 2, pixelPos.y - screenSize.y / 2);
-
-	vec2 k = vec2(2.0 * PI * centeredPos.x / (step.x * screenSize.x), 2.0 * PI * centeredPos.y / (step.y * screenSize.y));
-	float k_len_sqrd = k.x*k.x + k.y*k.y;
-
-	float k_dir = dot(k, wind_direction);
-	float Ph_k = amplitude * k_dir * k_dir * exp(- 1.0 / (k_len_sqrd * max_wave_height_sqrd) - k_len_sqrd * min_wave_height_sqrd) / (k_len_sqrd * k_len_sqrd);
+float PhillipsSpectrumSqrt(vec2 k_dir, float k_len_sqrd)
+{	
+	float dot_k_w = dot(k_dir, wind_direction);
+	
+	float Ph_k = amplitude * dot_k_w * dot_k_w * exp(- 1.0 / (k_len_sqrd * max_wave_height_sqrd) - k_len_sqrd * min_wave_height_sqrd) / (k_len_sqrd * k_len_sqrd);
 	float Ph_k_sqrt = sqrt(Ph_k);
 
-	// Random Sample
-	float theta = random(k);
-	float xi = gaussian(random(k.yx));
+	return Ph_k_sqrt;
+}
 
-	vec2 h0_k = xi * vec2(cos(theta), sin(theta)) * Ph_k_sqrt;
+vec4 SpectrumAmplitude(vec2 k_dir, float k_len_sqrd, int seed)
+{
+	vec4 randomSamples = vec4(hash(seed), hash(2 * seed), hash(3 * seed), hash(4 * seed));
 
-	vec3 color = vec3(h0_k.x);
+	float Ph_k_sqrt = PhillipsSpectrumSqrt(-k_dir, k_len_sqrd);
+
+	vec2 epsilon_0 = UniformToGaussian(randomSamples.x, randomSamples.y);
+	vec2 epsilon_1 = UniformToGaussian(randomSamples.z, randomSamples.w);
+
+	float invert_two_sqrt = 1.0 / sqrt(2.0);
+
+	vec2 h0_k_0 = invert_two_sqrt * epsilon_0 * Ph_k_sqrt;
+	vec2 h0_k_1 = invert_two_sqrt * epsilon_1 * Ph_k_sqrt;
+
+	return vec4(h0_k_0, h0_k_1);
+}
+
+vec2 FourierAmplitude(vec2 k_dir, float k_len_sqrd, int seed, float g, float t)
+{
+	vec4 h0 = SpectrumAmplitude(k_dir, k_len_sqrd, seed);
+
+	float omega = sqrt(g * sqrt(k_len_sqrd));
+	vec2 cosin = vec2(cos(omega * t), sin(omega * t));
+	
+	return vec2(h0.x + h0.z, h0.y - h0.w) * cosin;
+}
+
+void main() 
+{
+	ivec2 pixelPos = ivec2(gl_GlobalInvocationID.xy);
+	ivec2 screenSize = imageSize(spectrumBuffer);
+	ivec2 centeredPos = ivec2(pixelPos.x - screenSize.x / 2, pixelPos.y - screenSize.y / 2);
+
+	int seed = pixelPos.x + pixelPos.y * screenSize.x + screenSize.y;
+
+	vec2 k = vec2(2.0 * PI * centeredPos.x / (step.x * screenSize.x), 2.0 * PI * centeredPos.y / (step.y * screenSize.y));
+	vec2 k_dir = normalize(k);
+	float k_len_sqrd = k.x*k.x + k.y*k.y;
+
+	//vec4 h0 = SpectrumAmplitude(k_dir, k_len_sqrd, seed);
+	vec2 h0 = FourierAmplitude(k_dir, k_len_sqrd, seed, gravity, time);
+	//float Ph_k = PhillipsSpectrumSqrt(k_dir, k_len_sqrd);
+
+	vec3 color = vec3(h0, 0.0);
 
 	imageStore(spectrumBuffer, pixelPos, vec4(color, 1.0));
 }
