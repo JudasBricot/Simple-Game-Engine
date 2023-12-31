@@ -23,9 +23,10 @@ public:
 		m_Mesh->SetShader(m_Shader);
 
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(1024, 1024);
-		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/compute.glsl", m_RenderTexture);
+		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/compute.glsl", m_RenderTexture, 0);
 
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLComputeShader>(m_ComputeShader)->Dispatch();
+		m_RenderTexture->Bind(0);
+		m_ComputeShader->Dispatch(1024 / 32, 1024 / 32, 1);
 	}
 
 	virtual void OnImGuiRender() override
@@ -37,9 +38,6 @@ public:
 
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->Bind();
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLRenderTexture2D>(m_RenderTexture)->Bind(15);
-		
 		m_Mesh->Submit();
 	}
 private:

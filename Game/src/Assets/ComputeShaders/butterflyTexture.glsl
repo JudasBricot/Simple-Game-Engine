@@ -1,7 +1,7 @@
 #version 430 core
 #define M_PI 3.1415926535897932384626433832795
 
-layout(local_size_x = 1, local_size_y = 16) in;
+layout(local_size_x = 16, local_size_y = 1) in;
 layout(binding = 0, rgba32f) writeonly uniform image2D butterflyTexture;
 layout(std430, binding = 1) buffer indices {
     int bit_reversed[];
@@ -10,9 +10,9 @@ layout(std430, binding = 1) buffer indices {
 void main(void) 
 {
     int N = imageSize(butterflyTexture).x;
-    ivec2 x = ivec2(gl_GlobalInvocationID.xy);
+    vec2 x = gl_GlobalInvocationID.xy;
 
-    float k = mod(x.x * (float(N) / pow(2, x.y + 1)), float(N));
+    float k = mod(x.x * (float(N) / pow(2, x.y + 1)), N);
     vec2 twiddle = vec2(cos(2.0 * M_PI * k / float(N)), sin(2.0 * M_PI * k / float(N)));
     int butterflySpan = int(pow(2, x.y));
     int butterflyWing;

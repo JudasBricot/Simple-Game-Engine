@@ -143,6 +143,7 @@
     <None Include="src\Assets\ComputeShaders\butterfly.glsl" />
     <None Include="src\Assets\ComputeShaders\butterflyTexture.glsl" />
     <None Include="src\Assets\ComputeShaders\compute.glsl" />
+    <None Include="src\Assets\ComputeShaders\permutation.glsl" />
     <None Include="src\Assets\ComputeShaders\phillipsSpectrum.glsl" />
     <None Include="src\Assets\ComputeShaders\ssbo.glsl" />
     <None Include="src\Assets\Shaders\colors.glsl" />
@@ -156,6 +157,7 @@
     <ClInclude Include="src\Assets\Scripts\Tests\PrimitiveTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\SsboTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\Tessendorf\Header.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\TextureSwitchTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\TextureTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\WaveField.h" />
   </ItemGroup>

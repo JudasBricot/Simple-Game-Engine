@@ -17,7 +17,7 @@ namespace Judas_Engine
 
 		virtual const std::string GetName() override { return m_Name; }
 
-		virtual void Dispatch() const override;
+		virtual void Dispatch(int xSize = 1, int ySize = 1, int zSize = 1) const override;
 
 	private:
 		std::string ReadFile(const std::string& filepath);

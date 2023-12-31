@@ -30,12 +30,12 @@ namespace Judas_Engine
 		Compile(src);
 	}
 
-	void OpenGLComputeShader::Dispatch() const
+	void OpenGLComputeShader::Dispatch(int xSize, int ySize, int zSize) const
 	{
 		glUseProgram(m_RendererID);
 		//m_RenderTexture->Bind(m_TextureSlot);
 
-		glDispatchCompute(m_RenderTexture->GetWidth(), m_RenderTexture->GetHeight(), 1);
+		glDispatchCompute(xSize, ySize, zSize);
 		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 	}
 

@@ -6,12 +6,6 @@ layout(binding = 0, rgba32f) readonly uniform image2D butterflyTexture;
 layout(binding = 1, rgba32f) uniform image2D pingpong0;
 layout(binding = 2, rgba32f) uniform image2D pingpong1;
 
-layout(std430, binding = 3) buffer indices {
-    int stage;
-    int pingpong;
-    int direction;
-};
-
 struct complex {
     float real;
     float im;
@@ -31,7 +25,7 @@ complex add(complex c0, complex c1) {
     return c;
 }
 
-void horizontalButterflies() {
+void horizontalButterflies(int stage, int pingpong, int direction) {
     complex H;
     ivec2 x = ivec2(gl_GlobalInvocationID.xy);
 
@@ -62,7 +56,7 @@ void horizontalButterflies() {
     }
 }
 
-void verticalButterflies() {
+void verticalButterflies(int stage, int pingpong, int direction) {
     complex H;
     ivec2 x = ivec2(gl_GlobalInvocationID.xy);
 
@@ -93,9 +87,21 @@ void verticalButterflies() {
     }
 }
 
-void main(void) {
+void pass(int stage, int pingpong, int direction) 
+{
     if (direction == 0)
-        horizontalButterflies();
+        horizontalButterflies(stage, pingpong, direction);
     else if (direction == 1)
-        verticalButterflies();
+        verticalButterflies(stage, pingpong, direction);
+}
+
+void main()
+{
+    for (int direction = 1; direction > -1; direction--)
+		{
+			for (int stage = 0; stage < 8; stage++)
+			{
+				pass(stage, stage % 2, direction);
+			}
+		}
 }

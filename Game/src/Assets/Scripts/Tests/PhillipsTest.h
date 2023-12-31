@@ -51,7 +51,7 @@ public:
 	PhillipsLayer()
 		: Layer("My Compute Shader Layer") {}
 
-	virtual void OnAttach()
+	virtual void OnAttach() override
 	{
 		// SETUP WIND PARAMETERS
 		m_Data = std::make_shared<Ph_Data>(
@@ -69,9 +69,16 @@ public:
 		m_Mesh->SetShader(m_Shader);
 
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(256, 256);
-		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl", m_RenderTexture);
+		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl", m_RenderTexture, 0);
 
 		m_Ssbo = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data, sizeof(Ph_Data));
+	}
+
+	virtual void OnDetach() override
+	{
+		m_Shader->Unbind();
+		m_RenderTexture->Unbind();
+		m_Ssbo->Unbind();
 	}
 
 	virtual void OnImGuiRender() override
@@ -90,9 +97,6 @@ public:
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
 		m_Data->UpdateTime(ts.GetSeconds());
-
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->Bind();
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLRenderTexture2D>(m_RenderTexture)->Bind(0);
 
 		m_Ssbo->Bind(1);
 		m_Ssbo->UpdateData((Judas_Engine::Ref<void>)m_Data);

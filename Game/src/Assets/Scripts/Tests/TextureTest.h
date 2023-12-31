@@ -25,6 +25,8 @@ public:
 
 		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->Bind();
 		std::dynamic_pointer_cast<Judas_Engine::OpenGLShader>(m_Shader)->UploadUniformInt("u_Texture", 0);
+
+		m_Texture->Bind(0);
 	}
 
 	virtual void OnImGuiRender() override
@@ -35,7 +37,6 @@ public:
 
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
-		m_Texture->Bind(0);
 		m_Mesh->Submit();
 	}
 private:

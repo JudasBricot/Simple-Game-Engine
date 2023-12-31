@@ -8,6 +8,7 @@
 #include "Assets/Scripts/Tests/ButterflyTextureTest.h"
 #include "Assets/Scripts/Tests/SsboTest.h"
 #include "Assets/Scripts/Tests/WaveField.h"
+#include "Assets/Scripts/Tests/TextureSwitchTest.h"
 
 class GameApplication : public Judas_Engine::Application
 {
@@ -22,6 +23,7 @@ public:
 		testManagerLayer->AddTestLayer("Butterfly", std::make_shared<ButterflyLayer>());
 		testManagerLayer->AddTestLayer("Ssbo", std::make_shared<SsboLayer>());
 		testManagerLayer->AddTestLayer("FFT", std::make_shared<FFTLayer>());
+		testManagerLayer->AddTestLayer("Texture Switch", std::make_shared<TextureSwitchLayer>());
 
 		PushLayer(testManagerLayer);
 	}

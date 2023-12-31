@@ -1,6 +1,6 @@
 #version 430 core
 
-layout (local_size_x = 1, local_size_y = 1) in;
+layout (local_size_x = 16, local_size_y = 16) in;
 layout(rgba32f, binding = 0) uniform image2D spectrumBuffer;
 
 layout(std430, binding = 1) buffer ssbo {
@@ -17,20 +17,8 @@ layout(std430, binding = 1) buffer ssbo {
 	float time;
 };
 
-/*const float amplitude = 1.0;
-const vec2 wind_direction = vec2(1.0, 0.0);
-float wind_amplitude = 31.0;
-
-float gravity = 9.8;
-
-float max_wave_height_sqrd = 31.0 * 31.0 * 31.0 * 31.0 / (gravity * gravity);
-float min_wave_height_sqrd = 0.1;
-
-const vec2 step = vec2(2.0f);
-
-uniform float time;*/
-
-const float PI = 3.141592;
+//#define M_PI = 3.1415926535897932384626433832795
+const float PI = 3.1415926535897932384626433832795f;
 
 float hash(float x)
 {
@@ -84,15 +72,25 @@ vec2 FourierAmplitude(vec2 k_dir, float k_len_sqrd, int seed, float g, float t)
 	return vec2(h0.x + h0.z, h0.y - h0.w) * cosin;
 }
 
+const float L = 1000.0;
+
 void main() 
 {
+	/*int N = imageSize(spectrumBuffer).x;
+	vec2 x_i = ivec2(gl_GlobalInvocationID.xy);
+	vec2 x = x_i - float(N) / 2;
+	vec2 k = vec2(2.0 * PI * x.x / (step.x * float(N)), 2.0 * PI * x.y / (step.y * float(N));*/
+
 	ivec2 pixelPos = ivec2(gl_GlobalInvocationID.xy);
 	ivec2 screenSize = imageSize(spectrumBuffer);
-	ivec2 centeredPos = ivec2(pixelPos.x - screenSize.x / 2, pixelPos.y - screenSize.y / 2);
 
-	int seed = pixelPos.x + pixelPos.y * screenSize.x + screenSize.y;
+	vec2 centeredPos = vec2(float(pixelPos.x) - float(screenSize.x) / 2.0, float(pixelPos.y) - float(screenSize.y) / 2.0);
+	//vec2 centeredPos = vec2(pixelPos.x - screenSize.x / 2, pixelPos.y - screenSize.y / 2);
+	
 
-	vec2 k = vec2(2.0 * PI * centeredPos.x / (step.x * screenSize.x), 2.0 * PI * centeredPos.y / (step.y * screenSize.y));
+	int seed = int(pixelPos.x) + int(pixelPos.y) * screenSize.x + screenSize.y;
+
+	vec2 k = vec2(2.0 * PI * centeredPos.x / (step.x * float(screenSize.x)), 2.0 * PI * centeredPos.y / (step.y * float(screenSize.y)));
 	vec2 k_dir = normalize(k);
 	float k_len_sqrd = k.x*k.x + k.y*k.y;
 
@@ -102,5 +100,7 @@ void main()
 
 	vec3 color = vec3(h0, 0.0);
 
-	imageStore(spectrumBuffer, pixelPos, vec4(color, 1.0));
+	imageStore(spectrumBuffer, ivec2(pixelPos), vec4(color, 1.0));
+
+
 }

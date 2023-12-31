@@ -34,12 +34,10 @@ public:
 		m_Mesh->SetShader(m_Shader);
 
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(16, 16);
-		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/ssbo.glsl", m_RenderTexture);
+		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/ssbo.glsl", m_RenderTexture, 0);
 
 		m_Data = std::make_shared<Data>();
-		//m_Data->time = 0.0f;
-		m_Data->color = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f); // PB WITH ALIGNEMENT !!
-		//m_Data->pulsation = 10.0f;
+		m_Data->color = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
 		m_Ssbo = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data, sizeof(Data));
 	}
@@ -59,7 +57,7 @@ public:
 
 		m_Ssbo->Bind(1);
 		m_Ssbo->UpdateData((Judas_Engine::Ref<void>)m_Data);
-		std::dynamic_pointer_cast<Judas_Engine::OpenGLComputeShader>(m_ComputeShader)->Dispatch();
+		m_ComputeShader->Dispatch(1, 1, 1);
 
 		m_Mesh->Submit();
 	}
