@@ -1,6 +1,8 @@
 #include "TestManager.h"
 
 #include <Judas-Engine/Renderer/Renderer.h>
+#include <Judas-Engine/Core/Input.h>
+#include <Judas-Engine/Core/KeyCodes.h>
 
 #include "imgui/imgui.h"
 
@@ -42,6 +44,13 @@ void TestManagerLayer::OnEvent(Judas_Engine::Event& e)
 
 void TestManagerLayer::OnUpdate(Judas_Engine::Timestep ts)
 {
+	if (Judas_Engine::Input::IsKeyPressed(JE_KEY_Z))
+		Judas_Engine::RenderCommand::SetDrawMode(Judas_Engine::RendererAPI::WireFrame);
+	if (Judas_Engine::Input::IsKeyPressed(JE_KEY_F))
+		Judas_Engine::RenderCommand::SetDrawMode(Judas_Engine::RendererAPI::Triangle);
+	if (Judas_Engine::Input::IsKeyPressed(JE_KEY_P))
+		Judas_Engine::RenderCommand::SetDrawMode(Judas_Engine::RendererAPI::Point);
+
 	m_CameraController.OnUpdate(ts);
 
 	Judas_Engine::Renderer::BeginScene(m_CameraController.GetCamera());

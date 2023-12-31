@@ -1,7 +1,7 @@
 #version 430 core
 #define M_PI 3.1415926535897932384626433832795
 
-layout(local_size_x = 16, local_size_y = 16) in;
+layout(local_size_x = 256, local_size_y = 1) in;
 layout(binding = 0, rgba32f) readonly uniform image2D butterflyTexture;
 layout(binding = 1, rgba32f) uniform image2D pingpong0;
 layout(binding = 2, rgba32f) uniform image2D pingpong1;
@@ -23,6 +23,12 @@ complex add(complex c0, complex c1) {
     c.real = c0.real + c1.real;
     c.im = c0.im + c1.im;
     return c;
+}
+
+void synchronize()
+{
+    memoryBarrierShared();
+    barrier();
 }
 
 void horizontalButterflies(int stage, int pingpong, int direction) {
@@ -102,6 +108,7 @@ void main()
 			for (int stage = 0; stage < 8; stage++)
 			{
 				pass(stage, stage % 2, direction);
+                synchronize();
 			}
 		}
 }

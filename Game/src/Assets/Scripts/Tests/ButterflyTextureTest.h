@@ -47,7 +47,7 @@ struct Butterfly_Data
 
 	Butterfly_Data(int bitNumber) : m_BitNumber(bitNumber)
 	{
-		for (size_t i = 0; i < B_SIZE; i++)
+		for (int i = 0; i < B_SIZE; i++)
 		{
 			BitReverseTable[i] = reverse_bits(i);
 		}

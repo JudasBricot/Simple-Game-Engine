@@ -10,6 +10,8 @@
 
 #include <imgui/imgui.h>
 
+#include "Assets/Scripts/Ocean/IFFT2D.h"
+
 #define SIZE 256
 #define LOG_2_SIZE 8
 
@@ -53,121 +55,33 @@ public:
 		);
 		m_SpectrumData->Time = 46832.654f;
 
+		// TO CENTER 0,0
 		m_SpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
 		m_SpectrumComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl", m_SpectrumTexture, 0);
 
 		m_SpectrumDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_SpectrumData, sizeof(Ph_Data));
 
+		m_IFFT2D = std::make_shared<IFFT2D<256, 8>>(m_SpectrumTexture);
+		m_WaveTexture = m_IFFT2D->GetOutputTexture();
+	}
+
+	void updateSpectrum()
+	{
 		m_SpectrumTexture->Bind(0);
 		m_SpectrumDataBuffer->Bind(1);
 		m_SpectrumDataBuffer->UpdateData((Judas_Engine::Ref<void>)m_SpectrumData);
+
 		m_SpectrumComputeShader->Dispatch(SIZE / 16 + 1, SIZE / 16 + 1, 1);
 
 		m_SpectrumTexture->Unbind();
 		m_SpectrumDataBuffer->Unbind();
-
-		// ----------------------------
-		// BUTTERFLY TEXTURE GENERATION
-		// ----------------------------
-
-		m_ButterflyData = std::make_shared<Butterfly_Data>(LOG_2_SIZE);
-		m_ButterflyDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_ButterflyData, sizeof(Butterfly_Data));
-
-		m_ButterflyRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, LOG_2_SIZE);
-		m_ButterflyTextureComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterflyTexture.glsl", m_ButterflyRenderTexture, 0);
-
-		// Computation of the Buttefly texture
-		m_ButterflyRenderTexture->Bind(0);
-		m_ButterflyDataBuffer->Bind(1);
-		m_ButterflyTextureComputeShader->Dispatch(SIZE, LOG_2_SIZE, 1);
-
-		m_ButterflyRenderTexture->Unbind();
-		m_ButterflyDataBuffer->Unbind();
-
-		// ---------------
-		// FFT COMPUTATION
-		// ---------------
-
-		m_WaveTexture = Judas_Engine::RenderTexture2D::Create(SIZE, SIZE);
-		m_ButterflyPassComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterfly.glsl", m_WaveTexture, 0);
-
-		// Bind Butterfly texture to the right slot
-		m_ButterflyRenderTexture->Bind(0);
-		m_SpectrumTexture->Bind(1);
-		m_WaveTexture->Bind(2);
-
-		m_FFTData = std::make_shared<FFT_Data>();
-		m_FFTDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_FFTData, sizeof(FFT_Data));
-		m_FFTDataBuffer->Bind(3);
-
-		for (int direction = 1; direction > -1; direction--)
-		{
-			m_FFTData->direction = direction;
-			for (int i = 0; i < LOG_2_SIZE; i++)
-			{
-				// Update Info
-				m_FFTData->stage = i;
-				m_FFTData->pingpong = i % 2;
-				m_FFTDataBuffer->UpdateData(m_FFTData);
-
-				m_ButterflyPassComputeShader->Dispatch(SIZE / 16, SIZE / 16 , 1);
-			}
-		}
-
-		m_ButterflyRenderTexture->Unbind();
-		m_SpectrumTexture->Unbind();
-		m_WaveTexture->Unbind();
-
-		m_FFTDataBuffer->Unbind();
-
-		// -----------------
-		// Displacement Pass
-		// -----------------
-
-		m_DisplacementRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, SIZE);
-		m_InversionPassComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/permutation.glsl", m_DisplacementRenderTexture, 0);
-
-		m_Inversion_Data = std::make_shared<Inversion_Data>();
-		m_InversionDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>(m_Inversion_Data, sizeof(Inversion_Data));
-
-		m_DisplacementRenderTexture->Bind(0);
-		m_SpectrumTexture->Bind(1);
-		m_WaveTexture->Bind(2);
-
-		m_InversionDataBuffer->Bind(3);
-		m_InversionPassComputeShader->Dispatch(SIZE / 16, SIZE / 16, 1);
 	}
 
-	void fft_stage(int stage, int pingpong, int direction)
+	void updateWave()
 	{
-		m_ButterflyRenderTexture->Bind(0);
-		m_SpectrumTexture->Bind(1);
-		m_WaveTexture->Bind(2);
-		m_FFTDataBuffer->Bind(3);
-
-		// Update Info
-		m_FFTData->direction = direction;
-		m_FFTData->stage = stage;
-		m_FFTData->pingpong = pingpong;
-		m_FFTDataBuffer->UpdateData(m_FFTData);
-
-		m_ButterflyPassComputeShader->Dispatch(SIZE / 16, SIZE / 16, 1);
-	}
-
-	void displacement()
-	{
-		m_DisplacementRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, SIZE);
-		m_InversionPassComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/permutation.glsl", m_DisplacementRenderTexture, 0);
-
-		m_Inversion_Data = std::make_shared<Inversion_Data>();
-		m_InversionDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>(m_Inversion_Data, sizeof(Inversion_Data));
-
-		m_DisplacementRenderTexture->Bind(0);
-		m_SpectrumTexture->Bind(1);
-		m_WaveTexture->Bind(2);
-
-		m_InversionDataBuffer->Bind(3);
-		m_InversionPassComputeShader->Dispatch(SIZE / 16, SIZE / 16, 1);
+		updateSpectrum();
+		m_IFFT2D->Compute();
+		/*fft(); */
 	}
 
 	virtual void OnImGuiRender() override
@@ -208,7 +122,10 @@ public:
 
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
-		switch (m_RenderMode)
+		m_SpectrumData->Time += ts;
+		updateWave();
+
+		/*switch (m_RenderMode)
 		{
 		case 0:
 			m_ButterflyRenderTexture->Bind(0);
@@ -227,36 +144,43 @@ public:
 				m_SpectrumTexture->Bind(0);
 		default:
 			break;
-		}
+		}*/
+
+		m_WaveTexture->Bind(0);
 
 		m_Mesh->Submit();
+
+		m_WaveTexture->Unbind();
 	}
 private:
 	Judas_Engine::Ref<Judas_Engine::Shader> m_Shader;
 	Judas_Engine::Ref <Judas_Engine::Mesh> m_Mesh;
 
 	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SpectrumTexture;
-	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_WaveTexture;
+	/*Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_WaveTexture;
 	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_ButterflyRenderTexture;
-	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_DisplacementRenderTexture;
+	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_DisplacementRenderTexture;*/
 
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_SpectrumComputeShader;
-	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_ButterflyTextureComputeShader;
+	/*Judas_Engine::Ref <Judas_Engine::ComputeShader> m_ButterflyTextureComputeShader;
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_ButterflyPassComputeShader;
-	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_InversionPassComputeShader;
+	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_InversionPassComputeShader;*/
 
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_SpectrumDataBuffer;
-	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_ButterflyDataBuffer;
+	/*Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_ButterflyDataBuffer;
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_FFTDataBuffer;
-	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_InversionDataBuffer;
+	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_InversionDataBuffer;*/
 
 	Judas_Engine::Ref<Ph_Data> m_SpectrumData;
-	Judas_Engine::Ref<Butterfly_Data> m_ButterflyData;
+	/*Judas_Engine::Ref<Butterfly_Data> m_ButterflyData;
 	Judas_Engine::Ref<FFT_Data> m_FFTData;
-	Judas_Engine::Ref<Inversion_Data> m_Inversion_Data;
+	Judas_Engine::Ref<Inversion_Data> m_Inversion_Data;*/
+
+	Judas_Engine::Ref<IFFT2D<256,8>> m_IFFT2D;
+	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_WaveTexture;
 
 	int m_RenderMode = 0;
 	float time = 0.0f;
 
-	int stage = 0, direction = 1, pingpong = 0;
+	//int stage = 0, direction = 1, pingpong = 0;
 };

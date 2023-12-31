@@ -59,7 +59,7 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
-		ImGui::DragInt("Use Texture", &textureNb, 0.01, 0, 1);
+		ImGui::DragInt("Use Texture", &textureNb, 0.01f, 0, 1);
 		ImGui::End();
 	}
 
