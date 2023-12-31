@@ -11,26 +11,37 @@ namespace Judas_Engine
 		{
 			s_RendererAPI->Init();
 		}
+
 		inline static void EnableBackFaceCulling()
 		{
 			s_RendererAPI->EnableBackFaceCulling();
 		}
+
 		inline static void EnableDepthTest()
 		{
 			s_RendererAPI->EnableDepthTest();
 		}
+
+		inline static void SetDrawMode(RendererAPI::DrawMode drawMode)
+		{
+			s_RendererAPI->SetDrawMode(drawMode);
+		}
+
 		inline static void SetViewPort(int x, int y, uint32_t width, uint32_t height)
 		{
 			s_RendererAPI->SetViewPort(x, y, width, height);
 		}
+
 		inline static void SetClearColor(const glm::vec4& color)
 		{
 			s_RendererAPI->SetClearColor(color);
 		}
+
 		inline static void Clear()
 		{
 			s_RendererAPI->Clear();
 		}
+
 		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
 		{
 			s_RendererAPI->DrawIndexed(vertexArray);

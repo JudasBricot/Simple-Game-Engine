@@ -20,6 +20,8 @@
 #include "Judas-Engine/Renderer/Renderer.h"
 #include "Judas-Engine/Renderer/RenderCommand.h"
 
+#include "Judas-Engine/Compute/ComputeShader.h"
+
 #include "Judas-Engine/Renderer/Buffer.h"
 #include "Judas-Engine/Renderer/Shader.h"
 #include "Judas-Engine/Renderer/Texture.h"

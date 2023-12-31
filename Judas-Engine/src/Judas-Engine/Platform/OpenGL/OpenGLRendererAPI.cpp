@@ -25,6 +25,23 @@ namespace Judas_Engine
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
+	void OpenGLRendererAPI::SetDrawMode(DrawMode drawMode)
+	{
+		switch (drawMode)
+		{
+		case Judas_Engine::RendererAPI::WireFrame:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			break;
+		case Judas_Engine::RendererAPI::Triangle:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		case Judas_Engine::RendererAPI::Point:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+			break;
+		default:
+			break;
+		}
+	}
 	// ---- TEMP -----
 
 	void OpenGLRendererAPI::EnableBackFaceCulling()
