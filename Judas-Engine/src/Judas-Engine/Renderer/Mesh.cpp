@@ -5,6 +5,8 @@ namespace Judas_Engine
 {
 	const Ref<Mesh> Mesh::CreatePrimitive(PrimitiveType type, unsigned int resolution)
 	{
+		JE_CORE_ASSERT(resolution > 0, "Resolution cannot be Null");
+
 		std::vector<float> vertices;
 		BufferLayout layout;
 		std::vector<unsigned int> indices;
@@ -75,17 +77,24 @@ namespace Judas_Engine
 			}
 			case Judas_Engine::Plane:
 			{
-				vertices = {
-					-0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-					 0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-					-0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-					 0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f
-				};
+				float delta = 1.0f / resolution;
 
-				indices = {
-					0, 2, 1,
-					1, 2, 3,
-				};
+				for (int i = 0; i < resolution + 1; i++)
+				{
+					for (int j = 0; j < resolution + 1; j++)
+					{
+						vertices.insert(vertices.end(), { i * delta - 0.5f, 0.0f, j * delta - 0.5f, 1.0f, 0.0f, 1.0f, i * delta, j * delta });
+					}
+				}
+
+				for (unsigned int i = 0; i < resolution; i++)
+				{
+					for (unsigned int j = 0; j < resolution; j++)
+					{
+						unsigned int vertexID = i * (resolution + 1) + j;
+						indices.insert(indices.end(), { vertexID, vertexID + 1, vertexID + resolution + 1, vertexID + resolution + 1, vertexID + 1, vertexID + resolution + 2 });
+					}
+				}
 
 				layout = {
 					{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
