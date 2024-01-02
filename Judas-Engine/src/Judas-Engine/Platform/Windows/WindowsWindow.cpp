@@ -143,19 +143,21 @@ namespace Judas_Engine
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos)
         {
+            static float x = 0.0, y = 0.0;
+
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
             MouseMovedEvent event_m(xpos, ypos);
             data.EventCallback(event_m);
 
             // Check for mouse dragging
-            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_RELEASE)
             {
-                return;
+                MouseDraggedEvent event_d(xpos - x, ypos - y);
+                data.EventCallback(event_d);
             }
 
-            MouseDraggedEvent event_d(xpos, ypos);
-            data.EventCallback(event_d);
+            x = xpos, y = ypos;
         });
     }
 

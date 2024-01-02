@@ -48,8 +48,9 @@ namespace Judas_Engine
 
     bool PerspectiveCameraController::OnMouseDragged(MouseDraggedEvent& e)
     {
-        JE_INFO("Called");
-        m_Camera.TranslateLocal({ e.GetXOffset(), 0.0f, e.GetYOffset() });
+        JE_INFO("Called {0}", e.GetXOffset());
+
+        m_Camera.TranslateLocal({ e.GetXOffset(), 0.0f, 0.0f});
         return true;
     }
 

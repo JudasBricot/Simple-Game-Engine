@@ -89,7 +89,7 @@ namespace Judas_Engine
 	class JE_API MouseDraggedEvent : public Event
 	{
 	public:
-		MouseDraggedEvent(const double xOffset, const double yOffset)
+		MouseDraggedEvent(const double xOffset, const double yOffset)	
 			: m_XOffset(xOffset), m_YOffset(yOffset) { }
 
 		std::string ToString() const override
