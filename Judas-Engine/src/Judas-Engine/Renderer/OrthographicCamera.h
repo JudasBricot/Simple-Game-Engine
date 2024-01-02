@@ -17,7 +17,6 @@ namespace Judas_Engine
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
 		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
 
-
 		void Translate(const glm::vec3& translation) { SetPosition(m_Position + translation); }
 		void Rotate(float rotation) { SetRotation(m_Rotation + rotation); }
 

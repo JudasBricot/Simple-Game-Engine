@@ -11,12 +11,12 @@ namespace Judas_Engine
 
 		void SetProjection(float fov, float aspect, float camNear, float camFar);
 
-		const glm::vec3 GetPosition() const { return m_Position; }
+		const glm::vec3& GetPosition() const { return m_Position; }
 		const glm::vec3& GetRotation() const { return m_Rotation; }
 
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateLocalBasis(); RecalculateViewMatrix(); }
 		void SetRotation(const glm::vec3& rotation) { m_Rotation = rotation; RecalculateLocalBasis(); RecalculateViewMatrix(); }
-		void SetTarget(glm::vec3 target) { m_Target = target; RecalculateLocalBasis(); }
+		void SetTarget(const glm::vec3& target) { m_Target = target; RecalculateLocalBasis(); }
 
 		void Translate(const glm::vec3& translation) { SetPosition(m_Position + translation); }
 		void TranslateLocal(const glm::vec3& translation) { Translate(-translation.x * m_Right + translation.y * m_Up + translation.z * m_Direction); }
