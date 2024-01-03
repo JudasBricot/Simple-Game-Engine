@@ -7,11 +7,22 @@
 template<unsigned int SIZE, unsigned int LOG_2_SIZE>
 class IFFT2D
 {
-	enum DrawMode { };
-
 	template<unsigned int SIZE, unsigned int LOG_2_SIZE>
 	struct ButterflyData
 	{
+	private:
+		int BitReverseTable[SIZE];
+
+	public:
+		ButterflyData()
+		{
+			for (int i = 0; i < SIZE; i++)
+			{
+				BitReverseTable[i] = reverse_bits(i);
+			}
+		}
+
+	private:
 		int reverse_bits(int n)
 		{
 			int k = 0;
@@ -21,16 +32,6 @@ class IFFT2D
 			}
 
 			return k;
-		}
-
-		int BitReverseTable[SIZE];
-
-		ButterflyData()
-		{
-			for (int i = 0; i < SIZE; i++)
-			{
-				BitReverseTable[i] = reverse_bits(i);
-			}
 		}
 	};
 
@@ -52,7 +53,7 @@ public:
 
 	void Compute();
 
-	const Judas_Engine::Ref<Judas_Engine::RenderTexture2D> GetOutputTexture() { return m_NormalizationRenderTexture; }
+	const Judas_Engine::Ref<Judas_Engine::RenderTexture2D> GetOutputTexture() { return m_NormalizationRenderTexture; ComputeButterfly(); }
 private:
 	void ComputeButterfly();
 	void ComputeFFT();

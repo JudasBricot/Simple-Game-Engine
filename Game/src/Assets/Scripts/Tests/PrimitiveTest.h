@@ -23,7 +23,7 @@ public:
 			return;
 
 		m_PrimitiveType = primitiveType;
-		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(m_PrimitiveType);
+		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(m_PrimitiveType, 16);
 	}
 
 	virtual void OnImGuiRender() override
