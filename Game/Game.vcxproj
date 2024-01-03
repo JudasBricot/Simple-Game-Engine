@@ -149,6 +149,7 @@
     <None Include="src\Assets\ComputeShaders\ssbo.glsl" />
     <None Include="src\Assets\Shaders\colors.glsl" />
     <None Include="src\Assets\Shaders\heightMap.glsl" />
+    <None Include="src\Assets\Shaders\phong.glsl" />
     <None Include="src\Assets\Shaders\texture.glsl" />
   </ItemGroup>
   <ItemGroup>
