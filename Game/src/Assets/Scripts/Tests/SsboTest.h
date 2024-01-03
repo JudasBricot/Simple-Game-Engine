@@ -34,7 +34,7 @@ public:
 		m_Mesh->SetShader(m_Shader);
 
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(16, 16);
-		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/ssbo.glsl", m_RenderTexture, 0);
+		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/ssbo.glsl");
 
 		m_Data = std::make_shared<Data>();
 		m_Data->color = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);

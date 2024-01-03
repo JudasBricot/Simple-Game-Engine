@@ -9,14 +9,16 @@
 namespace Judas_Engine
 {
     PerspectiveCameraController::PerspectiveCameraController(float fov, float aspectRatio, float camNear, float camFar)
-        : m_Fov(fov), m_AspectRatio(aspectRatio), m_Near(camNear), m_Far(camFar), m_Camera(fov, aspectRatio, camNear, camFar)
-    {
-
-    }
+        : m_Fov(fov), m_AspectRatio(aspectRatio), m_Near(camNear), m_Far(camFar), m_Camera(fov, aspectRatio, camNear, camFar) { }
 
     void PerspectiveCameraController::OnUpdate(Timestep ts)
     {
         glm::vec3 translation = glm::vec3(0.0f);
+
+        if (Input::IsKeyPressed(JE_KEY_R))
+        {
+            m_Camera.Reset();
+        }
 
         if (Input::IsKeyPressed(JE_KEY_W))
             translation.y += m_CameraTranslationSpeed * ts;
@@ -41,16 +43,28 @@ namespace Judas_Engine
 
     bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
     {
-        m_Camera.TranslateLocal({0.0f, 0.0f, e.GetYOffset()});
+        glm::vec3 target = m_Camera.GetLocalTargetPosition();
+        float zoomIntensity = glm::sqrt(target.x * target.x + target.y * target.y + target.z * target.z) / 2.0f;
+        float zoom = zoomIntensity * e.GetYOffset();
+
+        zoom = abs(zoom) < m_SlowingZoomZoneRadius ? zoom / m_SlowingFactor : zoom;
+
+        if (m_Camera.GetLocalTargetPosition().z - zoom > m_MaxZoomLevel)
+        {
+            m_Camera.TranslateLocal({ 0.0f, 0.0f, zoom });
+            m_Camera.TranslateTargetLocal({ 0.0f, 0.0f, -zoom });
+        }
 
         return true;
     }
 
     bool PerspectiveCameraController::OnMouseDragged(MouseDraggedEvent& e)
     {
-        JE_INFO("Called {0}", e.GetXOffset());
+        glm::vec3 axis = glm::normalize(glm::vec3(e.GetYOffset(), -e.GetXOffset(), 0.0f));
+        float draggingLength = glm::sqrt(e.GetXOffset() * e.GetXOffset() + e.GetYOffset() * e.GetYOffset());
 
-        m_Camera.TranslateLocal({ e.GetXOffset(), 0.0f, 0.0f});
+        m_Camera.RotateAroundAxis(axis, m_DraggingSpeed * draggingLength);
+
         return true;
     }
 

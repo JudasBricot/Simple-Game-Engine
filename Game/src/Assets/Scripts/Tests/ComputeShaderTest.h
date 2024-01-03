@@ -23,7 +23,7 @@ public:
 		m_Mesh->SetShader(m_Shader);
 
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(1024, 1024);
-		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/compute.glsl", m_RenderTexture, 0);
+		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/compute.glsl");
 
 		m_RenderTexture->Bind(0);
 		m_ComputeShader->Dispatch(1024 / 32, 1024 / 32, 1);

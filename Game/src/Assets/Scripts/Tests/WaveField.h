@@ -57,54 +57,44 @@ public:
 
 		// TO CENTER 0,0
 		m_SpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
-		m_SpectrumComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl", m_SpectrumTexture, 0);
+		m_SlopeSpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
+		m_SpectrumComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl");
 
 		m_SpectrumDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_SpectrumData, sizeof(Ph_Data));
 
-		m_IFFT2D = std::make_shared<IFFT2D<256, 8>>(m_SpectrumTexture);
-		m_WaveTexture = m_IFFT2D->GetOutputTexture();
+		m_WaveIFFT = std::make_shared<IFFT2D<256, 8>>(m_SpectrumTexture);
+		m_WaveTexture = m_WaveIFFT->GetOutputTexture();
+
+		m_SLopeIFFT = std::make_shared<IFFT2D<256, 8>>(m_SlopeSpectrumTexture);
+		m_SlopeTexture = m_SLopeIFFT->GetOutputTexture();
 	}
 
 	void updateSpectrum()
 	{
 		m_SpectrumTexture->Bind(0);
-		m_SpectrumDataBuffer->Bind(1);
+		m_SlopeSpectrumTexture->Bind(1);
+		m_SpectrumDataBuffer->Bind(2);
 		m_SpectrumDataBuffer->UpdateData((Judas_Engine::Ref<void>)m_SpectrumData);
 
 		m_SpectrumComputeShader->Dispatch(SIZE / 16 + 1, SIZE / 16 + 1, 1);
 
 		m_SpectrumTexture->Unbind();
+		m_SlopeSpectrumTexture->Unbind();
 		m_SpectrumDataBuffer->Unbind();
 	}
 
 	void updateWave()
 	{
 		updateSpectrum();
-		m_IFFT2D->Compute();
+		m_WaveIFFT->Compute();
+		m_SLopeIFFT->Compute();
 	}
 
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
 
-		/*if (ImGui::Button("FFT_Stage"))
-		{
-			fft_stage(stage, pingpong, direction);
-			direction = stage == LOG_2_SIZE - 1 ? 0 : direction;
-			stage = (stage + 1) % LOG_2_SIZE;
-			pingpong = (pingpong + 1) % 2;
-		}
-
-		if (ImGui::Button("Permutation"))
-		{
-			displacement();
-		}
-
-		ImGui::InputInt("Stage", &stage, 0, LOG_2_SIZE);
-		ImGui::InputInt("pingpong", &pingpong, 0, 1);
-		ImGui::InputInt("direction", &direction, 0, 1);*/
-
-		ImGui::InputInt("Render Mode", &m_RenderMode, 0, 3);
+		ImGui::InputInt("Render Mode", &m_RenderMode, 0, 1);
 
 		ImGui::DragFloat2("Step", glm::value_ptr(m_SpectrumData->Step), 0.001f, 0.0f, 5.0f);
 		ImGui::DragFloat2("Wind Direction", glm::value_ptr(m_SpectrumData->Wind_direction), 0.01f, 0.0f, 1.0f);
@@ -121,7 +111,16 @@ public:
 	{
 		m_SpectrumData->Time += ts;
 		updateWave();
-		m_WaveTexture->Bind(0);;
+		
+		switch (m_RenderMode)
+		{
+		case 0:
+			m_WaveTexture->Bind(0);
+			break;
+		default:
+			m_SlopeTexture->Bind(0);
+			break;
+		}
 
 		m_Mesh->Submit();
 	}
@@ -129,13 +128,18 @@ private:
 	Judas_Engine::Ref<Judas_Engine::Shader> m_Shader;
 	Judas_Engine::Ref <Judas_Engine::Mesh> m_Mesh;
 
-	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SpectrumTexture;
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_SpectrumComputeShader;
+
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_SpectrumDataBuffer;
 	Judas_Engine::Ref<Ph_Data> m_SpectrumData;
 
-	Judas_Engine::Ref<IFFT2D<256,8>> m_IFFT2D;
+	Judas_Engine::Ref<IFFT2D<256,8>> m_WaveIFFT;
+	Judas_Engine::Ref<IFFT2D<256,8>> m_SLopeIFFT;
+
+	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SpectrumTexture;
+	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SlopeSpectrumTexture;
 	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_WaveTexture;
+	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SlopeTexture;
 
 	int m_RenderMode = 0;
 };

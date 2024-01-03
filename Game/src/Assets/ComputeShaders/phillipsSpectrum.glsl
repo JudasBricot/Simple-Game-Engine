@@ -2,8 +2,9 @@
 
 layout (local_size_x = 16, local_size_y = 16) in;
 layout(rgba32f, binding = 0) uniform image2D spectrumBuffer;
+layout(rgba32f, binding = 1) uniform image2D slopeBuffer;
 
-layout(std430, binding = 1) buffer ssbo {
+layout(std430, binding = 2) buffer ssbo {
 	vec2 step;
 	vec2 wind_direction;
     float amplitude;
@@ -49,7 +50,7 @@ vec4 SpectrumAmplitude(vec2 k_dir, float k_len_sqrd, int seed)
 {
 	vec4 randomSamples = vec4(hash(seed), hash(2 * seed), hash(3 * seed), hash(4 * seed));
 
-	float Ph_k_sqrt = PhillipsSpectrumSqrt(-k_dir, k_len_sqrd);
+	float Ph_k_sqrt = PhillipsSpectrumSqrt(k_dir, k_len_sqrd);
 
 	vec2 epsilon_0 = UniformToGaussian(randomSamples.x, randomSamples.y);
 	vec2 epsilon_1 = UniformToGaussian(randomSamples.z, randomSamples.w);
@@ -76,17 +77,9 @@ const float L = 1000.0;
 
 void main() 
 {
-	/*int N = imageSize(spectrumBuffer).x;
-	vec2 x_i = ivec2(gl_GlobalInvocationID.xy);
-	vec2 x = x_i - float(N) / 2;
-	vec2 k = vec2(2.0 * PI * x.x / (step.x * float(N)), 2.0 * PI * x.y / (step.y * float(N));*/
-
 	ivec2 pixelPos = ivec2(gl_GlobalInvocationID.xy);
 	ivec2 screenSize = imageSize(spectrumBuffer);
-
 	vec2 centeredPos = vec2(float(pixelPos.x) - float(screenSize.x) / 2.0, float(pixelPos.y) - float(screenSize.y) / 2.0);
-	//vec2 centeredPos = vec2(pixelPos.x - screenSize.x / 2, pixelPos.y - screenSize.y / 2);
-	
 
 	int seed = int(pixelPos.x) + int(pixelPos.y) * screenSize.x + screenSize.y;
 
@@ -94,13 +87,11 @@ void main()
 	vec2 k_dir = normalize(k);
 	float k_len_sqrd = k.x*k.x + k.y*k.y;
 
-	//vec4 h0 = SpectrumAmplitude(k_dir, k_len_sqrd, seed);
 	vec2 h0 = FourierAmplitude(k_dir, k_len_sqrd, seed, gravity, time);
-	//float Ph_k = PhillipsSpectrumSqrt(k_dir, k_len_sqrd);
+	vec2 slope = vec2(h0.x * k.x + h0.y * k.y, h0.x * k.x - h0.y * k.y);
 
 	vec3 color = vec3(h0, 0.0);
 
 	imageStore(spectrumBuffer, ivec2(pixelPos), vec4(color, 1.0));
-
-
+	imageStore(slopeBuffer, ivec2(pixelPos), vec4(slope, 0.0, 1.0));
 }

@@ -30,7 +30,9 @@ namespace Judas_Engine
 
 		PerspectiveCamera m_Camera;
 
-		float m_CameraTranslationSpeed = 3.0f, m_CameraRotationSpeed = 1.0f;
+		float m_CameraTranslationSpeed = 3.0f, m_CameraRotationSpeed = 1.0f, m_DraggingSpeed = 0.01f;
+
+		float m_SlowingZoomZoneRadius = 5.0f, m_SlowingFactor = 10.0f, m_MaxZoomLevel = 1.0f;
 	};
 }
 

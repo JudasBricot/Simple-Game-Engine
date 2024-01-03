@@ -55,9 +55,7 @@ namespace Judas_Engine
 	public:
 
 		EventDispatcher(Event& e)
-			: m_Event(e)
-		{
-		}
+			: m_Event(e) { }
 
 		template<typename T>
 		bool Dispatch(EventFunc<T> function)

@@ -8,11 +8,11 @@
 
 namespace Judas_Engine
 {
-	Ref<ComputeShader> Judas_Engine::ComputeShader::Create(const std::string& filepath, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot)
+	Ref<ComputeShader> Judas_Engine::ComputeShader::Create(const std::string& filepath)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::OpenGL:		return std::make_shared<OpenGLComputeShader>(filepath, renderTexture, textureSlot);
+		case RendererAPI::API::OpenGL:		return std::make_shared<OpenGLComputeShader>(filepath);
 		case RendererAPI::API::None:		JE_CORE_ASSERT(false, "RendererAPI::None is not currently supported");  return nullptr;
 		}
 
@@ -20,11 +20,11 @@ namespace Judas_Engine
 		return nullptr;
 	}
 
-	Ref<ComputeShader> Judas_Engine::ComputeShader::Create(const std::string& name, const std::string& src, Ref<RenderTexture2D> renderTexture, uint32_t textureSlot)
+	Ref<ComputeShader> Judas_Engine::ComputeShader::Create(const std::string& name, const std::string& src)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::OpenGL:		return std::make_shared<OpenGLComputeShader>(name, src, renderTexture, textureSlot);
+		case RendererAPI::API::OpenGL:		return std::make_shared<OpenGLComputeShader>(name, src);
 		case RendererAPI::API::None:		JE_CORE_ASSERT(false, "RendererAPI::None is not currently supported");  return nullptr;
 		}
 

@@ -90,7 +90,7 @@ IFFT2D<SIZE, LOG_2_SIZE>::IFFT2D(const Judas_Engine::Ref<Judas_Engine::RenderTex
 	m_ButterflyDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_ButterflyData, sizeof(ButterflyData<SIZE, LOG_2_SIZE>));
 
 	m_ButterflyRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, LOG_2_SIZE);
-	m_ButterflyTextureComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterflyTexture.glsl", m_ButterflyRenderTexture, 0);
+	m_ButterflyTextureComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterflyTexture.glsl");
 
 	// Init butterfly texture
 	ComputeButterfly();
@@ -100,7 +100,7 @@ IFFT2D<SIZE, LOG_2_SIZE>::IFFT2D(const Judas_Engine::Ref<Judas_Engine::RenderTex
 	// ------------------
 
 	m_PingpongRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, SIZE);
-	m_ButterflyPassComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterfly.glsl", m_PingpongRenderTexture, 0);
+	m_ButterflyPassComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterfly.glsl");
 
 	m_ButterflyPassData = std::make_shared<FFTData>();
 	m_ButterflyPassDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_ButterflyPassData, sizeof(FFTData));
@@ -110,7 +110,7 @@ IFFT2D<SIZE, LOG_2_SIZE>::IFFT2D(const Judas_Engine::Ref<Judas_Engine::RenderTex
 	// ----------------------------
 
 	m_NormalizationRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, SIZE);
-	m_NormalizationComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/permutation.glsl", m_NormalizationRenderTexture, 0);
+	m_NormalizationComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/permutation.glsl");
 
 	m_Inversion_Data = std::make_shared<NormalizationData>();
 	m_NormalizationDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>(m_Inversion_Data, sizeof(NormalizationData));

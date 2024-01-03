@@ -17,36 +17,37 @@ namespace Judas_Engine
 		{
 			case Judas_Engine::Cube:
 			{
+				// WRONG NORMALS !!! TEMPORARY
 				vertices = {
-					-0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
-					 0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
-					-0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
-					 0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+					-0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+					 0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+					-0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+					 0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 
-					-0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-					-0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-					-0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-					-0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+					-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+					-0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+					-0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+					-0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
 
-					-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
-					 0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
-					-0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
-					 0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+					-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+					 0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+					-0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+					 0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 
-					 0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-					 0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-					 0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
-					 0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+					 0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+					 0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+					 0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+					 0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
 
-					-0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
-					-0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
+					-0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+					 0.5f,  0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+					-0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+					 0.5f,  0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
 
-					-0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f,
-					-0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f,
-					 0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f
+					-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+					 0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+					-0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+					 0.5f, -0.5f,  0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f
 				};
 
 				indices = {
@@ -71,7 +72,9 @@ namespace Judas_Engine
 
 				layout = {
 					{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
-					{ Judas_Engine::ShaderDataType::Float3, "a_Color"}
+					{ Judas_Engine::ShaderDataType::Float3, "a_Normal"},
+					{ Judas_Engine::ShaderDataType::Float3, "a_Color"},
+					{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
 				};
 				break;
 			}
@@ -83,7 +86,7 @@ namespace Judas_Engine
 				{
 					for (int j = 0; j < resolution + 1; j++)
 					{
-						vertices.insert(vertices.end(), { i * delta - 0.5f, 0.0f, j * delta - 0.5f, 1.0f, 0.0f, 1.0f, i * delta, j * delta });
+						vertices.insert(vertices.end(), { i * delta - 0.5f, 0.0f, j * delta - 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, i * delta, j * delta });
 					}
 				}
 
@@ -98,6 +101,7 @@ namespace Judas_Engine
 
 				layout = {
 					{ Judas_Engine::ShaderDataType::Float3, "a_Position"},
+					{ Judas_Engine::ShaderDataType::Float3, "a_Normal"},
 					{ Judas_Engine::ShaderDataType::Float3, "a_Color"},
 					{ Judas_Engine::ShaderDataType::Float2, "a_TexCoords"}
 				};
@@ -111,8 +115,9 @@ namespace Judas_Engine
 				#version 330 core
 			
 				layout(location = 0) in vec3 a_Position;
-				layout(location = 1) in vec3 a_Color;
-				layout(location = 2) in vec2 a_TexCoords;
+				layout(location = 1) in vec3 a_Normal;
+				layout(location = 2) in vec3 a_Color;
+				layout(location = 3) in vec2 a_TexCoords;
 
 				uniform mat4 u_ViewProjection;
 
@@ -162,13 +167,14 @@ namespace Judas_Engine
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 	}
+
 	const void Mesh::Submit()
 	{
 		JE_ASSERT(m_Shader, "Mesh Shader is null"); 
 		JE_ASSERT(m_VertexArray, "Mesh Vertex array is null");
 		JE_ASSERT(m_VertexBuffer, "Mesh Vertex buffer is null");
-		JE_ASSERT(m_IndexBuffer, "Mesh Index bufferis null");
+		JE_ASSERT(m_IndexBuffer, "Mesh Index buffer is null");
 
-		Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4x4(1.0), m_Scale)); 
+		Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4x4(1.0f), m_Scale)); 
 	}
 }

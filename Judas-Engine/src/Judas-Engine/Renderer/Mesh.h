@@ -28,7 +28,7 @@ namespace Judas_Engine
 	private:
 		Ref<Shader> m_Shader{};
 		Ref<VertexArray> m_VertexArray{};
-		glm::vec3 m_Scale{};
+		glm::vec3 m_Scale = glm::vec3(1.0f);
 
 		Ref<VertexBuffer> m_VertexBuffer{};
 		Ref<IndexBuffer> m_IndexBuffer{};
