@@ -32,6 +32,14 @@ namespace Judas_Engine
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		JE_CORE_INFO(R"(
+      _           _             _____             _            
+     | |_   _  __| | __ _ ___  | ____|_ __   __ _(_)_ __   ___ 
+  _  | | | | |/ _` |/ _` / __| |  _| | '_ \ / _` | | '_ \ / _ \
+ | |_| | |_| | (_| | (_| \__ \ | |___| | | | (_| | | | | |  __/
+  \___/ \__,_|\__,_|\__,_|___/ |_____|_| |_|\__, |_|_| |_|\___|
+                                            |___/             )");
 	}
 
 	void Application::OnEvent(Event& e)

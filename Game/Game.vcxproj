@@ -158,6 +158,7 @@
     <ClInclude Include="src\Assets\Scripts\Tests\ButterflyTextureTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\ComputeShaderTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\PhillipsTest.h" />
+    <ClInclude Include="src\Assets\Scripts\Tests\PhongTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\PrimitiveTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\SsboTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\Tessendorf\Header.h" />

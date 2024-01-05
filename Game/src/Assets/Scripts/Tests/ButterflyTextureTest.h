@@ -48,7 +48,7 @@ public:
 	{
 		m_Shader = Judas_Engine::Shader::Create("src/Assets/shaders/texture.glsl");
 
-		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::Plane);
+		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::PrimitiveType::Plane);
 		m_Mesh->SetShader(m_Shader);
 
 		m_ButterflyData = std::make_shared<Butterfly_Data>(B_LOG_2_SIZE);

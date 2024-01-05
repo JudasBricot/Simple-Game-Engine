@@ -37,7 +37,7 @@ public:
 	{
 		m_Shader = Judas_Engine::Shader::Create("src/Assets/shaders/heightMap.glsl");
 
-		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::Plane, 256);
+		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::PrimitiveType::Plane, 256);
 		m_Mesh->SetShader(m_Shader);
 
 		// -------------------

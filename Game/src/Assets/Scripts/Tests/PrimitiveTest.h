@@ -24,18 +24,24 @@ public:
 
 		m_PrimitiveType = primitiveType;
 		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(m_PrimitiveType, 16);
+		m_Mesh->SetShader(m_Shader);
+
 	}
 
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
-		if (ImGui::Button("Cube", ImVec2(100.0f, 20.0f)))
+		if (ImGui::Button("Cube", ImVec2()))
 		{
-			SetPrimitiveType(Judas_Engine::Cube);
+			SetPrimitiveType(Judas_Engine::PrimitiveType::Cube);
 		}
-		if (ImGui::Button("Plane", ImVec2(100.0f, 20.0f)))
+		if (ImGui::Button("Plane", ImVec2()))
 		{
-			SetPrimitiveType(Judas_Engine::Plane);
+			SetPrimitiveType(Judas_Engine::PrimitiveType::Plane);
+		}
+		if (ImGui::Button("Sphere", ImVec2()))
+		{
+			SetPrimitiveType(Judas_Engine::PrimitiveType::Sphere);
 		}
 		ImGui::End();
 	}
@@ -48,5 +54,5 @@ private:
 	Judas_Engine::Ref<Judas_Engine::Shader> m_Shader;
 	Judas_Engine::Ref <Judas_Engine::Mesh> m_Mesh;
 
-	Judas_Engine::PrimitiveType m_PrimitiveType = Judas_Engine::Cube;
+	Judas_Engine::PrimitiveType m_PrimitiveType = Judas_Engine::PrimitiveType::Cube;
 };

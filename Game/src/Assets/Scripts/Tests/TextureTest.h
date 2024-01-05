@@ -17,7 +17,7 @@ public:
 	{
 		m_Shader = Judas_Engine::Shader::Create("src/Assets/Shaders/texture.glsl");
 
-		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::Plane);
+		m_Mesh = Judas_Engine::Mesh::CreatePrimitive(Judas_Engine::PrimitiveType::Plane);
 		m_Mesh->SetShader(m_Shader);
 
 		m_Texture = Judas_Engine::Texture2D::Create("src/Assets/textures/texture.jpeg");

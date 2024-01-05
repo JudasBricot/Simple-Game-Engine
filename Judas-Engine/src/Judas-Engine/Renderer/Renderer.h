@@ -25,6 +25,7 @@ namespace Judas_Engine
 		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
+			glm::vec3 CameraPosition;
 		};
 
 		static SceneData* s_SceneData;

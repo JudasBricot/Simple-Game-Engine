@@ -33,6 +33,7 @@ namespace Judas_Engine
 	void Renderer::BeginScene(PerspectiveCamera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+		s_SceneData->CameraPosition = camera.GetPosition();
 	}
 
 	void Renderer::EndScene()
@@ -42,6 +43,8 @@ namespace Judas_Engine
 	void Renderer::Submit(const Ref<Shader> shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform)
 	{
 		shader->Bind();
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformFloat3("u_CameraPosition", s_SceneData->CameraPosition);
+
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
