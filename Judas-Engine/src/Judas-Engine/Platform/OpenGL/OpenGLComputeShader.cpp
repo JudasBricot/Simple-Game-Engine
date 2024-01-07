@@ -35,6 +35,8 @@ namespace Judas_Engine
 
 		glDispatchCompute(xSize, ySize, zSize);
 		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+		glUseProgram(0);
 	}
 
 	std::string OpenGLComputeShader::ReadFile(const std::string& filepath)

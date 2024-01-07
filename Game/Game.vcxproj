@@ -151,6 +151,7 @@
     <None Include="src\Assets\Shaders\heightMap.glsl" />
     <None Include="src\Assets\Shaders\phong.glsl" />
     <None Include="src\Assets\Shaders\texture.glsl" />
+    <None Include="src\Assets\Shaders\waveShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Assets\Scripts\Ocean\IFFT2D.h" />

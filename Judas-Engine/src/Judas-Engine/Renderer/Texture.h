@@ -23,6 +23,9 @@ namespace Judas_Engine
 	{
 	public:
 		static Ref<RenderTexture2D> Create(unsigned int width, unsigned int height);
+
+		virtual void BindImage(uint32_t slot) = 0;
+		virtual void UnbindImage() const = 0;
 	};
 
 	class Texture2D : public Texture

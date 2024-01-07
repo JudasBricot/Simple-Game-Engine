@@ -25,8 +25,11 @@ public:
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(1024, 1024);
 		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/compute.glsl");
 
-		m_RenderTexture->Bind(0);
+		m_RenderTexture->BindImage(0);
 		m_ComputeShader->Dispatch(1024 / 32, 1024 / 32, 1);
+		m_RenderTexture->UnbindImage();
+
+		m_RenderTexture->Bind(0);
 	}
 
 	virtual void OnImGuiRender() override

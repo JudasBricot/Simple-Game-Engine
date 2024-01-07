@@ -3,8 +3,9 @@
 layout (local_size_x = 16, local_size_y = 16) in;
 layout(rgba32f, binding = 0) uniform image2D spectrumBuffer;
 layout(rgba32f, binding = 1) uniform image2D slopeBuffer;
+layout(rgba32f, binding = 2) uniform image2D displacementBuffer;
 
-layout(std430, binding = 2) buffer ssbo {
+layout(std430, binding = 3) buffer ssbo {
 	vec2 step;
 	vec2 wind_direction;
     float amplitude;
@@ -18,7 +19,6 @@ layout(std430, binding = 2) buffer ssbo {
 	float time;
 };
 
-//#define M_PI = 3.1415926535897932384626433832795
 const float PI = 3.1415926535897932384626433832795f;
 
 float hash(float x)
@@ -38,7 +38,7 @@ vec2 UniformToGaussian(float u1, float u2) {
 
 float PhillipsSpectrumSqrt(vec2 k_dir, float k_len_sqrd)
 {	
-	float dot_k_w = dot(k_dir, wind_direction);
+	float dot_k_w = pow(dot(k_dir, wind_direction), 4.0);
 	
 	float Ph_k = amplitude * dot_k_w * dot_k_w * exp(- 1.0 / (k_len_sqrd * max_wave_height_sqrd) - k_len_sqrd * min_wave_height_sqrd) / (k_len_sqrd * k_len_sqrd);
 	float Ph_k_sqrt = sqrt(Ph_k);
@@ -67,7 +67,7 @@ vec2 FourierAmplitude(vec2 k_dir, float k_len_sqrd, int seed, float g, float t)
 {
 	vec4 h0 = SpectrumAmplitude(k_dir, k_len_sqrd, seed);
 
-	float omega = sqrt(g * sqrt(k_len_sqrd));
+	float omega = sqrt(g * sqrt(k_len_sqrd) + k_len_sqrd * 0.01);
 	vec2 cosin = vec2(cos(omega * t), sin(omega * t));
 	
 	return vec2(h0.x + h0.z, h0.y - h0.w) * cosin;
@@ -88,10 +88,13 @@ void main()
 	float k_len_sqrd = k.x*k.x + k.y*k.y;
 
 	vec2 h0 = FourierAmplitude(k_dir, k_len_sqrd, seed, gravity, time);
-	vec2 slope = vec2(h0.x * k.x + h0.y * k.y, h0.x * k.x - h0.y * k.y);
+	vec2 ih = vec2(-h0.y, h0.x);
+	vec2 slope = vec2(ih.x * k.x - ih.y * k.y, ih.y * k.x + ih.x * k.y);
+	vec2 displacement = - vec2(ih.x * k_dir.x - ih.y * k_dir.y, ih.y * k_dir.x + ih.x * k_dir.y);
 
 	vec3 color = vec3(h0, 0.0);
 
 	imageStore(spectrumBuffer, ivec2(pixelPos), vec4(color, 1.0));
-	imageStore(slopeBuffer, ivec2(pixelPos), vec4(slope, 0.0, 1.0));
+	imageStore(slopeBuffer, ivec2(pixelPos), vec4(100.0 * slope, 0.0, 1.0));
+	imageStore(displacementBuffer, ivec2(pixelPos), vec4(displacement, 0.0, 1.0));
 }
