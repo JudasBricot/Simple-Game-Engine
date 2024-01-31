@@ -90,7 +90,7 @@ void main()
 	vec2 h0 = FourierAmplitude(k_dir, k_len_sqrd, seed, gravity, time);
 	vec2 ih = vec2(-h0.y, h0.x);
 	vec2 slope = vec2(ih.x * k.x - ih.y * k.y, ih.y * k.x + ih.x * k.y);
-	vec2 displacement = - vec2(ih.x * k_dir.x - ih.y * k_dir.y, ih.y * k_dir.x + ih.x * k_dir.y);
+	vec2 displacement = vec2(ih.x * k_dir.x - ih.y * k_dir.y, ih.y * k_dir.x + ih.x * k_dir.y);
 
 	vec3 color = vec3(h0, 0.0);
 

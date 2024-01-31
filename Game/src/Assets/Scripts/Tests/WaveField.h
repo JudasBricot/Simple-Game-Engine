@@ -11,6 +11,7 @@
 #include <imgui/imgui.h>
 
 #include "Assets/Scripts/Ocean/IFFT2D.h"
+#include "Assets/Scripts/Ocean/SpectrumGenerator.h"
 #include "Assets/Scripts/Tests/PhongTest.h"
 
 #define SIZE 256
@@ -83,25 +84,16 @@ public:
 		// SPECTRUM GENERATION
 		// -------------------
 
-		// SETUP SPECTRUM PARAMETERS
-		m_SpectrumData = std::make_shared<Ph_Data>(
-			1.0f,
-			glm::vec2(1.0f, 0.0f),
-			31.0f,
-			9.8f,
-			0.1f,
-			glm::vec2(1.0f)
-		);
-		m_SpectrumData->Time = 46832.654f;
+		m_SpectrumGenerator = std::make_shared<SpectrumGenerator<256>>();
 
 		// TO CENTER 0,0
-		m_SpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
-		m_SlopeSpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
-		m_DisplacementSpectrumTexture = Judas_Engine::RenderTexture2D::Create(SIZE + 1, SIZE + 1);
+		m_SpectrumTexture = m_SpectrumGenerator->GetSpectrumTexture();
+		m_SlopeSpectrumTexture = m_SpectrumGenerator->GetSlopeSpectrumTexture();
+		m_DisplacementSpectrumTexture = m_SpectrumGenerator->GetDisplacementSpectrumTexture();
 
-		m_SpectrumComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl");
-
-		m_SpectrumDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_SpectrumData, sizeof(Ph_Data));
+		// ------------------
+		// FFT INITIALIZATION
+		// ------------------
 
 		m_WaveIFFT = std::make_shared<IFFT2D<256, 8>>(m_SpectrumTexture);
 		m_WaveTexture = m_WaveIFFT->GetOutputTexture();
@@ -113,27 +105,9 @@ public:
 		m_DisplacementTexture = m_DisplacementIFFT->GetOutputTexture();
 	}
 
-	void updateSpectrum()
+	void updateWave(float t)
 	{
-		m_SpectrumTexture->BindImage(0);
-		m_SlopeSpectrumTexture->BindImage(1);
-		m_DisplacementSpectrumTexture->BindImage(2);
-
-		m_SpectrumDataBuffer->Bind(3);
-		m_SpectrumDataBuffer->UpdateData((Judas_Engine::Ref<void>)m_SpectrumData);
-
-		m_SpectrumComputeShader->Dispatch(SIZE / 16 + 1, SIZE / 16 + 1, 1);
-
-		m_SpectrumTexture->UnbindImage();
-		m_SlopeSpectrumTexture->UnbindImage();
-		m_DisplacementSpectrumTexture->UnbindImage();
-
-		m_SpectrumDataBuffer->Unbind();
-	}
-
-	void updateWave()
-	{
-		updateSpectrum();
+		m_SpectrumGenerator->ComputeTimeDependentSpectrum(t);
 		m_WaveIFFT->Compute();
 		m_SLopeIFFT->Compute();
 		m_DisplacementIFFT->Compute();
@@ -145,14 +119,8 @@ public:
 
 		ImGui::InputInt("Render Mode", &m_RenderMode, 0, 2);
 
-		ImGui::DragFloat2("Step", glm::value_ptr(m_SpectrumData->Step), 0.001f, 0.0f, 5.0f);
-		ImGui::DragFloat2("Wind Direction", glm::value_ptr(m_SpectrumData->Wind_direction), 0.01f, 0.0f, 1.0f);
-		ImGui::DragFloat("Amplitude", &m_SpectrumData->Amplitude, 0.001f, 0.1f, 2.0f);
-		ImGui::DragFloat("Wind Amplitude", &m_SpectrumData->Wind_amplitude, 0.01f, 0.0f, 60.0f);
-		ImGui::DragFloat("Gravity", &m_SpectrumData->Gravity, 0.001f, 0.0f, 1.0f);
-		ImGui::DragFloat("Min Wave Height Sqrd", &m_SpectrumData->Min_wave_height_sqrd, 0.001f, 0.0f, 1.0f);
-		m_SpectrumData->UpdateData();
-
+		m_SpectrumGenerator->ImGuiRender();
+		
 		ImGui::DragFloat("Displacement factor", &m_DisplacementFactor, 0.001f, 0.0f, 1.0f);
 
 		ImGui::End();
@@ -180,8 +148,7 @@ public:
 
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
-		m_SpectrumData->Time += ts;
-		updateWave();
+		updateWave(ts);
 
 		// Dispatching compute shader change the used program !!
 		if (m_RenderMode == 0)
@@ -224,12 +191,11 @@ private:
 
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_SpectrumComputeShader;
 
-	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_SpectrumDataBuffer;
-	Judas_Engine::Ref<Ph_Data> m_SpectrumData;
-
 	Judas_Engine::Ref<IFFT2D<256,8>> m_WaveIFFT;
 	Judas_Engine::Ref<IFFT2D<256,8>> m_SLopeIFFT;
 	Judas_Engine::Ref<IFFT2D<256,8>> m_DisplacementIFFT;
+
+	Judas_Engine::Ref<SpectrumGenerator<256>> m_SpectrumGenerator;
 
 	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SpectrumTexture;
 	Judas_Engine::Ref<Judas_Engine::RenderTexture2D> m_SlopeSpectrumTexture;
@@ -242,5 +208,5 @@ private:
 	float m_DisplacementFactor = 0.5f;
 
 	Light m_Light = { glm::vec3(0.0f, -1.0f, -1.0f), glm::vec3(20.0f, 29.0f, 45.0f) / 256.0f, glm::vec3(1.0f), glm::vec3(1.0f) };
-	Material m_Material = { glm::vec3(35.0f, 35.0f, 135.0f) / 256.0f, 0.8f, glm::vec3(1.0f), 0.2f, 16.0f };
+	Material m_Material = { glm::vec3(8.0f, 113.0f, 131.0f) / 256.0f, 2.0f, glm::vec3(111.0f, 255.0f, 251.0f), 1.0f, 128.0f };
 };

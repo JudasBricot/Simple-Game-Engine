@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Assets\Scripts\Ocean\IFFT2D.h" />
+    <ClInclude Include="src\Assets\Scripts\Ocean\SpectrumGenerator.h" />
     <ClInclude Include="src\Assets\Scripts\TestManager.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\ButterflyTextureTest.h" />
     <ClInclude Include="src\Assets\Scripts\Tests\ComputeShaderTest.h" />

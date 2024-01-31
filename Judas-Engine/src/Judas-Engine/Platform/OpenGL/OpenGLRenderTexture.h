@@ -18,6 +18,7 @@ namespace Judas_Engine
 
 		virtual void BindImage(uint32_t slot) override;
 		virtual void UnbindImage() const override;
+ 
 	private:
 		unsigned int m_Slot, m_Unit;
 		unsigned int m_Width, m_Height;
