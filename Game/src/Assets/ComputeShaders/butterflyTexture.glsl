@@ -3,41 +3,23 @@
 
 layout(local_size_x = 16, local_size_y = 1) in;
 layout(binding = 0, rgba32f) writeonly uniform image2D butterflyTexture;
-layout(std430, binding = 1) buffer indices {
-    int bit_reversed[];
-};
 
-void main(void) 
+void main() 
 {
     int N = imageSize(butterflyTexture).x;
     vec2 x = gl_GlobalInvocationID.xy;
 
-    float k = mod(x.x * (float(N) / pow(2, x.y + 1)), N);
-    vec2 twiddle = vec2(cos(2.0 * M_PI * k / float(N)), sin(2.0 * M_PI * k / float(N)));
-    int butterflySpan = int(pow(2, x.y));
-    int butterflyWing;
+    int n = int(x.x);
+    float k = x.x;
+    int p = int(x.y) + 1; // stage
+    
+    int b = N >> p; // Represent the offset between the indices
+    int base = b * (n / b); // Index of the partition
+	int i = (2 * base + n % b);
 
-    if (mod(x.x, pow(2, x.y + 1)) < pow(2, x.y))
-        butterflyWing = 1;
-    else
-        butterflyWing = 0;
+	float phase = 2.0 * M_PI / N * base;
+    vec2 twiddle = vec2(cos(phase), sin(phase));
 
-    // First stage, bit-reversed indices
-    if (x.y == 0) {
-        // Top butterfly wing
-        if (butterflyWing == 1)
-            imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, bit_reversed[int(x.x)], bit_reversed[int(x.x + 1)]));
-        // Bottom butterfly wing
-        else
-            imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, bit_reversed[int(x.x - 1)], bit_reversed[int(x.x)]));
-    }
-    // Second to log2(N) stage
-    else {
-        // Top butterfly wing
-        if (butterflyWing == 1)
-            imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, x.x, x.x + butterflySpan));
-        // Bottom butterfly wing
-        else
-            imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, x.x - butterflySpan, x.x));
-    }
+    imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, i, i + b));
+    imageStore(butterflyTexture, ivec2(x.x + N / 2, x.y), vec4(-twiddle.x, -twiddle.y, i, i + b));
 }

@@ -7,34 +7,6 @@
 template<unsigned int SIZE, unsigned int LOG_2_SIZE>
 class IFFT2D
 {
-	template<unsigned int SIZE, unsigned int LOG_2_SIZE>
-	struct ButterflyData
-	{
-	private:
-		int BitReverseTable[SIZE];
-
-	public:
-		ButterflyData()
-		{
-			for (int i = 0; i < SIZE; i++)
-			{
-				BitReverseTable[i] = reverse_bits(i);
-			}
-		}
-
-	private:
-		int reverse_bits(int n)
-		{
-			int k = 0;
-			for (int i = 0; i < LOG_2_SIZE; i++)
-			{
-				k += (1 << (LOG_2_SIZE - i - 1)) * ((n & (1 << i)) >> i);
-			}
-
-			return k;
-		}
-	};
-
 	struct FFTData
 	{
 		int stage = 0;
@@ -70,11 +42,9 @@ private:
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_ButterflyPassComputeShader;
 	Judas_Engine::Ref <Judas_Engine::ComputeShader> m_NormalizationComputeShader;
 
-	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_ButterflyDataBuffer;
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_ButterflyPassDataBuffer;
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_NormalizationDataBuffer;
 
-	Judas_Engine::Ref<ButterflyData<SIZE, LOG_2_SIZE>> m_ButterflyData;
 	Judas_Engine::Ref<FFTData> m_ButterflyPassData;
 	Judas_Engine::Ref<NormalizationData> m_Inversion_Data;
 };
@@ -85,9 +55,6 @@ IFFT2D<SIZE, LOG_2_SIZE>::IFFT2D(const Judas_Engine::Ref<Judas_Engine::RenderTex
 	// --------------------------------
 	// BUTTERFLY TEXTURE INITIALIZATION
 	// --------------------------------
-
-	m_ButterflyData = std::make_shared<ButterflyData<SIZE, LOG_2_SIZE>>();
-	m_ButterflyDataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_ButterflyData, sizeof(ButterflyData<SIZE, LOG_2_SIZE>));
 
 	m_ButterflyRenderTexture = Judas_Engine::RenderTexture2D::Create(SIZE, LOG_2_SIZE);
 	m_ButterflyTextureComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/butterflyTexture.glsl");
@@ -128,11 +95,8 @@ template<unsigned int SIZE, unsigned int LOG_2_SIZE>
 void IFFT2D<SIZE, LOG_2_SIZE>::ComputeButterfly()
 {
 	m_ButterflyRenderTexture->Bind(0);
-	m_ButterflyDataBuffer->Bind(1);
-	m_ButterflyTextureComputeShader->Dispatch(SIZE, LOG_2_SIZE, 1);
-
+	m_ButterflyTextureComputeShader->Dispatch(SIZE / 2, LOG_2_SIZE, 1);
 	m_ButterflyRenderTexture->Unbind();
-	m_ButterflyDataBuffer->Unbind();
 }
 
 template<unsigned int SIZE, unsigned int LOG_2_SIZE>
