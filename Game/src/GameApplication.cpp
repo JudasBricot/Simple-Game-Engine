@@ -25,7 +25,7 @@ public:
 		testManagerLayer->AddTestLayer("Butterfly", std::make_shared<ButterflyLayer>());
 		testManagerLayer->AddTestLayer("Ssbo", std::make_shared<SsboLayer>());
 		testManagerLayer->AddTestLayer("Waves", std::make_shared<FFTLayer>());
-		testManagerLayer->AddTestLayer("Texture Switch", std::make_shared<TextureSwitchLayer>());
+		//testManagerLayer->AddTestLayer("Texture Switch", std::make_shared<TextureSwitchLayer>());
 		testManagerLayer->AddTestLayer("Phong Lighting", std::make_shared<PhongLayer>());
 
 		PushLayer(testManagerLayer);

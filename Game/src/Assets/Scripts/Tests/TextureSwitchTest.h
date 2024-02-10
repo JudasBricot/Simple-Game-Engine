@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include <JudasEngine.h>
 
 #include <Judas-Engine/Compute/ComputeShader.h>
@@ -22,7 +22,7 @@ public:
 	virtual void OnAttach()
 	{
 		// SETUP WIND PARAMETERS
-		m_Data = std::make_shared<Ph_Data>(
+		m_Data = std::make_shared<OceanParameters>(
 			1.0f,
 			glm::vec2(1.0f, 0.0f),
 			31.0f,
@@ -32,7 +32,7 @@ public:
 		);
 		m_Data->Time = 65412.0f;
 
-		m_Data1 = std::make_shared<Ph_Data>(
+		m_Data1 = std::make_shared<OceanParameters>(
 			1.0f,
 			glm::vec2(1.0f, 0.0f),
 			31.0f,
@@ -50,8 +50,8 @@ public:
 		m_RenderTexture = Judas_Engine::RenderTexture2D::Create(256, 256);
 		m_ComputeShader = Judas_Engine::ComputeShader::Create("src/Assets/ComputeShaders/phillipsSpectrum.glsl");
 
-		m_DataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data, sizeof(Ph_Data));
-		m_DataBuffer1 = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data1, sizeof(Ph_Data));
+		m_DataBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data, sizeof(OceanParameters));
+		m_DataBuffer1 = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_Data1, sizeof(OceanParameters));
 
 		m_RenderTexture->Bind(0);
 	}
@@ -88,8 +88,9 @@ private:
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_DataBuffer;
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_DataBuffer1;
 
-	Judas_Engine::Ref<Ph_Data> m_Data;
-	Judas_Engine::Ref<Ph_Data> m_Data1;
+	Judas_Engine::Ref<OceanParameters> m_Data;
+	Judas_Engine::Ref<OceanParameters> m_Data1;
 	float time = 0.0f;
 	int textureNb = 0;
 };
+*/

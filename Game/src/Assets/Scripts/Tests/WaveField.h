@@ -86,7 +86,6 @@ public:
 
 		m_SpectrumGenerator = std::make_shared<SpectrumGenerator<256>>();
 
-		// TO CENTER 0,0
 		m_SpectrumTexture = m_SpectrumGenerator->GetSpectrumTexture();
 		m_SlopeSpectrumTexture = m_SpectrumGenerator->GetSlopeSpectrumTexture();
 		m_DisplacementSpectrumTexture = m_SpectrumGenerator->GetDisplacementSpectrumTexture();
@@ -122,6 +121,7 @@ public:
 		m_SpectrumGenerator->ImGuiRender();
 		
 		ImGui::DragFloat("Displacement factor", &m_DisplacementFactor, 0.001f, 0.0f, 1.0f);
+		ImGui::DragFloat("Speed factor", &m_SpeedFactor, 0.01f, 0.1f, 10.0f);
 
 		ImGui::End();
 
@@ -148,7 +148,7 @@ public:
 
 	void OnUpdate(Judas_Engine::Timestep ts) override
 	{
-		updateWave(ts);
+		updateWave(ts * m_SpeedFactor);
 
 		// Dispatching compute shader change the used program !!
 		if (m_RenderMode == 0)
@@ -206,7 +206,8 @@ private:
 
 	int m_RenderMode = 0;
 	float m_DisplacementFactor = 0.5f;
+	float m_SpeedFactor = 1.0f;
 
 	Light m_Light = { glm::vec3(0.0f, -1.0f, -1.0f), glm::vec3(20.0f, 29.0f, 45.0f) / 256.0f, glm::vec3(1.0f), glm::vec3(1.0f) };
-	Material m_Material = { glm::vec3(8.0f, 113.0f, 131.0f) / 256.0f, 2.0f, glm::vec3(111.0f, 255.0f, 251.0f), 1.0f, 128.0f };
+	Material m_Material = { glm::vec3(0.0f, 218, 255) / 256.0f, 1.0f, glm::vec3(111.0f, 254.0f, 250.0f) / 256.0f, 1.0f, 128.0f };
 };
