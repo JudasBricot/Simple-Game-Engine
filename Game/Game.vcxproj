@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>JE_PLATFORM_WINDOWS;JE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Judas-Engine\vendor\spdlog\include;..\Judas-Engine\src;..\Judas-Engine\vendor;..\Judas-Engine\vendor\glm;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Judas-Engine\vendor\spdlog\include;..\Judas-Engine\src;..\Judas-Engine\vendor;..\Judas-Engine\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -131,6 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Assets\Scripts\Layers\ButterflyTexture.h" />
+    <ClInclude Include="src\Assets\Scripts\Layers\SpectraDisplay.h" />
+    <ClInclude Include="src\Assets\Scripts\Layers\WaveField.h" />
+    <ClInclude Include="src\Assets\Scripts\Ocean\IFFT2D.h" />
+    <ClInclude Include="src\Assets\Scripts\Ocean\SpectrumGenerator.h" />
+    <ClInclude Include="src\Assets\Scripts\TestManager.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Assets\Scripts\TestManager.cpp" />
     <ClCompile Include="src\GameApplication.cpp" />
   </ItemGroup>
@@ -138,38 +146,6 @@
     <ProjectReference Include="..\Judas-Engine\Judas-Engine.vcxproj">
       <Project>{9F2D267C-8B90-B520-3416-EED6205881A3}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Assets\ComputeShaders\butterfly.glsl" />
-    <None Include="src\Assets\ComputeShaders\butterflyTexture.glsl" />
-    <None Include="src\Assets\ComputeShaders\compute.glsl" />
-    <None Include="src\Assets\ComputeShaders\IFFT2D.glsl" />
-    <None Include="src\Assets\ComputeShaders\permutation.glsl" />
-    <None Include="src\Assets\ComputeShaders\phillipsSpectrum.glsl" />
-    <None Include="src\Assets\ComputeShaders\ssbo.glsl" />
-    <None Include="src\Assets\Shaders\colors.glsl" />
-    <None Include="src\Assets\Shaders\heightMap.glsl" />
-    <None Include="src\Assets\Shaders\phong.glsl" />
-    <None Include="src\Assets\Shaders\texture.glsl" />
-    <None Include="src\Assets\Shaders\waveShader.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Assets\Scripts\Ocean\IFFT2D.h" />
-    <ClInclude Include="src\Assets\Scripts\Ocean\SpectrumGenerator.h" />
-    <ClInclude Include="src\Assets\Scripts\TestManager.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\ButterflyTextureTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\ComputeShaderTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\PhillipsTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\PhongTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\PrimitiveTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\SsboTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\Tessendorf\Header.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\TextureSwitchTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\TextureTest.h" />
-    <ClInclude Include="src\Assets\Scripts\Tests\WaveField.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="src\Assets\textures\texture.jpeg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,7 +16,7 @@ void TestManagerLayer::OnImGuiRender()
 		std::string s = "Select " + key;
 		bool pressed = ImGui::Button(s.c_str());
 
-		if (pressed)
+		if (pressed && m_SelectedTest != val)
 		{
 			JE_INFO("{0} Pressed : {1}", key.c_str(), pressed);
 			if (m_SelectedTest != nullptr)

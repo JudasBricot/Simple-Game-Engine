@@ -9,7 +9,7 @@
 class TestManagerLayer : public Judas_Engine::Layer
 {
 public:
-	TestManagerLayer() : Layer("MyLayer"), m_CameraController(1.0f, 1280.0f / 720.0f, 0.1f, 100.0f) {}
+	TestManagerLayer() : Layer("Test manager Layer"), m_CameraController(1.0f, 1280.0f / 720.0f, 0.1f, 100.0f) {}
 	~TestManagerLayer() {}
 
 	virtual void OnImGuiRender() override;

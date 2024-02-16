@@ -12,84 +12,54 @@ layout(std430, binding = 3) buffer indices {
     int direction;
 };
 
-struct complex {
-    float real;
-    float im;
-};
-
-complex mul(complex c0, complex c1) {
-    complex c;
-    c.real = c0.real * c1.real - c0.im * c1.im;
-    c.im = c0.real * c1.im + c0.im * c1.real;
-    return c;
-}
-
-complex add(complex c0, complex c1) {
-    complex c;
-    c.real = c0.real + c1.real;
-    c.im = c0.im + c1.im;
+vec2 mul(vec2 c0, vec2 c1) {
+    vec2 c;
+    c.x = c0.x * c1.x - c0.y * c1.y;
+    c.y = c0.x * c1.y + c0.y * c1.x;
     return c;
 }
 
 void horizontalButterflies() {
-    complex H;
+    vec2 H;
     ivec2 x = ivec2(gl_GlobalInvocationID.xy);
+    vec4 data = imageLoad(butterflyTexture, ivec2(x.x, stage)).rgba;
 
     if (pingpong == 0) {
-        vec4 data = imageLoad(butterflyTexture, ivec2(x.x, stage)).rgba;
-        vec2 p_ = imageLoad(pingpong0, ivec2(data.z, x.y)).rg;
-        vec2 q_ = imageLoad(pingpong0, ivec2(data.w, x.y)).rg;
-        vec2 w_ = vec2(data.x, data.y);
+        vec2 p = imageLoad(pingpong0, ivec2(data.z, x.y)).rg;
+        vec2 q = imageLoad(pingpong0, ivec2(data.w, x.y)).rg;
+        vec2 w = vec2(data.x, data.y);
 
-        complex p = complex(p_.x, p_.y);
-        complex q = complex(q_.x, q_.y);
-        complex w = complex(w_.x, w_.y);
-
-        H = add(p, mul(w, q));
-        imageStore(pingpong1, x, vec4(H.real, H.im, 0, 1));
+        H = p + mul(w, q);
+        imageStore(pingpong1, x, vec4(H.x, H.y, 0, 1));
     } else if (pingpong == 1) {
-        vec4 data = imageLoad(butterflyTexture, ivec2(x.x, stage)).rgba;
-        vec2 p_ = imageLoad(pingpong1, ivec2(data.z, x.y)).rg;
-        vec2 q_ = imageLoad(pingpong1, ivec2(data.w, x.y)).rg;
-        vec2 w_ = vec2(data.x, data.y);
+        vec2 p = imageLoad(pingpong1, ivec2(data.z, x.y)).rg;
+        vec2 q = imageLoad(pingpong1, ivec2(data.w, x.y)).rg;
+        vec2 w = vec2(data.x, data.y);
 
-        complex p = complex(p_.x, p_.y);
-        complex q = complex(q_.x, q_.y);
-        complex w = complex(w_.x, w_.y);
-
-        H = add(p, mul(w, q));
-        imageStore(pingpong0, x, vec4(H.real, H.im, 0, 1));
+        H = p + mul(w, q);
+        imageStore(pingpong0, x, vec4(H.x, H.y, 0, 1));
     }
 }
 
 void verticalButterflies() {
-    complex H;
+    vec2 H;
     ivec2 x = ivec2(gl_GlobalInvocationID.xy);
+    vec4 data = imageLoad(butterflyTexture, ivec2(x.y, stage)).rgba;
 
     if (pingpong == 0) {
-        vec4 data = imageLoad(butterflyTexture, ivec2(x.y, stage)).rgba;
-        vec2 p_ = imageLoad(pingpong0, ivec2(x.x, data.z)).rg;
-        vec2 q_ = imageLoad(pingpong0, ivec2(x.x, data.w)).rg;
-        vec2 w_ = vec2(data.x, data.y);
+        vec2 p = imageLoad(pingpong0, ivec2(x.x, data.z)).rg;
+        vec2 q = imageLoad(pingpong0, ivec2(x.x, data.w)).rg;
+        vec2 w = vec2(data.x, data.y);
 
-        complex p = complex(p_.x, p_.y);
-        complex q = complex(q_.x, q_.y);
-        complex w = complex(w_.x, w_.y);
-
-        H = add(p, mul(w, q));
-        imageStore(pingpong1, x, vec4(H.real, H.im, 0, 1));
+        H = p + mul(w, q);
+        imageStore(pingpong1, x, vec4(H.x, H.y, 0, 1));
     } else if (pingpong == 1) {
-        vec4 data = imageLoad(butterflyTexture, ivec2(x.y, stage)).rgba;
-        vec2 p_ = imageLoad(pingpong1, ivec2(x.x, data.z)).rg;
-        vec2 q_ = imageLoad(pingpong1, ivec2(x.x, data.w)).rg;
-        vec2 w_ = vec2(data.x, data.y);
+        vec2 p = imageLoad(pingpong1, ivec2(x.x, data.z)).rg;
+        vec2 q = imageLoad(pingpong1, ivec2(x.x, data.w)).rg;
+        vec2 w = vec2(data.x, data.y);
 
-        complex p = complex(p_.x, p_.y);
-        complex q = complex(q_.x, q_.y);
-        complex w = complex(w_.x, w_.y);
-
-        H = add(p, mul(w, q));
-        imageStore(pingpong0, x, vec4(H.real, H.im, 0, 1));
+        H = p + mul(w, q);
+        imageStore(pingpong0, x, vec4(H.x, H.y, 0, 1));
     }
 }
 

@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>jepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;JE_DEBUG;JE_DISABLE_FUNC_UNDECLARED_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;JE_PLATFORM_WINDOWS;JE_BUILD_DLL;GLFW_INCLUDE_NONE;JE_ENABLE_ASSERT;JE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;src\Judas-Engine;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -158,8 +158,8 @@
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.h" />
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLVertexArray.h" />
@@ -167,6 +167,7 @@
     <ClInclude Include="src\Judas-Engine\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\Buffer.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCamera.h" />
@@ -177,7 +178,6 @@
     <ClInclude Include="src\Judas-Engine\Renderer\Shader.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\Texture.h" />
     <ClInclude Include="src\Judas-Engine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h" />
     <ClInclude Include="src\JudasEngine.h" />
     <ClInclude Include="src\jepch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -609,14 +609,15 @@
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.cpp" />
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Judas-Engine\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCamera.cpp" />
@@ -630,7 +631,6 @@
     <ClCompile Include="src\jepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

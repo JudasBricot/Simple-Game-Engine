@@ -6,7 +6,7 @@ layout(rgba32f, binding = 1) uniform image2D slopeBuffer;
 layout(rgba32f, binding = 2) uniform image2D displacementBuffer;
 
 layout(std430, binding = 3) buffer globalParam {
-	vec2 step;
+	vec2 scale;
 	vec2 wind_direction;
 	float wind_amplitude;
 	float gravity;
@@ -33,11 +33,6 @@ layout(std430, binding = 6) buffer _Pierson {
 	float amplitude;
 
 } piersonParams;
-
-/*layout(std430, binding = 7) buffer _TMA {
-	bool useTMA;
-	float depth;
-} TMAParams;*/
 
 const float PI = 3.1415926535897932384626433832795f;
 
@@ -66,10 +61,7 @@ vec2 UniformToGaussian(float u1, float u2) {
 
 float PhillipsSpectrum(float amplitude, vec2 k_dir, float k_len_sqrd, float g, float l_sqrd, float L_sqrd, float alignementFactor)
 {	
-	// Remove the directional part;
-	//float dot_k_w = pow(dot(k_dir, wind_direction), alignementFactor);
-	
-	float Ph_k = amplitude /** dot_k_w*/ * exp(- 1.0 / (k_len_sqrd * L_sqrd) - k_len_sqrd * l_sqrd) / (k_len_sqrd * k_len_sqrd);
+	float Ph_k = amplitude * exp(- 1.0 / (k_len_sqrd * L_sqrd) - k_len_sqrd * l_sqrd) / (k_len_sqrd * k_len_sqrd);
 
 	return Ph_k;
 }
@@ -107,6 +99,7 @@ float JonswapSpectrum(float amplitude, float g, float omega, float gamma, float 
 	float sigma = Sigma(omega, omega_p);
 	float r = R(omega, omega_p, sigma);
 
+	// Arbitrary scaling
 	return 500.0 * amplitude * alpha * g * g / pow(omega, 5.0) * exp(- 1.25 * pow(omega_p / omega, 4.0)) * pow(gamma, r);
 }
 
@@ -120,6 +113,7 @@ float PiersonSpectrum(float amplitude, float omega, float g, float wind_speed)
 	float beta = 0.74;
 	float omega_0 = g / (1.026 * wind_speed);
 
+	// Arbitrary scaling
 	return 400.0 * amplitude * alpha * g * g / pow(omega, 5.0) * exp(- beta * pow(omega_0 / omega, 4.0));
 }
 
@@ -147,18 +141,8 @@ float NonDirectionalSpectrum(vec2 k_dir, float k_len_sqrd, float omega, float g,
 	return nonDirSpectrum;
 }
 
-/*float TMA(float k_len, float g, float depth)
-{
-	float omega = sqrt(g * k_len);
-	float omega_h = omega * sqrt(depth / g);
-
-	if(omega_h <= 1.0)
-		return 0.5 * omega_h*omega_h;
-	return 1.0 - 0.5 * (2.0 - omega_h) * (2.0 - omega_h);
-}*/
-
 // =============================
-//    Directional Spectra 
+//      Directional Spectra 
 // =============================
 
 float PhillipsDirectional(float theta)
@@ -168,7 +152,10 @@ float PhillipsDirectional(float theta)
 
 float PositiveCosine(float theta)
 {
-	float c = max(cos(theta), 0.0);
+	if(abs(theta) >= PI / 2.0)
+		return 0.0;
+
+	float c = cos(theta);
 
 	return 2.0 / PI * c * c;
 }
@@ -207,6 +194,10 @@ float DirectionalSpreading(float omega, float theta, float g, float wind_speed)
 	}
 }
 
+// ==============================
+//   Global Spectra computation
+// ==============================
+
 float GlobalSpectrum(vec2 k_dir, float k_len_sqrd, float g, float wind_speed)
 {
 	float k_len = sqrt(k_len_sqrd);
@@ -216,11 +207,12 @@ float GlobalSpectrum(vec2 k_dir, float k_len_sqrd, float g, float wind_speed)
 	float spectrum = NonDirectionalSpectrum(k_dir, k_len_sqrd, omega, gravity, wind_amplitude);
 	spectrum *= DirectionalSpreading(omega, theta, g, wind_speed);
 
-	/*if(TMAParams.useTMA)
-		spectrum *= TMA(k_len, g, TMAParams.depth);*/
-
 	return sqrt(spectrum);
 }
+
+// ================================
+//   Tessendorf Fourier Amplitude
+// ================================
 
 vec4 SpectrumAmplitude(vec2 k_dir, float k_len_sqrd, int seed)
 {
@@ -257,17 +249,20 @@ void main()
 
 	int seed = int(pixelPos.x) + int(pixelPos.y) * screenSize.x + screenSize.y;
 
-	vec2 dk = 2.0 * PI * vec2 (1.0 / (step.x * float(screenSize.x)), 1.0 / (step.y * float(screenSize.y)));
+	// Sampling information
+	vec2 dk = 2.0 * PI * vec2 (1.0 / (scale.x * float(screenSize.x)), 1.0 / (scale.y * float(screenSize.y)));
 	vec2 k = dk * centeredPos;
 	vec2 k_dir = normalize(k);
 	float k_len_sqrd = k.x*k.x + k.y*k.y;
 
+	// Wave spectrum information
 	vec2 h0 = FourierAmplitude(k_dir, k_len_sqrd, seed, gravity, time);
 	vec2 ih = vec2(-h0.y, h0.x);
 	vec2 slope = vec2(ih.x * k.x - ih.y * k.y, ih.y * k.x + ih.x * k.y);
 	vec2 displacement = vec2(ih.x * k_dir.x - ih.y * k_dir.y, ih.y * k_dir.x + ih.x * k_dir.y);
 
-	vec3 color = vec3(h0  / (step.x * step.y), 0.0);
+	// Arbitrary scaling
+	vec3 color = vec3(h0  / (scale.x * scale.y), 0.0);
 
 	imageStore(spectrumBuffer, ivec2(pixelPos), vec4(color, 1.0));
 	imageStore(slopeBuffer, ivec2(pixelPos), vec4(100.0 * slope, 0.0, 1.0));

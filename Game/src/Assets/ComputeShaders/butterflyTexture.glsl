@@ -14,10 +14,10 @@ void main()
     int p = int(x.y) + 1; // stage
     
     int b = N >> p; // Represent the offset between the indices
-    int base = b * (n / b); // Index of the partition
-	int i = (2 * base + n % b);
+    int u = b * (n / b); // Index of the partition
+	int i = (u + n) % N;
 
-	float phase = 2.0 * M_PI / N * base;
+	float phase = 2.0 * M_PI / N * u;
     vec2 twiddle = vec2(cos(phase), sin(phase));
 
     imageStore(butterflyTexture, ivec2(x), vec4(twiddle.x, twiddle.y, i, i + b));

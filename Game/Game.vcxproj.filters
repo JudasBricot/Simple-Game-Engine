@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{3824E0A7-24C6-0A7E-0D81-1ED2F9C191CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Scripts">
+      <UniqueIdentifier>{6FC36DC7-5B91-61CD-4425-D2F330923D32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Scripts\Layers">
+      <UniqueIdentifier>{4E47D8FA-BAB3-93F5-83A7-2B53EFD2B55D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Scripts\Ocean">
+      <UniqueIdentifier>{24646455-10F3-ED1E-B911-021AA57FFEC4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Assets\Scripts\Layers\ButterflyTexture.h">
+      <Filter>Assets\Scripts\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Scripts\Layers\SpectraDisplay.h">
+      <Filter>Assets\Scripts\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Scripts\Layers\WaveField.h">
+      <Filter>Assets\Scripts\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Scripts\Ocean\IFFT2D.h">
+      <Filter>Assets\Scripts\Ocean</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Scripts\Ocean\SpectrumGenerator.h">
+      <Filter>Assets\Scripts\Ocean</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\Scripts\TestManager.h">
+      <Filter>Assets\Scripts</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Assets\Scripts\TestManager.cpp">
+      <Filter>Assets\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameApplication.cpp" />
+  </ItemGroup>
+</Project>

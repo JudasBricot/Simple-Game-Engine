@@ -12,7 +12,7 @@ class SpectrumGenerator
 {
 	struct OceanParameters
 	{
-		glm::vec2 Step;
+		glm::vec2 scale;
 		glm::vec2 Wind_direction;
 		float Wind_amplitude;
 		float Gravity;
@@ -20,8 +20,8 @@ class SpectrumGenerator
 		int EnveloppeSpectrumIndex;
 		int DirectionSpreadingIndex;
 
-		OceanParameters(float amplitude, glm::vec2 wind_direction, float wind_amplitude, float gravity, float min_wave_height_sqrd, glm::vec2 step, int enveloppeSpectrumIndex, int directionSpreadingIndex)
-			: Wind_direction(wind_direction), Wind_amplitude(wind_amplitude), Gravity(gravity), Step(step), EnveloppeSpectrumIndex(enveloppeSpectrumIndex), DirectionSpreadingIndex(directionSpreadingIndex)
+		OceanParameters(float amplitude, glm::vec2 wind_direction, float wind_amplitude, float gravity, float min_wave_height_sqrd, glm::vec2 scale, int enveloppeSpectrumIndex, int directionSpreadingIndex)
+			: Wind_direction(wind_direction), Wind_amplitude(wind_amplitude), Gravity(gravity), scale(scale), EnveloppeSpectrumIndex(enveloppeSpectrumIndex), DirectionSpreadingIndex(directionSpreadingIndex)
 		{
 			Time = 0.0f;
 		}
@@ -70,15 +70,6 @@ class SpectrumGenerator
 		: Amplitude(amplitude) {}
 	};
 
-	struct TMAParameters
-	{
-		bool UseTMA;
-		float Depth;
-
-		TMAParameters(bool useTMA, float depth)
-		: UseTMA(useTMA), Depth(depth) {}
-	};
-
 public:
 	SpectrumGenerator(EnveloppeSpectrum enveloppeSpectrum = EnveloppeSpectrum::Phillips, DirectionalSpectrum directionalSpectrum = DirectionalSpectrum::None);
 	~SpectrumGenerator();
@@ -96,7 +87,7 @@ public:
 		{
 			if (ImGui::CollapsingHeader("Simulation Parameters"))
 			{
-				ImGui::DragFloat2("Step", glm::value_ptr(m_SimulationParams->Step), 0.001f, 0.0f, 5.0f);
+				ImGui::DragFloat2("scale", glm::value_ptr(m_SimulationParams->scale), 0.001f, 0.0f, 5.0f);
 				ImGui::DragFloat2("Wind Direction", glm::value_ptr(m_SimulationParams->Wind_direction), 0.01f, 0.0f, 1.0f);
 				ImGui::DragFloat("Wind Amplitude", &m_SimulationParams->Wind_amplitude, 0.01f, 0.0f, 60.0f);
 				ImGui::DragFloat("Gravity", &m_SimulationParams->Gravity, 0.001f, 0.0f, 1.0f);
@@ -169,12 +160,6 @@ public:
 					m_SimulationParams->DirectionSpreadingIndex = (int)m_DirectionalSpectrum;
 				}
 			}
-
-			if (ImGui::CollapsingHeader("TMA"))
-			{
-				ImGui::Checkbox("Use TMA", &m_TMAParams->UseTMA);
-				ImGui::DragFloat("Depth", &m_TMAParams->Depth, 0.01f, 1.0f, 10000.0f);
-			}
 		}
 	}
 
@@ -199,9 +184,6 @@ private:
 
 	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_PiersonParamsBuffer;
 	Judas_Engine::Ref<PiersonParameters> m_PiersonParams;
-
-	Judas_Engine::Ref<Judas_Engine::OpenGLDataBufferObject> m_TMAParamsBuffer;
-	Judas_Engine::Ref<TMAParameters> m_TMAParams;
 };
 
 // Impl
@@ -251,12 +233,6 @@ SpectrumGenerator<SIZE>::SpectrumGenerator(EnveloppeSpectrum enveloppeSpectrum, 
 		1.0f
 	);
 	m_PiersonParamsBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_PiersonParams, sizeof(PiersonParameters));
-
-	m_TMAParams = std::make_shared<TMAParameters>(
-		false,
-		0.1f
-	);
-	m_TMAParamsBuffer = std::make_shared<Judas_Engine::OpenGLDataBufferObject>((Judas_Engine::Ref<void>)m_TMAParams, sizeof(TMAParameters));
 }
 
 template<unsigned int SIZE>
@@ -288,9 +264,6 @@ inline void SpectrumGenerator<SIZE>::ComputeTimeDependentSpectrum(float deltaTim
 
 	m_PiersonParamsBuffer->Bind(6);
 	m_PiersonParamsBuffer->UpdateData((Judas_Engine::Ref<void>)m_PiersonParams);
-
-	m_TMAParamsBuffer->Bind(7);
-	m_TMAParamsBuffer->UpdateData((Judas_Engine::Ref<void>)m_TMAParams);
 
 	m_SpectrumComputeShader->Dispatch(SIZE / 16 + 1, SIZE / 16 + 1, 1);
 

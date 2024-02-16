@@ -7,6 +7,9 @@
     <Filter Include="src\Judas-Engine">
       <UniqueIdentifier>{16D4468F-02CD-65E1-2BFF-4A66175745ED}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Judas-Engine\Compute">
+      <UniqueIdentifier>{22FE0016-0E23-5096-376E-352623F24EB4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Judas-Engine\Core">
       <UniqueIdentifier>{2EF675C7-9A62-31C2-6356-C91FCF81532A}</UniqueIdentifier>
     </Filter>
@@ -60,6 +63,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Judas-Engine\Compute\ComputeShader.h">
+      <Filter>src\Judas-Engine\Compute</Filter>
+    </ClInclude>
     <ClInclude Include="src\Judas-Engine\Core\Application.h">
       <Filter>src\Judas-Engine\Core</Filter>
     </ClInclude>
@@ -105,7 +111,13 @@
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h">
+      <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.h">
       <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -132,10 +144,19 @@
     <ClInclude Include="src\Judas-Engine\Renderer\GraphicsContext.h">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Judas-Engine\Renderer\OrthographicCamera.h">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Judas-Engine\Renderer\OrthographicCameraController.h">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCamera.h">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCameraController.h">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Judas-Engine\Renderer\RenderCommand.h">
@@ -1413,14 +1434,11 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCamera.h" />
-    <ClInclude Include="src\Judas-Engine\Renderer\PerspectiveCameraController.h" />
-    <ClInclude Include="src\Judas-Engine\Renderer\Mesh.h" />
-    <ClInclude Include="src\Judas-Engine\Compute\ComputeShader.h" />
-    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.h" />
-    <ClInclude Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Judas-Engine\Compute\ComputeShader.cpp">
+      <Filter>src\Judas-Engine\Compute</Filter>
+    </ClCompile>
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp">
       <Filter>src\Judas-Engine\Core</Filter>
     </ClCompile>
@@ -1442,7 +1460,13 @@
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp">
+      <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.cpp">
       <Filter>src\Judas-Engine\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1466,10 +1490,19 @@
     <ClCompile Include="src\Judas-Engine\Renderer\Buffer.cpp">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Judas-Engine\Renderer\OrthographicCamera.cpp">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Judas-Engine\Renderer\OrthographicCameraController.cpp">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCamera.cpp">
+      <Filter>src\Judas-Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCameraController.cpp">
       <Filter>src\Judas-Engine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Judas-Engine\Renderer\Renderer.cpp">
@@ -1496,11 +1529,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Judas-Engine\Renderer\PerspectiveCameraController.cpp" />
-    <ClCompile Include="src\Judas-Engine\Renderer\Mesh.cpp" />
-    <ClCompile Include="src\Judas-Engine\Compute\ComputeShader.cpp" />
-    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLComputeShader.cpp" />
-    <ClCompile Include="src\Judas-Engine\Platform\OpenGL\OpenGLRenderTexture.cpp" />
   </ItemGroup>
 </Project>
