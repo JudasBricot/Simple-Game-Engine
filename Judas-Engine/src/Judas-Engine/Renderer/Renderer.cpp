@@ -40,13 +40,15 @@ namespace Judas_Engine
 	{
 	}
 
-	void Renderer::Submit(const Ref<Shader> shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform)
+	void Renderer::Submit(const Ref<Shader> shader, const Ref<VertexArray>& vertexArray, const glm::mat4 modelMatrix)
 	{
 		shader->Bind();
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformFloat3("u_CameraPosition", s_SceneData->CameraPosition);
 
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", modelMatrix);
+
+		JE_INFO("Model matrix : \n {0}", glm::to_string(modelMatrix));
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

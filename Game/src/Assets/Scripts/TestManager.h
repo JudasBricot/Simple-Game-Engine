@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Judas-Engine/Layers/Layer.h>
-#include <Judas-Engine/Renderer/PerspectiveCameraController.h>
+#include <Judas-Engine/Renderer/Camera/PerspectiveCameraController.h>
 
 // TEMP
 #include <Judas-Engine/Logging/Log.h>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RenderCommand.h"
-#include "PerspectiveCamera.h"
+#include "Camera/PerspectiveCamera.h"
 #include "Shader.h"
 
 namespace Judas_Engine

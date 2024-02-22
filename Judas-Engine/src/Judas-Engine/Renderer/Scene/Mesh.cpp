@@ -232,6 +232,6 @@ namespace Judas_Engine
 		JE_ASSERT(m_VertexBuffer, "Mesh Vertex buffer is null");
 		JE_ASSERT(m_IndexBuffer, "Mesh Index buffer is null");
 
-		Renderer::Submit(m_Shader, m_VertexArray, glm::scale(glm::mat4x4(1.0f), m_Scale)); 
+		Renderer::Submit(m_Shader, m_VertexArray, m_Transform.GetModelMatrix()); 
 	}
 }

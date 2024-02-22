@@ -6,6 +6,8 @@
 #include "Judas-Engine/Renderer/Buffer.h"
 #include "Judas-Engine/Core/Core.h"
 
+#include "Transform.h"
+
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 
@@ -18,7 +20,7 @@ namespace Judas_Engine
 	public:
 		static const Ref<Mesh> CreatePrimitive(PrimitiveType type, unsigned int resolution = 16);
 		Mesh() {}
-		Mesh(const Ref<Shader> shader, const Ref<VertexArray> vertexArray, glm::vec3 scale) : m_Shader(shader), m_VertexArray(vertexArray), m_Scale(scale) {}
+		Mesh(const Ref<Shader> shader, const Ref<VertexArray> vertexArray, const glm::vec3& scale) : m_Shader(shader), m_VertexArray(vertexArray), m_Transform(glm::vec3(0), scale) {}
 		~Mesh() {}
 
 		void SetMeshData(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const BufferLayout& layout);
@@ -28,12 +30,13 @@ namespace Judas_Engine
 	private:
 		Ref<Shader> m_Shader{};
 		Ref<VertexArray> m_VertexArray{};
-		glm::vec3 m_Scale = glm::vec3(1.0f);
 
 		Ref<VertexBuffer> m_VertexBuffer{};
 		Ref<IndexBuffer> m_IndexBuffer{};
 
 		std::vector<float> m_Vertices{};
 		std::vector<unsigned int> m_Indices{};
+
+		Transform m_Transform;
 	};
 }

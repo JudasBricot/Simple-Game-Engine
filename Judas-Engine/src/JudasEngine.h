@@ -27,12 +27,12 @@
 #include "Judas-Engine/Renderer/Texture.h"
 #include "Judas-Engine/Renderer/VertexArray.h"
 
-#include "Judas-Engine/Renderer/OrthographicCamera.h"
-#include "Judas-Engine/Renderer/OrthographicCameraController.h"
-#include "Judas-Engine/Renderer/PerspectiveCamera.h"
-#include "Judas-Engine/Renderer/PerspectiveCameraController.h"
+#include "Judas-Engine/Renderer/Camera/OrthographicCamera.h"
+#include "Judas-Engine/Renderer/Camera/OrthographicCameraController.h"
+#include "Judas-Engine/Renderer/Camera/PerspectiveCamera.h"
+#include "Judas-Engine/Renderer/Camera/PerspectiveCameraController.h"
 
-#include "Judas-Engine/Renderer/Mesh.h"
+#include "Judas-Engine/Renderer/Scene/Mesh.h"
 
 //--------------------
 

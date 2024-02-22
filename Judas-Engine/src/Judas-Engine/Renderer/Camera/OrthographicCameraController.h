@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Judas-Engine/Renderer/OrthographicCamera.h"
+#include "Judas-Engine/Renderer/Camera/OrthographicCamera.h"
 #include "Judas-Engine/Core/Timestep.h"
 
 #include "Judas-Engine/EventSystem/ApplicationEvent.h"
