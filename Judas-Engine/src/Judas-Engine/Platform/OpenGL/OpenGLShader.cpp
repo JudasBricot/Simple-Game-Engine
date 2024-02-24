@@ -88,8 +88,10 @@ namespace Judas_Engine
 			JE_CORE_ASSERT(ShaderTypeFromString(type), "Invalide shader type specified");
 
 			size_t nextLinePos = source.find_first_of("\r\n", eol);
+			JE_CORE_ASSERT(nextLinePos != std::string::npos, "Synthax error");
 			pos = source.find(typeToken, nextLinePos);
-			shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos));
+
+			shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
 		}
 
 		return shaderSources;
@@ -174,7 +176,10 @@ namespace Judas_Engine
 
 		// Always detach shaders after a successful link.
 		for (auto id : glShaderIds)
+		{
 			glDetachShader(m_RendererID, id);
+			glDeleteShader(id);
+		}
 	}
 
 	void OpenGLShader::Bind() const

@@ -1,15 +1,20 @@
 [submodule "Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog"]
 	path = Thats-the-one/src/vendor/TThats-the-one/src/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	branch = v1.x
 [submodule "Judas-Engine/vendor/GLFW"]
 	path = Judas-Engine/vendor/GLFW
 	url = https://github.com/TheCherno/GLFW
+	branch = master
 [submodule "Judas-Engine/vendor/spdlog"]
 	path = Judas-Engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	branch = master
 [submodule "Judas-Engine/vendor/imgui"]
 	path = Judas-Engine/vendor/imgui
 	url = https://github.com/thecherno/imgui
+	branch = docking
 [submodule "Judas-Engine/vendor/glm"]
 	path = Judas-Engine/vendor/glm
 	url = https://github.com/g-truc/glm
+	branch = master

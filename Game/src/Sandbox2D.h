@@ -1,5 +1,5 @@
 #pragma once
-/*
+
 #include <JudasEngine.h>
 
 class Sandbox2D : public Judas_Engine::Layer
@@ -10,4 +10,4 @@ class Sandbox2D : public Judas_Engine::Layer
 	virtual void OnImGuiRender() override;
 	virtual void OnEvent(Judas_Engine::Event& e) override;
 };
-*/
+
