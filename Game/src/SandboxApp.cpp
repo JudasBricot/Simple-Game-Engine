@@ -1,7 +1,10 @@
 #include <JudasEngine.h>
+#include "Judas-Engine/Core/EntryPoint.h"
 
 #include "Judas-Engine/Platform/OpenGL/OpenGLShader.h"
 #include "Judas-Engine/Renderer/Shader.h"
+
+#include "Sandbox2D.h"
 
 #include "ImGui/imgui.h"
 
@@ -12,11 +15,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
 #include <glm/gtc/type_ptr.hpp>
-
-// temp
-#include "glm/ext.hpp"
+#include "glm/ext.hpp" // TEMP
 
 
 class ExampleLayer : public Judas_Engine::Layer
@@ -25,7 +25,7 @@ public:
 	ExampleLayer()
 		: Layer("MyLayer"), m_CameraController(1280.0f / 720.0f, true)
 	{
-		/*m_VertexArray.reset(Judas_Engine::VertexArray::Create());
+		m_VertexArray = Judas_Engine::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
@@ -51,7 +51,7 @@ public:
 
 		Judas_Engine::Ref<Judas_Engine::IndexBuffer> m_IndexBuffer;
 		m_IndexBuffer.reset(Judas_Engine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);*/
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
 		m_BlueShaderVertexArray = Judas_Engine::VertexArray::Create();
 
@@ -229,7 +229,7 @@ class GameApplication : public Judas_Engine::Application
 public:
 	GameApplication()
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 
 		/*m_CameraLayer = new CameraLayer(&m_Camera);
 		PushLayer(m_CameraLayer);*/

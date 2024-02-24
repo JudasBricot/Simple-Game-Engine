@@ -20,6 +20,10 @@ namespace Judas_Engine
 		void Bind() const;
 		void Unbind() const;
 
+		virtual void SetMat4(const char* name, glm::mat4 mat) override;
+		virtual void SetFloat4(const char* name, glm::vec4 vec) override;
+		virtual void SetFloat3(const char* name, glm::vec3 vec) override;
+
 		void UploadUniformInt(const char* name, int value);
 
 		void UploadUniformFloat(const char* name, float value);

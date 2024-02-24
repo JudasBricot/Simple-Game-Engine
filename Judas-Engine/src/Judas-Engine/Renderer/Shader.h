@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+#include <glm/glm.hpp>
+
 namespace Judas_Engine
 {
 	class Shader
@@ -13,10 +15,13 @@ namespace Judas_Engine
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual void SetMat4(const char* name, glm::mat4 mat) = 0;
+		virtual void SetFloat4(const char* name, glm::vec4 vec) = 0;
+		virtual void SetFloat3(const char* name, glm::vec3 vec) = 0;
+
 		static Ref<Shader> Create(const std::string& filepath);
 		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 	};
-
 
 	class ShaderLibrary
 	{
