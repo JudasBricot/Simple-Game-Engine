@@ -192,9 +192,14 @@ namespace Judas_Engine
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetMat4(const char* name, glm::mat4 mat)
+	void OpenGLShader::SetInt(const char* name, int value)
 	{
-		UploadUniformMat4(name, mat);
+		UploadUniformInt(name, value);
+	}
+
+	void OpenGLShader::SetFloat3(const char* name, glm::vec3 vec)
+	{
+		UploadUniformFloat3(name, vec);
 	}
 
 	void OpenGLShader::SetFloat4(const char* name, glm::vec4 vec)
@@ -202,9 +207,9 @@ namespace Judas_Engine
 		UploadUniformFloat4(name, vec);
 	}
 
-	void OpenGLShader::SetFloat3(const char* name, glm::vec3 vec)
+	void OpenGLShader::SetMat4(const char* name, glm::mat4 mat)
 	{
-		UploadUniformFloat3(name, vec);
+		UploadUniformMat4(name, mat);
 	}
 
 	void OpenGLShader::UploadUniformInt(const char* name, int value)

@@ -13,7 +13,7 @@ namespace Judas_Engine
 		virtual uint32_t GetWidth() const override { return m_Width; }
 		virtual uint32_t Getheight() const override { return m_Height; }
 
-		virtual void Bind(uint32_t slot) const override;
+		virtual void Bind(uint32_t slot = 0) const override;
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;

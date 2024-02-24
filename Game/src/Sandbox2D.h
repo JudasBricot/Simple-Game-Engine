@@ -14,6 +14,8 @@ public:
 private:
 	Judas_Engine::ShaderLibrary m_ShaderLibrary;
 
+	Judas_Engine::Ref<Judas_Engine::Texture2D> m_Texture;
+
 	Judas_Engine::Ref<Judas_Engine::Shader> m_FlatColorShader;
 	Judas_Engine::Ref<Judas_Engine::VertexArray> m_VertexArray;
 

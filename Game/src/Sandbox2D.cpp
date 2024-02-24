@@ -12,6 +12,7 @@ Sandbox2D::Sandbox2D() : Layer("MyLayer"), m_CameraController(1280.0f / 720.0f, 
 
 void Sandbox2D::OnAttach()
 {
+	m_Texture = Judas_Engine::Texture2D::Create("src/Assets/textures/texture.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -29,6 +30,7 @@ void Sandbox2D::OnUpdate(Judas_Engine::Timestep ts)
 
 	Judas_Engine::Renderer2D::DrawQuad({ 1.0f, 0.0f }, glm::vec2(0.5f, 1.0f), { m_SquareColor, 1.0f });
 	Judas_Engine::Renderer2D::DrawQuad({ 0.0f, 1.0f }, glm::vec2(1.0f, 0.5f), { 0.5f, 0.1f, 0.8, 1.0f });
+	Judas_Engine::Renderer2D::DrawQuad({ -0.5f, 0.0f }, glm::vec2(1.0f, 1.0f), m_Texture);
 	Judas_Engine::Renderer2D::EndScene();
 }
 
