@@ -12,9 +12,9 @@ namespace Judas_Engine
 {
 	struct Renderer2DStorage
 	{
-		Ref<Shader> FlatColorShader;
 		Ref<Shader> TextureShader;
 		Ref<VertexArray> VertexArray;
+		Ref<Texture2D> WhiteTexture;
 	};
 
 	static Scope<Renderer2DStorage> s_Data = CreateScope<Renderer2DStorage>();
@@ -58,8 +58,13 @@ namespace Judas_Engine
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		s_Data->VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-		s_Data->FlatColorShader = Shader::Create("src/Assets/Shaders/flatColor.glsl");
+		s_Data->WhiteTexture = Texture2D::Create(1, 1);
+		uint32_t data = 0xffffffff;
+		s_Data->WhiteTexture->SetData(&data, sizeof(uint32_t));
+
 		s_Data->TextureShader = Shader::Create("src/Assets/Shaders/texture.glsl");
+		s_Data->TextureShader->Bind();
+		s_Data->TextureShader->SetInt("u_Texture", 0);
 	}
 
 	void Renderer2D::OnWindowResize(uint32_t width, uint32_t height)
@@ -69,9 +74,6 @@ namespace Judas_Engine
 
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
-		s_Data->FlatColorShader->Bind();
-		s_Data->FlatColorShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());		
-		
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
@@ -85,13 +87,13 @@ namespace Judas_Engine
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		s_Data->FlatColorShader->Bind();
-		s_Data->FlatColorShader->SetFloat4("u_Color", color);
-
-		s_Data->VertexArray->Bind();
+		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->WhiteTexture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) * glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
-		s_Data->FlatColorShader->SetMat4("u_Transform", transform);
+		s_Data->TextureShader->SetMat4("u_Transform", transform);
+
+		s_Data->VertexArray->Bind();
 
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
@@ -103,13 +105,13 @@ namespace Judas_Engine
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture)
 	{
-		s_Data->TextureShader->Bind();
-		s_Data->VertexArray->Bind();
+		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0));
+		texture->Bind(0);
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) * glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 		
-		texture->Bind(0);
+		s_Data->VertexArray->Bind();
 
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}

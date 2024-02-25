@@ -6,7 +6,6 @@ layout(location = 1) in vec2 a_TexCoords;
 
 uniform mat4 u_ViewProjection;
 uniform mat4 u_Transform;
-uniform vec3 u_Color;
 
 out vec2 v_TexCoords;
 
@@ -24,8 +23,9 @@ layout(location = 0) out vec4 color;
 in vec2 v_TexCoords;
 
 uniform sampler2D u_Texture;
+uniform vec4 u_Color;
 		
 void main()
 {
-	color = texture(u_Texture, v_TexCoords);
+	color = texture(u_Texture, v_TexCoords) * u_Color;
 }
