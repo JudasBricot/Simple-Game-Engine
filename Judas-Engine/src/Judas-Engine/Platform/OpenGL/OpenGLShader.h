@@ -21,19 +21,20 @@ namespace Judas_Engine
 		void Unbind() const;
 
 		virtual void SetInt(const char* name, int value) override;
-		virtual void SetFloat3(const char* name, glm::vec3 vec) override;
-		virtual void SetFloat4(const char* name, glm::vec4 vec) override;
-		virtual void SetMat4(const char* name, glm::mat4 mat) override;
+		virtual void SetFloat(const char* name, float value) override;
+		virtual void SetFloat3(const char* name, const glm::vec3& value) override;
+		virtual void SetFloat4(const char* name, const glm::vec4& value) override;
+		virtual void SetMat4(const char* name, const glm::mat4& mat) override;
 
 		void UploadUniformInt(const char* name, int value);
 
 		void UploadUniformFloat(const char* name, float value);
-		void UploadUniformFloat2(const char* name, const glm::vec2 values);
-		void UploadUniformFloat3(const char* name, const glm::vec3 values);
-		void UploadUniformFloat4(const char* name, const glm::vec4 values);
+		void UploadUniformFloat2(const char* name, const glm::vec2& values);
+		void UploadUniformFloat3(const char* name, const glm::vec3& values);
+		void UploadUniformFloat4(const char* name, const glm::vec4& values);
 
-		void UploadUniformMat3(const char* name, const glm::mat3 mat);
-		void UploadUniformMat4(const char* name, const glm::mat4 mat);
+		void UploadUniformMat3(const char* name, const glm::mat3& mat);
+		void UploadUniformMat4(const char* name, const glm::mat4& mat);
 	private:
 		std::string ReadFile(const std::string& filepath);
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);

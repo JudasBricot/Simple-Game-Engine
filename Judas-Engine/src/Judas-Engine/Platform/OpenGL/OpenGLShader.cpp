@@ -25,6 +25,8 @@ namespace Judas_Engine
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		JE_PROFILE_FUNC
+
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -40,6 +42,8 @@ namespace Judas_Engine
 	OpenGLShader::OpenGLShader(const std::string name, const std::string& vertexSrc, const std::string& fragmentSrc)
 		: m_Name(name)
 	{
+		JE_PROFILE_FUNC
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -48,6 +52,8 @@ namespace Judas_Engine
 
 	OpenGLShader::~OpenGLShader()
 	{
+		JE_PROFILE_FUNC
+
 		glDeleteProgram(m_RendererID);
 	}
 
@@ -74,6 +80,8 @@ namespace Judas_Engine
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
+		JE_PROFILE_FUNC
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		char* typeToken = "#type";
@@ -99,6 +107,8 @@ namespace Judas_Engine
 
 	void OpenGLShader::Compile(std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		JE_PROFILE_FUNC
+
 		// Get a program object.
 		uint32_t program = glCreateProgram();
 		JE_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
@@ -184,31 +194,50 @@ namespace Judas_Engine
 
 	void OpenGLShader::Bind() const
 	{
+		JE_PROFILE_FUNC
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		JE_PROFILE_FUNC
+
 		glUseProgram(0);
 	}
 
 	void OpenGLShader::SetInt(const char* name, int value)
 	{
+		JE_PROFILE_FUNC
+
 		UploadUniformInt(name, value);
 	}
 
-	void OpenGLShader::SetFloat3(const char* name, glm::vec3 vec)
+	void OpenGLShader::SetFloat(const char* name, float value)
 	{
-		UploadUniformFloat3(name, vec);
+		JE_PROFILE_FUNC
+
+			UploadUniformFloat(name, value);
 	}
 
-	void OpenGLShader::SetFloat4(const char* name, glm::vec4 vec)
+	void OpenGLShader::SetFloat3(const char* name, const glm::vec3& value)
 	{
-		UploadUniformFloat4(name, vec);
+		JE_PROFILE_FUNC
+
+		UploadUniformFloat3(name, value);
 	}
 
-	void OpenGLShader::SetMat4(const char* name, glm::mat4 mat)
+	void OpenGLShader::SetFloat4(const char* name, const glm::vec4& value)
 	{
+		JE_PROFILE_FUNC
+
+		UploadUniformFloat4(name, value);
+	}
+
+	void OpenGLShader::SetMat4(const char* name, const glm::mat4& mat)
+	{
+		JE_PROFILE_FUNC
+
 		UploadUniformMat4(name, mat);
 	}
 
@@ -230,7 +259,7 @@ namespace Judas_Engine
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::UploadUniformFloat2(const char* name, const glm::vec2 values)
+	void OpenGLShader::UploadUniformFloat2(const char* name, const glm::vec2& values)
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
@@ -239,7 +268,7 @@ namespace Judas_Engine
 		glUniform2f(location, values.x, values.y);
 	}
 
-	void OpenGLShader::UploadUniformFloat3(const char* name, const glm::vec3 values)
+	void OpenGLShader::UploadUniformFloat3(const char* name, const glm::vec3& values)
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
@@ -247,8 +276,8 @@ namespace Judas_Engine
 
 		glUniform3f(location, values.x, values.y, values.z);
 	}
-
-	void OpenGLShader::UploadUniformFloat4(const char* name, const glm::vec4 values)
+	
+	void OpenGLShader::UploadUniformFloat4(const char* name, const glm::vec4& values)
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
@@ -257,7 +286,7 @@ namespace Judas_Engine
 		glUniform4f(location, values.x, values.y, values.z, values.w);
 	}
 
-	void OpenGLShader::UploadUniformMat3(const char* name, const glm::mat3 mat)
+	void OpenGLShader::UploadUniformMat3(const char* name, const glm::mat3& mat)
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)
@@ -266,7 +295,7 @@ namespace Judas_Engine
 		glUniformMatrix3fv(location, 1, false, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::UploadUniformMat4(const char* name, const glm::mat4 mat)
+	void OpenGLShader::UploadUniformMat4(const char* name, const glm::mat4& mat)
 	{
 		unsigned int location = glGetUniformLocation(m_RendererID, name);
 		if (location == -1)

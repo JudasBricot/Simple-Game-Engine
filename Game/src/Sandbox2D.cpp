@@ -40,9 +40,9 @@ void Sandbox2D::OnUpdate(Judas_Engine::Timestep ts)
 
 	Judas_Engine::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-	Judas_Engine::Renderer2D::DrawQuad({ 1.0f, 0.0f }, glm::vec2(0.5f, 1.0f), { m_SquareColor, 1.0f });
+	Judas_Engine::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, glm::vec2(0.5f, 1.0f), glm::radians(22.5f), { m_SquareColor, 1.0f });
 	Judas_Engine::Renderer2D::DrawQuad({ 0.0f, 1.0f }, glm::vec2(1.0f, 0.5f), { 0.5f, 0.1f, 0.8, 1.0f });
-	Judas_Engine::Renderer2D::DrawQuad({ -0.5f, 0.0f }, glm::vec2(1.0f, 1.0f), m_Texture);
+	Judas_Engine::Renderer2D::DrawRotatedQuad({ -0.5f, 0.0f }, glm::vec2(1.0f, 1.0f), glm::radians(45.0f), m_Texture, 2.0f, glm::vec4(0.8f, 0.8f, 0.8f, 1.0f));
 	Judas_Engine::Renderer2D::EndScene();
 }
 

@@ -16,6 +16,8 @@ namespace Judas_Engine
 
     void OrthographicCameraController::OnUpdate(Timestep ts)
     {
+        JE_PROFILE_FUNC
+
         if (Input::IsKeyPressed(JE_KEY_W))
             m_CameraPosition.y -= m_CameraTranslationSpeed * ts;
         else if (Input::IsKeyPressed(JE_KEY_S))
@@ -47,7 +49,7 @@ namespace Judas_Engine
 
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
     {
-        m_ZoomLevel -= e.GetYOffset();
+        m_ZoomLevel -= (float)e.GetYOffset();
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
         return true;

@@ -19,6 +19,8 @@ namespace Judas_Engine
 
     Window* Window::Create(const WindowProps& props)
     {
+        JE_PROFILE_FUNC
+
         return new WindowsWindow(props);
     }
 
@@ -35,6 +37,8 @@ namespace Judas_Engine
 
     void WindowsWindow::Init(const WindowProps& props)
     {
+        JE_PROFILE_FUNC
+
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
@@ -44,18 +48,26 @@ namespace Judas_Engine
 
         if (!s_GLFWInitialized)
         {
+            JE_PROFILE_SCOPE("glfwInit")
+
             int success = glfwInit();
             JE_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-        m_Context = CreateScope<OpenGLContext>(m_Window);
+        {
+            JE_PROFILE_SCOPE("glfwCreateWindow")
 
-        m_Context->Init();
+            m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
+        }
 
-        
+        {
+            JE_PROFILE_SCOPE("Init")
+
+            m_Context = CreateScope<OpenGLContext>(m_Window);
+            m_Context->Init();
+        }
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -153,11 +165,14 @@ namespace Judas_Engine
 
     void WindowsWindow::Shutdown()
     {
+        JE_PROFILE_FUNC
         glfwDestroyWindow(m_Window);
     }
 
     void WindowsWindow::OnUpdate()
     {
+        JE_PROFILE_FUNC
+
         m_Context->SwapBuffers();
         glfwPollEvents();
     }

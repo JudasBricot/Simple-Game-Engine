@@ -28,6 +28,8 @@ namespace Judas_Engine
 
 	void Renderer2D::Init()
 	{
+		JE_PROFILE_FUNC
+
 		RenderCommand::Init();
 
 		s_Data->VertexArray = VertexArray::Create();
@@ -69,11 +71,15 @@ namespace Judas_Engine
 
 	void Renderer2D::OnWindowResize(uint32_t width, uint32_t height)
 	{
+		JE_PROFILE_FUNC
+
 		RenderCommand::SetViewPort(0, 0, width, height);
 	}
 
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
+		JE_PROFILE_FUNC
+
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
@@ -87,7 +93,10 @@ namespace Judas_Engine
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		JE_PROFILE_FUNC
+
 		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->TextureShader->SetFloat("u_TilingFactor", 1.0f);
 		s_Data->WhiteTexture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) * glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
@@ -98,19 +107,67 @@ namespace Judas_Engine
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture, float tilingFactor, const glm::vec4& color)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture, float tilingFactor, const glm::vec4& color)
 	{
-		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0));
-		texture->Bind(0);
+		JE_PROFILE_FUNC
+
+		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		texture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) * glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 		
+		s_Data->VertexArray->Bind();
+
+		RenderCommand::DrawIndexed(s_Data->VertexArray);
+	}
+	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		JE_PROFILE_FUNC
+
+		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		s_Data->WhiteTexture->Bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) 
+			* glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f})
+			* glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
+		s_Data->TextureShader->SetMat4("u_Transform", transform);
+
+		s_Data->VertexArray->Bind();
+
+		RenderCommand::DrawIndexed(s_Data->VertexArray);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D> texture, float tilingFactor, const glm::vec4& color)
+	{
+		DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, texture, tilingFactor, color);
+	}
+
+	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D> texture, float tilingFactor, const glm::vec4& color)
+	{
+		JE_PROFILE_FUNC
+
+		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		texture->Bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0), position) 
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0), { size.x, size.y, 1.0 });
+		s_Data->TextureShader->SetMat4("u_Transform", transform);
+
 		s_Data->VertexArray->Bind();
 
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
