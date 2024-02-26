@@ -92,5 +92,4 @@ namespace Judas_Engine {
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
-
 }

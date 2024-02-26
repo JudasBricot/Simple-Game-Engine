@@ -8,7 +8,12 @@
 #include "glm/ext.hpp"
 
 Sandbox2D::Sandbox2D() : Layer("MyLayer"), m_CameraController(1280.0f / 720.0f, true)
-{ }
+{ 
+}
+
+Sandbox2D::~Sandbox2D()
+{
+}
 
 void Sandbox2D::OnAttach()
 {
@@ -17,14 +22,21 @@ void Sandbox2D::OnAttach()
 
 void Sandbox2D::OnDetach()
 {
+
 }
 
 void Sandbox2D::OnUpdate(Judas_Engine::Timestep ts)
 {
-	m_CameraController.OnUpdate(ts);
+	{
+		JE_PROFILE_SCOPE("Camera update");
+		m_CameraController.OnUpdate(ts);
+	}
 
-	Judas_Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-	Judas_Engine::RenderCommand::Clear();
+	{
+		JE_PROFILE_SCOPE("Clear Background");
+		Judas_Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		Judas_Engine::RenderCommand::Clear();
+	}
 
 	Judas_Engine::Renderer2D::BeginScene(m_CameraController.GetCamera());
 

@@ -148,6 +148,7 @@
     <ClInclude Include="src\Judas-Engine\Core\MouseButtonCode.h" />
     <ClInclude Include="src\Judas-Engine\Core\Timestep.h" />
     <ClInclude Include="src\Judas-Engine\Core\Window.h" />
+    <ClInclude Include="src\Judas-Engine\Debug\Profiler.h" />
     <ClInclude Include="src\Judas-Engine\EventSystem\ApplicationEvent.h" />
     <ClInclude Include="src\Judas-Engine\EventSystem\Event.h" />
     <ClInclude Include="src\Judas-Engine\ImGui\ImGuiLayer.h" />

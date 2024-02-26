@@ -1414,6 +1414,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Judas-Engine\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\Judas-Engine\Debug\Profiler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Judas-Engine\Core\Application.cpp">

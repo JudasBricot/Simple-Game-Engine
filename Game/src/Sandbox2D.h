@@ -6,6 +6,7 @@ class Sandbox2D : public Judas_Engine::Layer
 {
 public:
 	Sandbox2D();
+	~Sandbox2D();
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 	virtual void OnUpdate(Judas_Engine::Timestep ts) override;

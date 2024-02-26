@@ -18,3 +18,4 @@
 #endif
 
 #include "Judas-Engine/Logging/Log.h"
+#include "Judas-Engine/Debug/Profiler.h"
