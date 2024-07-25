@@ -18,6 +18,6 @@ All the file of the Engine are in the Judas-Engine file. As every **src/Renderer
 
 The Application provides multiple vizualization in the ImGui window : one to vizualize the FFT Butterfly texture containing all the information for the FFT, the Spectra display and the Waves. The spectra display enables to vizualize the different spectra. The waves enables the ocean vizualization, the spectrum can be choosen in the ImGui window that appeared, and its parameters can be changed in this same window. 
 
-# Generating the project files
+## Generating the project files
 
 This project uses [Premake](https://premake.github.io/) as project file generator. Launch the 'Win-GenProject.bat' to generate the files for Visual Studio (the targeted IDE version can be changed, explanations [here](https://premake.github.io/docs/Using-Premake/)). 
