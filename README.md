@@ -1,5 +1,21 @@
 # Simulating Ocean
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fd038aaf-a35a-42fb-88e4-39ea1f469234" alt="showcase" width="50%" height="auto">
+</p>
+
+## Introduction
+
+This project was created for the IGR202 course at Telecom Paris under Prof. Amal Pakkat and Prof. Kiwon Um.
+The slide for the presentation can be found [here](https://www.canva.com/design/DAF8bRNNfsA/sDp9xGuqLl9K9JLvKywwWg/edit?utm_content=DAF8bRNNfsA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton).
+The project report can be found [here](https://www.overleaf.com/read/gwcqgvjgvkhy#a7906f).
+
+## Overview
+
+The goal of this project is to generate waves in real-time, it focuses on the vertices position generation, and does not implement any advanced lighting.
+
+## Code organization
+
 The code is splitted into multiple projects : the engine, the application, and Glfw, Glad and ImGui. However, only the files from the Engine and the Application are interesting to check.
 
 ## The Engine
